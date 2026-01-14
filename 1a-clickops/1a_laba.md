@@ -1,0 +1,104 @@
+EC2 Web App → RDS (MySQL) “Notes” App
+Goal
+
+Deploy a simple web app on an EC2 instance that can:
+  Insert a note into RDS MySQL
+  List notes from the database
+
+Requirements
+  RDS MySQL instance in a private subnet (or publicly accessible if you want ultra-simple)
+  EC2 instance running a Python Flask app
+  Security groups allowing EC2 → RDS on port 3306
+  Credentials stored in AWS Secrets Manager (recommended) or plain env vars (simpler)
+
+Part 1 — Create RDS MySQL
+  Option A (recommended, still simple): RDS private + EC2 public
+    RDS Console → Create database
+    Engine: MySQL
+    Template: Free tier (or Dev/Test)
+    DB instance identifier: lab-mysql
+    Master username: admin
+    Password: generate or set (keep it safe)
+    Connectivity
+    VPC: default (or class VPC)
+    Public access: No
+    VPC security group: create new sg-rds-lab
+    Create DB
+
+Security group for RDS (sg-rds-lab): This is the key “real-world” security pattern: allow DB access only from the app server’s SG.
+  Inbound
+    MySQL/Aurora (TCP 3306) Source = sg-ec2-lab (we’ll create that next)
+Outbound
+    default allow-all is fine: Don't touch this or Chewbacca will touch you.
+
+Part 2 — Launch EC2
+  1) EC2 Console → Launch instance
+  2) Name: lab-ec2-app
+  3) AMI: Amazon Linux 2023
+  4) Instance type: t3.micro (or t2.micro)
+  5) Key pair: choose/create (only if you want SSH access)
+  6) Network: same VPC as RDS
+  7) Security group: create sg-ec2-lab
+
+Security group for EC2 (sg-ec2-lab)
+  Inbound
+    HTTP TCP 80 from 0.0.0.0/0 (so they can test in browser)
+    (Optional) SSH TCP 22 from your IP only
+
+  Outbound
+    allow-all (default)
+
+Now go back to RDS SG inbound rule
+Set Source = sg-ec2-lab for TCP 3306.
+
+Part 3 — Store DB creds (Secrets Manager)
+  1) Secrets Manager → Store a new secret
+  2) Secret type: Credentials for RDS database
+  3) Username/password: admin + your password
+  4) Select your RDS instance lab-mysql
+  5) Secret name: lab/rds/mysql
+
+Create an IAM Role for EC2 to read the secret
+  1) IAM → Roles → Create role
+  2) Trusted entity: EC2
+  3) Add permission policy (tightest good enough for lab):
+      SecretsManagerReadWrite is too broad (but easy).
+      Better: create a small inline policy like below.
+
+Inline policy (recommended)
+Replace <REGION>, <ACCOUNT_ID>, and secret name if different:
+#Check inline_policy.json in this folder 
+
+  4) Attach role to EC2:
+      EC2 → Instance → Actions → Security → Modify IAM role → select your role
+
+Part 4 — Bootstrap the EC2 app (User Data)
+In EC2 launch, you can paste this in User data (or run manually after SSH).
+Important: Replace SECRET_ID if you used a different name.
+#user.data.sh
+
+Part 5 — Test
+  1) In RDS console, copy the endpoint (you won’t paste it into app because Secrets Manager provides host)
+  2) Open browser:
+      http://<EC2_PUBLIC_IP>/init
+      http://<EC2_PUBLIC_IP>/add?note=first_note
+      http://<EC2_PUBLIC_IP>/list
+  If /init hangs or errors, it’s almost always:
+    RDS SG inbound not allowing from EC2 SG on 3306
+    RDS not in same VPC/subnets routing-wise
+    EC2 role missing secretsmanager:GetSecretValue
+    Secret doesn’t contain host / username / password fields (fix by storing as “Credentials for RDS database”)
+
+Student Deliverables:
+1) Screenshot of:
+  RDS SG inbound rule using source = sg-ec2-lab
+  EC2 role attached
+  /list output showing at least 3 notes
+
+2) Short answers:
+  A) Why is DB inbound source restricted to the EC2 security group?
+  B) What port does MySQL use?
+  C) Why is Secrets Manager better than storing creds in code/user-data?
+
+
+

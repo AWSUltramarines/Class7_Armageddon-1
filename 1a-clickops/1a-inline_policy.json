@@ -1,0 +1,23 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadSpecificSecret",
+      "Effect": "Allow",
+      "Action": ["secretsmanager:GetSecretValue"],
+      "Resource": "arn:aws:secretsmanager:us-east-1:329599652812:secret:lab/rds/mysql*"
+    }
+  ]
+}
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadSpecificSecret",
+      "Effect": "Allow",
+      "Action": ["secretsmanager:GetSecretValue"],
+      "Resource": "arn:aws:secretsmanager:us-east-1:329599652812:secret:arma-g-02"
+    }
+  ]
+}
