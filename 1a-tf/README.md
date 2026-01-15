@@ -31,24 +31,16 @@ The core philosophy of this deployment is **"Zero Hardcoded Credentials."** The 
 
 | File | Description |
 | --- | --- |
-| `00-auth.tf` | Terraform provider configuration (AWS, Random, TLS) and S3 backend setup. 
-|
-| `01-IAM.tf` | IAM Roles and Policies granting EC2 permission to access Secrets Manager. 
-|
-| `02-secrets.tf` | Generates a random password and stores it in AWS Secrets Manager. 
-|
-| `03-network.tf` | VPC, Subnets, Route Tables, and Internet Gateway configuration. 
-|
-| `04-sg.tf` | Security Groups for EC2 (HTTP/SSH) and RDS (MySQL access from EC2). 
-|
-| `05-EC2.tf` | EC2 instance definition, SSH Key generation, and User Data script injection. 
-|
-| `06-RDS.tf` | RDS MySQL instance configuration. 
-|
-| `1a_user_data_tf.sh` | Bash script that installs Flask and configures the app to run on boot. 
-|
-| `99-variables.tf` | Input variables for CIDRs, Database names, and Instance types. 
-| `terraform.tfvars` | (Optional) Input variable values if not using default
+| `00-auth.tf` | Terraform provider configuration (AWS, Random, TLS) and S3 backend setup. |
+| `01-IAM.tf` | IAM Roles and Policies granting EC2 permission to access Secrets Manager. |
+| `02-secrets.tf` | Generates a random password and stores it in AWS Secrets Manager. |
+| `03-network.tf` | VPC, Subnets, Route Tables, and Internet Gateway configuration. |
+| `04-sg.tf` | Security Groups for EC2 (HTTP/SSH) and RDS (MySQL access from EC2). |
+| `05-EC2.tf` | EC2 instance definition, SSH Key generation, and User Data script injection. |
+| `06-RDS.tf` | RDS MySQL instance configuration. |
+| `1a_user_data_tf.sh` | Bash script that installs Flask and configures the app to run on boot. |
+| `99-variables.tf` | Input variables for CIDRs, Database names, and Instance types. |
+| `terraform.tfvars` | (Optional) Input variable values if not using default|
 
 For example your tfvars file might look like this:
 
