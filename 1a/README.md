@@ -18,6 +18,14 @@ Production-ready Terraform infrastructure demonstrating secure EC2-to-RDS connec
 - ✅ **Encrypted Storage** - Both EBS and RDS encryption enabled
 - ✅ **Free Tier Compatible** - Uses t3.micro and db.t3.micro instances
 
+### Quick Reference
+
+| Section | Description |
+|---------|-------------|
+| [Deployment Evidence](#deployment-evidence) | Screenshots and verification of successful infrastructure deployment |
+| [RUNBOOK.md](RUNBOOK.md) | Complete troubleshooting guide with layer-by-layer diagnostic procedures |
+| [SECURITY.md](SECURITY.md) | SSH key handling and security considerations |
+
 ## Architecture
 
 ```
@@ -242,6 +250,8 @@ See **[RUNBOOK.md](RUNBOOK.md)** for:
 - All commands used to diagnose and fix deployment issues
 - Root cause analysis of the original AL2023 package issue
 - Reusable troubleshooting framework for similar issues
+
+**Next Steps:** For CloudWatch monitoring, alerting, and incident response procedures, see **[Lab 1b](../1b/README.md)**.
 
 ---
 

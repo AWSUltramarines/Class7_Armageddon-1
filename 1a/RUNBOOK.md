@@ -1,7 +1,47 @@
-# EC2→RDS Lab Troubleshooting Guide
+# EC2→RDS Lab Troubleshooting Guide (Lab 1a RUNBOOK)
 
 ## Overview
-This document provides a comprehensive, step-by-step troubleshooting framework for diagnosing "port 80 unreachable" issues in an EC2→RDS Terraform deployment. Each command includes full context, rationale, and interpretation.
+
+This runbook provides comprehensive diagnostic and troubleshooting procedures for Lab 1a infrastructure. It includes:
+
+- **Diagnostic Framework** - Layer-by-layer approach to isolating network, security, and application issues
+- **Root Cause Analysis** - Documented investigation of the Amazon Linux 2023 package compatibility issue
+- **Fix Implementation** - Step-by-step recovery procedures with verification
+- **Lessons Learned** - Reusable patterns for future EC2/RDS troubleshooting
+- **Quick Reference** - Common commands for ongoing operations
+
+**Related Documentation:**
+- [README.md](README.md) - Lab overview, deployment instructions, and evidence
+- [SECURITY.md](SECURITY.md) - Security considerations and SSH key handling
+- [Lab 1b RUNBOOK.md](../1b/RUNBOOK.md) - Advanced monitoring and incident response procedures
+
+---
+
+## Table of Contents
+
+### Diagnostic Process
+| Section | Description |
+|---------|-------------|
+| [Original Issue](#original-issue) | Initial symptoms and error messages |
+| [Layer 1: EC2 Network](#layer-1-verify-ec2-instance-network-configuration) | Instance status, public IP, security groups |
+| [Layer 2: Route Tables](#layer-2-verify-route-table-and-internet-gateway) | IGW routes and subnet associations |
+| [Layer 3: Security Groups](#layer-3-verify-security-group-rules) | Ingress/egress rule verification |
+| [Layer 4: Connectivity](#layer-4-test-network-connectivity) | HTTP connection testing |
+| [Layer 5: Console Output](#layer-5-check-ec2-console-output-critical-step) | User-data and boot diagnostics |
+
+### Resolution
+| Section | Description |
+|---------|-------------|
+| [Root Cause Summary](#root-cause-summary) | Analysis of the mysql package issue |
+| [Fix Implementation](#fix-implementation) | User-data corrections and redeployment |
+| [Post-Fix Verification](#post-fix-verification) | Testing all endpoints after fix |
+
+### Reference
+| Section | Description |
+|---------|-------------|
+| [Key Lessons Learned](#key-lessons-learned) | Best practices from this investigation |
+| [Troubleshooting Framework](#troubleshooting-framework-for-future-use) | Reusable diagnostic sequence |
+| [Quick Reference Commands](#quick-reference-common-commands) | Common operational commands |
 
 ---
 
@@ -908,3 +948,22 @@ curl http://$(terraform output -raw ec2_public_ip)/health
 curl http://$(terraform output -raw ec2_public_ip)/init
 curl http://$(terraform output -raw ec2_public_ip)/list
 ```
+
+---
+
+## Additional Resources
+
+### Lab Documentation
+| Document | Description |
+|----------|-------------|
+| [README.md](README.md) | Lab overview, deployment, and evidence |
+| [README.md → Deployment Evidence](README.md#deployment-evidence) | Screenshots validating successful deployment |
+| [SECURITY.md](SECURITY.md) | SSH key handling and security considerations |
+| [Lab 1b RUNBOOK.md](../1b/RUNBOOK.md) | Advanced monitoring, alarms, and incident response |
+
+### AWS Documentation
+- [Amazon Linux 2023 Package Management](https://docs.aws.amazon.com/linux/al2023/ug/package-management.html)
+- [EC2 User Data and Cloud-Init](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html)
+- [Security Groups for Your VPC](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-security-groups.html)
+- [Secrets Manager Best Practices](https://docs.aws.amazon.com/secretsmanager/latest/userguide/best-practices.html)
+- [IAM Roles for EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html)

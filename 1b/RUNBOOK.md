@@ -2,9 +2,58 @@
 
 ## Overview
 
-This runbook provides comprehensive diagnostic and troubleshooting procedures for Lab 1b. It includes:
-- **Part 1**: Incident response procedures for database connection failures (when alarms trigger)
-- **Part 2**: General troubleshooting for CloudWatch Logs, metrics, alarms, and monitoring components
+This runbook provides comprehensive operational procedures for Lab 1b infrastructure. It includes:
+
+- **Part 1: Incident Response** - Step-by-step procedures for diagnosing and recovering from database connection failures when CloudWatch alarms trigger
+- **Part 2: General Troubleshooting** - Diagnostic procedures for CloudWatch Logs, metrics, alarms, SNS notifications, and monitoring components
+- **Part 3: Chaos Engineering** - Controlled failure injection procedures to validate monitoring systems and practice incident response
+- **Reference Sections** - Quick command reference, emergency recovery procedures, and escalation guidelines
+
+**Related Documentation:**
+- [README.md](README.md) - Lab overview, deployment instructions, and evidence
+- [SECURITY.md](SECURITY.md) - Security considerations and SSH key handling
+
+---
+
+## Table of Contents
+
+### Part 1: Incident Response
+| Section | Description |
+|---------|-------------|
+| [Quick Reference](#quick-reference) | When to use these procedures and common failure modes |
+| [Step 1: Check Alarm State](#step-1-check-alarm-state) | Verify CloudWatch alarm status |
+| [Step 2: Check CloudWatch Logs](#step-2-check-cloudwatch-logs-for-db-connection-errors) | Identify error patterns in logs |
+| [Step 3: Verify Parameter Store](#step-3-verify-parameter-store-values) | Validate SSM parameter values |
+| [Step 4: Verify Secrets Manager](#step-4-verify-secrets-manager-credentials) | Check credential consistency |
+| [Step 5: Check RDS Status](#step-5-check-rds-instance-status) | Verify database availability |
+| [Step 6a: Credential Drift Recovery](#scenario-6a-credential-drift) | Fix password mismatch |
+| [Step 6b: Network Isolation Recovery](#scenario-6b-network-isolation) | Restore security group rules |
+| [Step 6c: Database Unavailable Recovery](#scenario-6c-database-unavailable) | Start stopped RDS instance |
+| [Step 7: Verify Application](#step-7-verify-application-endpoints) | Test all API endpoints |
+| [Step 8: Confirm Alarm OK](#step-8-confirm-alarm-returns-to-ok) | Validate monitoring recovery |
+| [Step 9: Post-Incident Documentation](#step-9-post-incident-documentation) | Record incident details |
+
+### Part 2: General Troubleshooting
+| Issue | Description |
+|-------|-------------|
+| [Issue 1: CloudWatch Logs Not Appearing](#issue-1-cloudwatch-logs-not-appearing) | Agent not shipping logs |
+| [Issue 2: Alarm Stuck in INSUFFICIENT_DATA](#issue-2-cloudwatch-alarm-stuck-in-insufficient_data) | No metric data points |
+| [Issue 3: Parameter Store Access Denied](#issue-3-parameter-store-values-not-accessible) | IAM permissions issue |
+| [Issue 4: Metric Filter Not Working](#issue-4-metric-filter-not-creating-data-points) | Pattern not matching logs |
+| [Issue 5: SNS Email Not Received](#issue-5-sns-email-not-received) | Subscription or delivery issues |
+| [Issue 6: False Positive Errors](#issue-6-application-logging-error-but-no-errors-occurring) | Log pattern false matches |
+
+### Chaos Engineering & Reference
+| Section | Description |
+|---------|-------------|
+| [Chaos Test 1: Credential Drift](#chaos-test-1-simulate-credential-drift) | Simulate password mismatch |
+| [Chaos Test 2: Network Isolation](#chaos-test-2-simulate-network-isolation) | Remove security group rules |
+| [Chaos Test 3: Database Unavailability](#chaos-test-3-simulate-database-unavailability) | Stop RDS instance |
+| [Complete Chaos Test Suite](#complete-chaos-engineering-run) | Run all tests in sequence |
+| [Quick Command Reference](#quick-command-reference) | Common diagnostic commands |
+| [Emergency Recovery](#emergency-recovery-commands) | Critical recovery procedures |
+
+> **Note:** Chaos test execution evidence with screenshots is documented in [README.md → Deployment Evidence](README.md#deployment-evidence)
 
 ---
 
@@ -18,9 +67,13 @@ This runbook provides comprehensive diagnostic and troubleshooting procedures fo
 - Logs show `DB_CONNECTION_FAILURE` errors
 
 **Common failure modes:**
-1. **Credential Drift**: Secrets Manager password doesn't match RDS
-2. **Network Isolation**: Security group rules removed or misconfigured
-3. **DB Availability**: RDS instance stopped, rebooting, or unavailable
+| Failure Mode | Error Signature | Recovery |
+|--------------|-----------------|----------|
+| **Credential Drift** | `Access denied for user 'dbadmin'` | [Step 6a](#scenario-6a-credential-drift) |
+| **Network Isolation** | `Can't connect to MySQL server` / `timed out` | [Step 6b](#scenario-6b-network-isolation) |
+| **DB Unavailability** | `Can't connect...` (error 111) | [Step 6c](#scenario-6c-database-unavailable) |
+
+**See also:** [Chaos Engineering](#chaos-engineering-failure-mode-simulations) for comprehensive failure testing procedures
 
 ---
 
@@ -1006,7 +1059,7 @@ Application might log other errors that don't relate to DB connections.
 
 ## Lab 1a Issues (Still Applicable)
 
-All Lab 1a troubleshooting steps still apply:
+All Lab 1a troubleshooting steps still apply. Lab 1b builds on Lab 1a infrastructure, so foundational issues may require Lab 1a diagnostic procedures.
 
 ### Layer-by-Layer Diagnostic Order
 
@@ -1017,7 +1070,9 @@ All Lab 1a troubleshooting steps still apply:
 5. ✅ **Secrets Manager**: Secret accessible from EC2
 6. ✅ **RDS**: Instance available, endpoint reachable
 
-See Lab 1a `RUNBOOK.md` for complete procedures.
+**Reference:** See [Lab 1a RUNBOOK.md](../1a/RUNBOOK.md) for complete foundational diagnostic procedures.
+
+**See also:** [README.md → Architecture](README.md#architecture) for infrastructure diagram and component overview.
 
 ---
 
@@ -1268,6 +1323,13 @@ ssh -i ec2-ssh-key.pem ec2-user@$(terraform output -raw ec2_public_ip)
 ## Chaos Engineering: Failure Mode Simulations
 
 This section provides controlled procedures to deliberately trigger each of the three common failure modes, allowing you to practice incident response and validate monitoring/alerting systems.
+
+> **Documented Evidence:** A complete chaos test execution with screenshots is available in [README.md → Chaos Test 1: Credential Drift Simulation](README.md#chaos-test-1-credential-drift-simulation). This includes:
+> - Failure injection evidence
+> - CloudWatch alarm state transitions
+> - SNS email notifications received
+> - Incident response recovery steps
+> - Post-incident log analysis
 
 ⚠️ **WARNING:** These procedures will cause application downtime and trigger alarms. Only perform in non-production environments. Ensure you have time to complete the recovery process.
 
@@ -1780,7 +1842,18 @@ echo "All 3 failure modes tested successfully!"
 
 ## Additional Resources
 
+### Lab Documentation
+| Document | Description |
+|----------|-------------|
+| [README.md](README.md) | Lab overview, deployment, Quick Start, and evidence |
+| [README.md → Deployment Evidence](README.md#deployment-evidence) | Screenshots validating successful deployment |
+| [README.md → Chaos Test Evidence](README.md#chaos-test-1-credential-drift-simulation) | Documented chaos engineering execution |
+| [SECURITY.md](SECURITY.md) | SSH key handling and security considerations |
+| [Lab 1a RUNBOOK.md](../1a/RUNBOOK.md) | Foundational network/RDS troubleshooting |
+
+### AWS Documentation
 - [CloudWatch Agent Troubleshooting](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/troubleshooting-CloudWatch-Agent.html)
 - [CloudWatch Logs Insights Query Examples](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/CWL_QuerySyntax-examples.html)
 - [Metric Filter Pattern Syntax](https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html)
-- Lab 1a RUNBOOK.md for network/RDS issues
+- [RDS Instance Lifecycle](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.DBInstance.Status.html)
+- [Security Group Rules Reference](https://docs.aws.amazon.com/vpc/latest/userguide/security-group-rules.html)

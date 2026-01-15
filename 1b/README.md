@@ -56,6 +56,14 @@ Lab 1b extends Lab 1a with **operations, observability, and incident response** 
 - ✅ **Encrypted Storage** - Both EBS and RDS encryption enabled
 - ✅ **Free Tier Compatible** - Uses t3.micro and db.t3.micro instances
 
+### Quick Reference
+
+| Section | Description |
+|---------|-------------|
+| [Deployment Evidence](#deployment-evidence) | Screenshots and verification of successful Lab 1b deployment |
+| [Simulated Chaos Test & Incident Response](#chaos-test-1-credential-drift-simulation) | Controlled failure injection testing monitoring and recovery procedures |
+| [RUNBOOK.md](RUNBOOK.md) | Complete incident response procedures and troubleshooting guide |
+
 ---
 
 ## Architecture
@@ -370,104 +378,18 @@ aws cloudwatch describe-alarms \
 
 ### 5. Test Error Detection and Email Notifications
 
-**⚠️ Important:** CloudWatch alarms send emails only on **state transitions**, not while staying in the same state:
-- ✅ OK → ALARM: Sends ALARM email
-- ✅ ALARM → OK: Sends OK email
-- ❌ ALARM → ALARM: No email (already in alarm state)
+For comprehensive testing of the monitoring pipeline (including all three failure modes), see **[RUNBOOK.md → Chaos Engineering](RUNBOOK.md#chaos-engineering-failure-mode-simulations)**.
 
-**Full Test Cycle (recommended for testing email notifications):**
+**Quick Verification Steps:**
 
-**Step 1: Ensure alarm is in OK state**
-```bash
-# Check current state
-aws cloudwatch describe-alarms \
-  --alarm-names lab-db-connection-errors \
-  --query 'MetricAlarms[0].{State:StateValue,Since:StateUpdatedTimestamp}' \
-  --output table
+1. **Check alarm state:** `aws cloudwatch describe-alarms --alarm-names lab-db-connection-errors --query 'MetricAlarms[0].StateValue'`
+2. **Break connectivity:** Remove RDS security group ingress rule
+3. **Generate errors:** Run 5+ curl requests to `/list` endpoint
+4. **Wait 5-7 minutes:** Alarm should transition OK → ALARM
+5. **Restore connectivity:** Re-add security group rule
+6. **Verify recovery:** Alarm should return to OK within 5-10 minutes
 
-# If INSUFFICIENT_DATA or ALARM, wait or fix to reach OK state first
-```
-
-**Step 2: Break - Remove security group rule**
-```bash
-RDS_SG=$(terraform output -raw rds_security_group_id)
-RULE_ID=$(aws ec2 describe-security-group-rules \
-  --filters "Name=group-id,Values=$RDS_SG" \
-  --query 'SecurityGroupRules[?IsEgress==`false`].SecurityGroupRuleId' \
-  --output text)
-
-# Remove rule (causes connection failures)
-aws ec2 revoke-security-group-ingress \
-  --group-id $RDS_SG \
-  --security-group-rule-ids $RULE_ID
-```
-
-**Step 3: Generate errors to trigger alarm**
-```bash
-# Generate 5+ connection attempts (threshold is >= 3 errors in 5 minutes)
-for i in {1..5}; do
-  curl http://$(terraform output -raw ec2_public_ip)/list
-  sleep 2
-done
-```
-
-**Expected output:** `{"status":"error","message":"(2003, \"Can't connect to MySQL server...\")"}`
-
-**Step 4: Verify logs contain DB_CONNECTION_FAILURE token**
-```bash
-aws logs filter-log-events \
-  --log-group-name /aws/ec2/lab-rds-app \
-  --filter-pattern "DB_CONNECTION_FAILURE" \
-  --start-time $(date -u -d '10 minutes ago' +%s)000 \
-  --max-items 5 \
-  --query 'events[*].message' \
-  --output text
-```
-
-**Expected:** `2026-01-05 00:22:35,217 - ERROR - DB_CONNECTION_FAILURE OperationalError: (2003, "Can't connect...")`
-
-**Step 5: Wait for alarm to trigger (5-7 minutes)**
-```bash
-# Check alarm state periodically
-watch -n 30 'aws cloudwatch describe-alarms --alarm-names lab-db-connection-errors --query "MetricAlarms[0].StateValue" --output text'
-```
-
-**Expected:** State changes from OK → ALARM
-**Email received:** "ALARM: lab-db-connection-errors in US East (N. Virginia)"
-
-**Step 6: Fix - Restore security group rule**
-```bash
-EC2_SG=$(terraform output -raw ec2_security_group_id)
-RDS_SG=$(terraform output -raw rds_security_group_id)
-
-aws ec2 authorize-security-group-ingress \
-  --group-id "$RDS_SG" \
-  --ip-permissions IpProtocol=tcp,FromPort=3306,ToPort=3306,UserIdGroupPairs="[{GroupId=$EC2_SG,Description='MySQL from EC2 security group'}]"
-```
-
-**Step 7: Verify recovery**
-```bash
-# Test database connection
-curl http://$(terraform output -raw ec2_public_ip)/list | jq .
-
-# Wait 5-10 minutes for alarm to return to OK
-aws cloudwatch describe-alarms \
-  --alarm-names lab-db-connection-errors \
-  --query 'MetricAlarms[0].StateValue' \
-  --output text
-```
-
-**Expected:** State changes from ALARM → OK
-**Email received:** "OK: lab-db-connection-errors in US East (N. Virginia)"
-
-**Verification complete when:**
-- ✅ Received both ALARM and OK emails
-- ✅ Alarm history shows SNS action executions:
-  ```bash
-  aws cloudwatch describe-alarm-history \
-    --alarm-name lab-db-connection-errors \
-    --max-records 5
-  ```
+**⚠️ Important:** CloudWatch alarms send emails only on **state transitions** (OK → ALARM, ALARM → OK), not while staying in the same state.
 
 **If no emails received:** See **[RUNBOOK.md Issue 5](RUNBOOK.md#issue-5-sns-email-not-received)** for debugging steps
 

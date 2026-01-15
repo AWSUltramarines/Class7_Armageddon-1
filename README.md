@@ -34,12 +34,12 @@ A progressive two-lab series demonstrating the evolution from secure infrastruct
 
 ### Key Features
 
-✅ **Zero Static Credentials** - Secrets Manager + IAM roles
-✅ **Network Isolation** - RDS in private subnets only
-✅ **SG-to-SG References** - No CIDR-based database access
-✅ **Encrypted Storage** - EBS and RDS encryption enabled
-✅ **IMDSv2 Required** - Enhanced metadata security
-✅ **Comprehensive Documentation** - Includes troubleshooting runbook
+- ✅ **Zero Static Credentials** - Secrets Manager + IAM roles
+- ✅ **Network Isolation** - RDS in private subnets only
+- ✅ **SG-to-SG References** - No CIDR-based database access
+- ✅ **Encrypted Storage** - EBS and RDS encryption enabled
+- ✅ **IMDSv2 Required** - Enhanced metadata security
+- ✅ **Comprehensive Documentation** - Includes troubleshooting runbook
 
 ### Quick Start
 
