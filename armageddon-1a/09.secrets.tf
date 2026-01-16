@@ -1,18 +1,27 @@
-# resource "aws_secretsmanager_secret" "db_secret" {
-#   name = var.secret_name
-# }
+resource "aws_secretsmanager_secret" "db_secret" {
+  name = var.secret_name
 
-# resource "aws_secretsmanager_secret_version" "db_secret_version" {
-#   secret_id = aws_secretsmanager_secret.db_secret.id
+  lifecycle {
+    prevent_destroy = true
+  }
+}
 
-#   secret_string = jsonencode({
-#     username = var.db_username
-#     password = var.db_password
-#     host     = aws_db_instance.rds_instance.address
-#     port     = aws_db_instance.rds_instance.port
-#     dbname   = var.db_name
-#   })
-# }
+resource "aws_secretsmanager_secret_version" "db_secret_version" {
+  secret_id = aws_secretsmanager_secret.db_secret.id
+
+  secret_string = jsonencode({
+    username = var.db_username
+    password = var.db_password
+    host     = aws_db_instance.rds_instance.address
+    port     = aws_db_instance.rds_instance.port
+    dbname   = var.db_name
+  })
+
+  
+  lifecycle {
+    prevent_destroy = true
+  }
+}
 
 resource "aws_ssm_parameter" "db_endpoint_param" {
   name  = "/lab/db/endpoint"

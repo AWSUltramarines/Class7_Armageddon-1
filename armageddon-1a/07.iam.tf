@@ -35,7 +35,7 @@ resource "aws_iam_role_policy" "compute2secrets_policy" {
         "Sid" : "ReadSpecificSecret",
         "Effect" : "Allow",
         "Action" : ["secretsmanager:GetSecretValue"],
-        "Resource" : "arn:aws:secretsmanager:${var.region}:${var.account_id}:secret:${var.secret_name}*"
+        "Resource" : "arn:aws:secretsmanager:${data.aws_region.region.name}:${data.aws_caller_identity.self.account_id}:secret:${var.secret_name}*"
       },
     ]
   })
