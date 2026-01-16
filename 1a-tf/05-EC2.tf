@@ -1,4 +1,4 @@
-# ec2.tf - EC2 instance running the Flask notes application
+EC2 instance running the Flask notes application
 
 # Generate SSH key pair for EC2 access
 resource "tls_private_key" "ec2_ssh" {
