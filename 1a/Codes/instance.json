@@ -1,0 +1,5 @@
+aws ec2 describe-instances \
+  --instance-ids i-0f183f2a161dad688 \
+  --region us-east-1 \
+  --query "Reservations[].Instances[].IamInstanceProfile.Arn" \
+  --output text
