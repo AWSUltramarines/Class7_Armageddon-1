@@ -1,0 +1,137 @@
+# Locals
+# Local list of services to loop through
+locals {
+  services = {
+    "ssm"            = "com.amazonaws.${var.region}.ssm"
+    "ec2messages"    = "com.amazonaws.${var.region}.ec2messages"
+    "ssmmessages"    = "com.amazonaws.${var.region}.ssmmessages"
+    "logs"           = "com.amazonaws.${var.region}.logs"
+    "secretsmanager" = "com.amazonaws.${var.region}.secretsmanager"
+    "kms"            = "com.amazonaws.${var.region}.kms"
+  }
+}
+
+# ================================================================ #
+
+# Variables
+
+variable "region" {
+  description = "The region for this deployment"
+  type        = string
+  default     = "us-east-2"
+}
+
+variable "cidr" {
+  description = "The cidr block for the vpc"
+  type        = string
+  default     = "10.14.0.0/16"
+}
+
+variable "secret_name" {
+  description = "The name of the secret"
+  type        = string
+  default     = "lab/rds/mysql"
+}
+
+variable "db_name" {
+  description = "Name of the MySQL database to create"
+  type        = string
+  default     = "labdb"
+
+  validation {
+    condition     = can(regex("^[a-zA-Z][a-zA-Z0-9_]*$", var.db_name))
+    error_message = "Database name must start with a letter and contain only alphanumeric characters and underscores."
+  }
+}
+
+variable "db_username" {
+  description = "Username for the database"
+  type        = string
+  default     = "dbadmin"
+  sensitive   = true
+}
+
+# variable "db_password" {
+#   description = "password for the database"
+#   type        = string
+#   default     = "123password"
+#   sensitive   = true
+# }
+
+variable "public_subnet_cidrs" {
+  description = "List of CIDR blocks for public subnets"
+  type        = list(string)
+  # Example default:
+  default = ["10.14.1.0/24", "10.14.2.0/24"]
+}
+
+variable "azs" {
+  description = "List of Availability Zones to use"
+  type        = list(string)
+  default     = ["us-east-2a", "us-east-2b"]
+}
+
+variable "private_subnet_cidrs" {
+  description = "List of CIDR blocks for public subnets"
+  type        = list(string)
+  # Example default:
+  default = ["10.14.11.0/24", "10.14.12.0/24"]
+}
+
+variable "ssh_allowed_cidr" {
+  description = "CIDR block allowed for SSH access. Empty string disables SSH access."
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.ssh_allowed_cidr == "" || can(cidrhost(var.ssh_allowed_cidr, 0))
+    error_message = "Must be a valid CIDR block or empty string to disable SSH."
+  }
+}
+
+variable "allowed_http_cidrs" {
+  description = "List of CIDR blocks allowed for HTTP access"
+  type        = list(string)
+  default     = ["0.0.0.0/0"]
+}
+
+variable "db_port" {
+  description = "MySQL port"
+  type        = number
+  default     = 3306
+}
+
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "db_engine_version" {
+  description = "MySQL engine version"
+  type        = string
+  default     = "8.0"
+}
+
+variable "db_instance_class" {
+  description = "RDS instance class"
+  type        = string
+  default     = "db.t3.micro"
+}
+
+variable "db_allocated_storage" {
+  description = "Allocated storage in GB for RDS (free-tier: 20)"
+  type        = number
+  default     = 20
+}
+
+variable "alert_email" {
+  description = "Email address for alarm notifications (requires confirmation)"
+  type        = string
+  default     = ""
+
+  validation {
+    condition     = var.alert_email == "" || can(regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", var.alert_email))
+    error_message = "Must be a valid email address or empty string to skip email subscription."
+  }
+}
