@@ -1,0 +1,134 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red89\green138\blue67;
+\red193\green193\blue193;\red212\green214\blue154;\red194\green126\blue101;\red70\green137\blue204;\red202\green202\blue202;
+}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\csgray\c0\c0;\cssrgb\c41569\c60000\c33333;
+\cssrgb\c80000\c80000\c80000;\cssrgb\c86275\c86275\c66667;\cssrgb\c80784\c56863\c47059;\cssrgb\c33725\c61176\c83922;\cssrgb\c83137\c83137\c83137;
+}
+\margl1440\margr1440\vieww16740\viewh12320\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec4 #!/bin/bash\strokec5 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \strokec6 dnf\strokec5  \strokec7 update\strokec5  \strokec8 -y\strokec5 \
+\strokec6 dnf\strokec5  \strokec7 install\strokec5  \strokec8 -y\strokec5  \strokec7 python3-pip\strokec5 \
+\strokec6 pip3\strokec5  \strokec7 install\strokec5  \strokec7 flask\strokec5  \strokec7 pymysql\strokec5  \strokec7 boto3\strokec5 \
+\
+\strokec6 mkdir\strokec5  \strokec8 -p\strokec5  \strokec7 /opt/rdsapp\strokec5 \
+\strokec6 cat\strokec5  \strokec9 >\strokec7 /opt/rdsapp/app.py\strokec5  \strokec9 <<\strokec5 'PY'\
+\pard\pardeftab720\partightenfactor0
+\cf2 \strokec7 import json\strokec5 \
+\strokec7 import os\strokec5 \
+\strokec7 import boto3\strokec5 \
+\strokec7 import pymysql\strokec5 \
+\strokec7 from flask import Flask, request\strokec5 \
+\
+\strokec7 REGION = os.environ.get("AWS_REGION", "us-east-1")\strokec5 \
+\strokec7 SECRET_ID = os.environ.get("SECRET_ID", "lab/rds/mysql1")\strokec5 \
+\
+\strokec7 secrets = boto3.client("secretsmanager", region_name=REGION)\strokec5 \
+\
+\strokec7 def get_db_creds():\strokec5 \
+\strokec7     resp = secrets.get_secret_value(SecretId=SECRET_ID)\strokec5 \
+\strokec7     s = json.loads(resp["SecretString"])\strokec5 \
+\strokec7     # When you use "Credentials for RDS database", AWS usually stores:\strokec5 \
+\strokec7     # username, password, host, port, dbname (sometimes)\strokec5 \
+\strokec7     return s\strokec5 \
+\
+\strokec7 def get_conn():\strokec5 \
+\strokec7     c = get_db_creds()\strokec5 \
+\strokec7     host = c["host"]\strokec5 \
+\strokec7     user = c["username"]\strokec5 \
+\strokec7     password = c["password"]\strokec5 \
+\strokec7     port = int(c.get("port", 3306))\strokec5 \
+\strokec7     db = c.get("dbname", "labdb")  # we'll create this if it doesn't exist\strokec5 \
+\strokec7     return pymysql.connect(host=host, user=user, password=password, port=port, database=db, autocommit=True)\strokec5 \
+\
+\strokec7 app = Flask(__name__)\strokec5 \
+\
+\strokec7 @app.route("/")\strokec5 \
+\strokec7 def home():\strokec5 \
+\strokec7     return """\strokec5 \
+\strokec7     <h2>EC2 \uc0\u8594  RDS Notes App</h2>\strokec5 \
+\strokec7     <p>POST /add?note=hello</p>\strokec5 \
+\strokec7     <p>GET /list</p>\strokec5 \
+\strokec7     """\strokec5 \
+\
+\strokec7 @app.route("/init")\strokec5 \
+\strokec7 def init_db():\strokec5 \
+\strokec7     c = get_db_creds()\strokec5 \
+\strokec7     host = c["host"]\strokec5 \
+\strokec7     user = c["username"]\strokec5 \
+\strokec7     password = c["password"]\strokec5 \
+\strokec7     port = int(c.get("port", 3306))\strokec5 \
+\
+\strokec7     # connect without specifying a DB first\strokec5 \
+\strokec7     conn = pymysql.connect(host=host, user=user, password=password, port=port, autocommit=True)\strokec5 \
+\strokec7     cur = conn.cursor()\strokec5 \
+\strokec7     cur.execute("CREATE DATABASE IF NOT EXISTS labdb;")\strokec5 \
+\strokec7     cur.execute("USE labdb;")\strokec5 \
+\strokec7     cur.execute("""\strokec5 \
+\strokec7         CREATE TABLE IF NOT EXISTS notes (\strokec5 \
+\strokec7             id INT AUTO_INCREMENT PRIMARY KEY,\strokec5 \
+\strokec7             note VARCHAR(255) NOT NULL\strokec5 \
+\strokec7         );\strokec5 \
+\strokec7     """)\strokec5 \
+\strokec7     cur.close()\strokec5 \
+\strokec7     conn.close()\strokec5 \
+\strokec7     return "Initialized labdb + notes table."\strokec5 \
+\
+\strokec7 @app.route("/add", methods=["POST", "GET"])\strokec5 \
+\strokec7 def add_note():\strokec5 \
+\strokec7     note = request.args.get("note", "").strip()\strokec5 \
+\strokec7     if not note:\strokec5 \
+\strokec7         return "Missing note param. Try: /add?note=hello", 400\strokec5 \
+\strokec7     conn = get_conn()\strokec5 \
+\strokec7     cur = conn.cursor()\strokec5 \
+\strokec7     cur.execute("INSERT INTO notes(note) VALUES(%s);", (note,))\strokec5 \
+\strokec7     cur.close()\strokec5 \
+\strokec7     conn.close()\strokec5 \
+\strokec7     return f"Inserted note: \{note\}"\strokec5 \
+\
+\strokec7 @app.route("/list")\strokec5 \
+\strokec7 def list_notes():\strokec5 \
+\strokec7     conn = get_conn()\strokec5 \
+\strokec7     cur = conn.cursor()\strokec5 \
+\strokec7     cur.execute("SELECT id, note FROM notes ORDER BY id DESC;")\strokec5 \
+\strokec7     rows = cur.fetchall()\strokec5 \
+\strokec7     cur.close()\strokec5 \
+\strokec7     conn.close()\strokec5 \
+\strokec7     out = "<h3>Notes</h3><ul>"\strokec5 \
+\strokec7     for r in rows:\strokec5 \
+\strokec7         out += f"<li>\{r[0]\}: \{r[1]\}</li>"\strokec5 \
+\strokec7     out += "</ul>"\strokec5 \
+\strokec7     return out\strokec5 \
+\
+\strokec7 if __name__ == "__main__":\strokec5 \
+\strokec7     app.run(host="0.0.0.0", port=80, debug=True)\strokec5 \
+PY\
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \strokec6 cat\strokec5  \strokec9 >\strokec7 /etc/systemd/system/rdsapp.service\strokec5  \strokec9 <<\strokec5 'SERVICE'\
+\pard\pardeftab720\partightenfactor0
+\cf2 \strokec7 [Unit]\strokec5 \
+\strokec7 Description=EC2 to RDS Notes App\strokec5 \
+\strokec7 After=network.target\strokec5 \
+\
+\strokec7 [Service]\strokec5 \
+\strokec7 WorkingDirectory=/opt/rdsapp\strokec5 \
+\strokec7 Environment=SECRET_ID=lab/rds/mysql1\strokec5 \
+\strokec7 ExecStart=/usr/bin/python3 /opt/rdsapp/app.py\strokec5 \
+\strokec7 Restart=always\strokec5 \
+\
+\strokec7 [Install]\strokec5 \
+\strokec7 WantedBy=multi-user.target\strokec5 \
+SERVICE\
+\
+\pard\pardeftab720\partightenfactor0
+\cf2 \strokec6 systemctl\strokec5  \strokec7 daemon-reload\strokec5 \
+\strokec6 systemctl\strokec5  \strokec7 enable\strokec5  \strokec7 rdsapp\strokec5 \
+\strokec6 systemctl\strokec5  \strokec7 start\strokec5  \strokec7 rdsapp\strokec5 \
+}
