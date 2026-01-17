@@ -1,0 +1,14 @@
+2. Short answers for Armageddon 1a submission
+
+A) Why is DB inbound source restricted to the EC2 security group? 
+
+DB inbound traffic is restricted to the EC2 security group to ensure that access to read or write data on the DB is only through the EC2 instance. 
+
+B) What port does MySQL use?
+
+MySQL uses port 3306
+
+C) C) Why is Secrets Manager better than storing creds in code/user-data?
+
+Secrets manager is better than storing creds in code/user-data because its more secure. You dont want your credentials exposed on a user data file. Also is easier to manage Credentials in AWS instead of changing hard coded credentials on your user data file. 
+
