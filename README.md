@@ -17,7 +17,10 @@ This repository contains individual team member work across separate branches. E
 | Member | Branch Name | Branch Link | Labs Included |
 |--------|-------------|-------------|---------------|
 | Daequan Britt | `daequan_britt` | [View Branch](../../tree/daequan_britt) | Lab 1a |
-| James Scales | `james_scales` | [View Branch](../../tree/james_scales) | Lab 1a |
+| James Scales | `james_scales` | [View Branch](../../tree/james_scales) | Lab 1a, Lab 1b |
+| Joey Africanstar | `Joey_africanstar` | [View Branch](../../tree/Joey_africanstar) | Lab 1a |
+| Kaiju Hyuga | `Kaiju_Hyuga` | [View Branch](../../tree/Kaiju_Hyuga) | Lab 1a |
+| Saffron Christian | `Saffron_Christian` | [View Branch](../../tree/Saffron_Christian) | In Progress |
 | Walid Ahmed | `Walid_Ahmed` | [View Branch](../../tree/Walid_Ahmed) | Lab 1a, Lab 1b |
 | Willie Bright | `Willie_Bright` | [View Branch](../../tree/Willie_Bright) | Lab 1a, Lab 1b |
 
@@ -32,6 +35,9 @@ git branch -a
 # Checkout individual member branches
 git checkout daequan_britt
 git checkout james_scales
+git checkout Joey_africanstar
+git checkout Kaiju_Hyuga
+git checkout Saffron_Christian
 git checkout Walid_Ahmed
 git checkout Willie_Bright
 
@@ -74,12 +80,105 @@ daequan_britt/
 james_scales/
 ├── README.md
 └── armageddon-1a/
-    └── readme.md
+    ├── readme.md
+    ├── 00.auth.tf
+    ├── 01.vpc.tf
+    ├── 02.subnets.tf
+    ├── 03.gateway.tf
+    ├── 04.route.tf
+    ├── 05.sg.tf
+    ├── 06.instance.tf
+    ├── 07.iam.tf
+    ├── 08.rds.tf
+    ├── 09.secrets.tf
+    ├── 10.cloudwatch.tf
+    ├── 11.sns.tf
+    ├── variables.tf
+    ├── locals.tf
+    ├── data.tf
+    ├── output.tf
+    └── userdata.sh
 ```
 
 **Approach:** Terraform
 
+**Labs Covered:** Lab 1a, Lab 1b
+
+---
+
+### Joey Africanstar Branch
+
+**Location:** `Joey_africanstar`
+
+**Directory Structure:**
+```
+Joey_africanstar/
+├── README.md
+├── Armageddon Part 1 Read Me.rtf
+├── Armageddon Data Script.rtf
+├── debug_db.py
+└── Student Deliverables.rtfd/
+    ├── TXT.rtf
+    └── (screenshots)
+```
+
+**Approach:** AWS Console (ClickOps)
+
 **Labs Covered:** Lab 1a
+
+**Notes:** Documentation in RTF format with step-by-step console instructions. Includes Python debug script for testing RDS connectivity.
+
+---
+
+### Kaiju Hyuga Branch
+
+**Location:** `Kaiju_Hyuga`
+
+**Directory Structure:**
+```
+Kaiju_Hyuga/
+└── 1a/
+    ├── 1a_short_answers.txt
+    ├── Armageddon_1/
+    │   ├── 0-auth.tf
+    │   ├── 01-rds.tf
+    │   ├── ec2.tf
+    │   ├── IAM.tf
+    │   ├── network.tf
+    │   ├── secrets.tf
+    │   ├── sg.tf
+    │   ├── variables.tf
+    │   └── 1a_user_data.sh
+    ├── Codes/
+    │   ├── instance.json
+    │   ├── rds.json
+    │   ├── role-policies.json
+    │   ├── secret.json
+    │   └── sg.json
+    └── Console/
+        ├── App_list_output.png
+        └── RDS_SG_source.png
+```
+
+**Approach:** Terraform + JSON configurations
+
+**Labs Covered:** Lab 1a
+
+---
+
+### Saffron Christian Branch
+
+**Location:** `Saffron_Christian`
+
+**Directory Structure:**
+```
+Saffron_Christian/
+└── README.md
+```
+
+**Approach:** In Progress
+
+**Labs Covered:** Not yet started
 
 ---
 
@@ -130,18 +229,9 @@ Walid_Ahmed/
     └── evidence/ (11 screenshots)
 ```
 
-**Approach:** Terraform Infrastructure-as-Code
+**Approach:** Terraform
 
-**Documentation Files:**
-- Root README.md (444 lines)
-- 1a/README.md (663 lines)
-- 1a/RUNBOOK.md (911 lines)
-- 1a/SECURITY.md (337 lines)
-- 1b/README.md (1275 lines)
-- 1b/RUNBOOK.md (1787 lines)
-- 1b/SECURITY.md (518 lines)
-
-**Evidence:** 19 total screenshots (8 for Lab 1a, 11 for Lab 1b)
+**Labs Covered:** Lab 1a, Lab 1b
 
 ---
 
@@ -190,14 +280,14 @@ Willie_Bright/
 
 ## File Location Quick Reference
 
-| Content Type | Walid Ahmed | Willie Bright | Daequan Britt | James Scales |
-|--------------|-------------|---------------|---------------|--------------|
-| **Lab 1a README** | `1a/README.md` | `README.md` | `1a-tf/README.md` or `1a-clickops/README.md` | `armageddon-1a/readme.md` |
-| **Lab 1b README** | `1b/README.md` | `Readme1B.md` | - | - |
-| **Terraform Files** | `1a/*.tf`, `1b/*.tf` | - | `1a-tf/` | `armageddon-1a/` |
-| **Evidence/Screenshots** | `1a/evidence/`, `1b/evidence/` | (see member docs) | (see member docs) | (see member docs) |
-| **Runbooks** | `1a/RUNBOOK.md`, `1b/RUNBOOK.md` | - | - | - |
-| **Security Docs** | `1a/SECURITY.md`, `1b/SECURITY.md` | - | - | - |
+| Content Type | Walid Ahmed | Willie Bright | Daequan Britt | James Scales | Joey Africanstar | Kaiju Hyuga | Saffron Christian |
+|--------------|-------------|---------------|---------------|--------------|------------------|-------------|-------------------|
+| **Lab 1a README** | `1a/README.md` | `README.md` | `1a-tf/README.md` or `1a-clickops/README.md` | `armageddon-1a/readme.md` | `*.rtf` files | `1a/1a_short_answers.txt` | - |
+| **Lab 1b README** | `1b/README.md` | `Readme1B.md` | - | (in `armageddon-1a/`) | - | - | - |
+| **Terraform Files** | `1a/*.tf`, `1b/*.tf` | - | `1a-tf/` | `armageddon-1a/` | - | `1a/Armageddon_1/` | - |
+| **Evidence/Screenshots** | `1a/evidence/`, `1b/evidence/` | (see member docs) | `1a-clickops/screenshots/` | (see member docs) | `Student Deliverables.rtfd/` | `1a/Console/` | - |
+| **Runbooks** | `1a/RUNBOOK.md`, `1b/RUNBOOK.md` | - | - | - | - | - | - |
+| **Security Docs** | `1a/SECURITY.md`, `1b/SECURITY.md` | - | - | - | - | - | - |
 
 ---
 
