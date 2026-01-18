@@ -1,0 +1,29 @@
+output "instance_id" {
+  description = "The ID of the EC2 instance"
+  value       = aws_instance.web.id
+}
+
+output "alb_dns_name" {
+  description = "The DNS name of the Load Balancer"
+  value       = aws_lb.main.dns_name
+}
+
+output "application_url" {
+  description = "The final URL to access your application"
+  value       = "https://${var.subdomain_name}.${var.domain_name}"
+}
+
+output "alb_arn" {
+  description = "The ARN of the ALB (Required for CLI verification)"
+  value       = aws_lb.main.arn
+}
+
+output "target_group_arn" {
+  description = "The ARN of the Target Group (Required for CLI verification)"
+  value       = aws_lb_target_group.flask_app.arn
+}
+
+output "acm_certificate_status" {
+  description = "The status of the SSL certificate"
+  value       = aws_acm_certificate.cert.status
+}

@@ -1,3 +1,0 @@
-this README is under construction...😅
-
-I did 1C before 1B so this is advanced, but it meets all the requirements of both.

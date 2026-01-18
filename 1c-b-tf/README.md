@@ -1,14 +1,8 @@
-# Class7_Armageddon-1
-
-Within these folders you will find each part of Armageddon.
-
-# 1A via Terraform and ClickOps
-![image](rds-secrets.png)
-___
+this README is under construction...😅
 
 1C bonus B complete!
 
-Current file tree:
+File tree:
 .
 ├── 00-auth.tf          # Provider & S3 Remote State Backend
 ├── 01-IAM.tf           # Roles, policies & instance profiles
@@ -25,3 +19,20 @@ Current file tree:
 ├── 99-variables.tf     # Project and naming variable definitions
 └── terraform.tfvars    # Environment-specific values (armage-dev)
 
+___
+
+Additionally there are some corrections to file paths:
+
+.
+├── proof-1b            # The evidence for 1b including commands used
+|   └── questions       # Answers to questions for 1b
+├── proof-1c-a          # The evidence for 1c bonus A including commands
+└── proof-1c-b          # The evidence for 1c bonus B including commands
+
+In order to make this deployment work effectively you should make a `terraform.tfvars` file. Ex:
+```rb
+db_username      = "engineer"
+alert_email      = "jeeves@hotmail.com"
+project_name     = "armage"
+environment      = "dev"
+```
