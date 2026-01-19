@@ -9,6 +9,7 @@ ___
 1C bonus B complete!
 
 Current file tree:
+```
 .
 ├── 00-auth.tf          # Provider & S3 Remote State Backend
 ├── 01-IAM.tf           # Roles, policies & instance profiles
@@ -24,4 +25,4 @@ Current file tree:
 ├── 98-outputs.tf       # Dynamic verification URLs and ARNs
 ├── 99-variables.tf     # Project and naming variable definitions
 └── terraform.tfvars    # Environment-specific values (armage-dev)
-
+```
