@@ -1,0 +1,23 @@
+Short answers: 
+A) Why is DB inbound source restricted to the EC2 security group?
+DB inbound source is private while EC2 security group is private
+
+B) What port does MySQL use?
+3306
+
+C) Why is Secrets Manager better than storing creds in code/user-data?
+Instead of storing the creds in code, you'll have a role that has access to secrets manager
+
+Then Answer:
+-Why each rule exists
+Each rule exist to build a structure on top of a foundation, a list of instructions to follow
+-What would break if removed
+Security Groups
+-Why broader access is forbidden
+To protect the private access of the DB from the public internet
+-Why this role exists
+For security reason, only whoever that's assigned an IAM role should have access to the DB, given permission
+-Why it can read this secret 
+It was assigned an IAM role that was attached
+-Why it cannot read others
+It's only attached to that particular secret
