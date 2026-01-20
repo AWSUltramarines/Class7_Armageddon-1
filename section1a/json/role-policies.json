@@ -1,0 +1,8 @@
+{
+    "AttachedPolicies": [
+        {
+            "PolicyName": "AWSSecretsManagerClientReadOnlyAccess",
+            "PolicyArn": "arn:aws:iam::aws:policy/AWSSecretsManagerClientReadOnlyAccess"
+        }
+    ]
+}

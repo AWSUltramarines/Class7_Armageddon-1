@@ -1,0 +1,69 @@
+{
+    "SecurityGroups": [
+        {
+            "GroupId": "sg-047357f6fbc89de8f",
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1",
+                    "UserIdGroupPairs": [],
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": []
+                }
+            ],
+            "VpcId": "vpc-0cb112e5a996fddf4",
+            "SecurityGroupArn": "arn:aws:ec2:us-east-1:367338719203:security-group/sg-047357f6fbc89de8f",
+            "OwnerId": "367338719203",
+            "GroupName": "ec2-lab-sg",
+            "Description": "ec2-lab-sg",
+            "IpPermissions": [
+                {
+                    "IpProtocol": "tcp",
+                    "FromPort": 80,
+                    "ToPort": 80,
+                    "UserIdGroupPairs": [],
+                    "IpRanges": [
+                        {
+                            "Description": "HTTP app",
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": []
+                },
+                {
+                    "IpProtocol": "tcp",
+                    "FromPort": 22,
+                    "ToPort": 22,
+                    "UserIdGroupPairs": [],
+                    "IpRanges": [
+                        {
+                            "Description": "ssh",
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": []
+                },
+                {
+                    "IpProtocol": "tcp",
+                    "FromPort": 3306,
+                    "ToPort": 3306,
+                    "UserIdGroupPairs": [
+                        {
+                            "UserId": "367338719203",
+                            "GroupId": "sg-0d7df4888cc53b29d"
+                        }
+                    ],
+                    "IpRanges": [],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": []
+                }
+            ]
+        }
+    ]
+}
