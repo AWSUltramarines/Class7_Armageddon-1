@@ -6,7 +6,7 @@ Within these folders you will find each part of Armageddon.
 ![image](rds-secrets.png)
 ___
 
-**1C bonus C complete!**
+**1C bonus D complete!**
 
 # File tree:
 Here is the current file structure for this terraform deployment
