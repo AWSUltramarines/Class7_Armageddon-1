@@ -22,7 +22,6 @@ Here is the current file structure for this terraform deployment
 ├── 07-alb-dns.tf       # Load Balancer & SSL Certificate
 ├── 08-dashboard.tf     # Visual App Health Dashboard & 5xx Alarm
 ├── 09-waf.tf           # Cross-site scripting (XSS) & SQL injection protection
-├── 10-route53          # Hosted zone and record management
 ├── 1a_user_data_tf.sh  # App initialization script with logging
 ├── 98-outputs.tf       # Dynamic verification URLs and ARNs
 ├── 99-variables.tf     # Project and naming variable definitions
