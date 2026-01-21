@@ -11,6 +11,10 @@ locals {
   }
 }
 
+locals {
+  app_fqdn = "${var.subdomain_name}.${var.domain_name}"
+}
+
 # ================================================================ #
 
 # Variables
@@ -131,7 +135,7 @@ variable "alert_emails" {
   default     = []
 
   validation {
-    condition     = alltrue([
+    condition = alltrue([
       for email in var.alert_emails : can(regex("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", email))
     ])
     error_message = "All items must be a valid email address or empty string to skip email subscription."

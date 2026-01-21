@@ -27,6 +27,13 @@ aws route53 list-resource-record-sets \
 --region us-east-2
 ```
 
+```rb
+aws route53 list-resource-record-sets \
+--hosted-zone-id Z05570601UFWMMRS92DVT \
+--query "ResourceRecordSets[?Name=='app.daequanbritt.com.']" \
+--region us-east-2
+```
+
 3. Confirm certificate issued 
 ```rb
 aws acm describe-certificate
@@ -44,6 +51,13 @@ aws acm describe-certificate \
 ```rb
 aws acm describe-certificate \
   --certificate-arn $(terraform output -raw certificate_arn) \
+  --region us-east-2 \
+  --query "Certificate.Status"
+```
+
+```rb
+aws acm describe-certificate \
+  --certificate-arn arn:aws:acm:us-east-2:329599652812:certificate/35800cb0-7e71-4cc1-8ad8-53150e18e8d0 \
   --region us-east-2 \
   --query "Certificate.Status"
 ```

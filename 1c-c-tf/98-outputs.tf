@@ -28,14 +28,15 @@ output "acm_certificate_status" {
   value       = aws_acm_certificate.cert.status
 }
 
-output "daequan_route53_zone_id" {
-  description = "The Hosted Zone ID for your domain"
-  value       = local.daequan_zone_id
+output "route53_zone_id" {
+  description = "The Hosted Zone ID for your domain verification"
+  # References the dynamic lookup from 07-alb-dns.tf
+  value       = data.aws_route53_zone.main.zone_id
 }
 
-output "daequan_app_url_https" {
+output "app_url_https" {
   description = "The final secure URL for your application"
-  value       = "https://${local.daequan_app_fqdn}"
+  value       = "https://${local.app_fqdn}"
 }
 
 output "certificate_arn" {

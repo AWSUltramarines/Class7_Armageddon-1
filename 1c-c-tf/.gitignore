@@ -55,3 +55,4 @@ rpm_packages/
 venv/
 
 DONT*
+*-old.*

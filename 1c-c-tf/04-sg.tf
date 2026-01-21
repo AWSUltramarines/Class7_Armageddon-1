@@ -25,15 +25,6 @@ resource "aws_security_group" "ec2" {
   description = "Security group for private EC2 instance"
   vpc_id      = aws_vpc.main.id
 
-  # # Internal HTTP for testing 
-  # ingress {
-  #   description = "HTTP from VPC"
-  #   from_port   = 80
-  #   to_port     = 80
-  #   protocol    = "tcp"
-  #   cidr_blocks = [var.cidr]
-  # }
-
   # # OUTBOUND: Allow instance to talk to the Nat Gateway
   egress {
     from_port   = 0
@@ -41,15 +32,6 @@ resource "aws_security_group" "ec2" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
-  # # OUTBOUND: Allow HTTPS to talk to the VPC Endpoints
-  # egress {
-  #   description = "HTTPS to VPC Endpoints"
-  #   from_port   = 443
-  #   to_port     = 443
-  #   protocol    = "tcp"
-  #   cidr_blocks = [var.cidr]
-  # }
 
   tags = {
     Name = "${var.project_name}-${var.environment}-ec2-sg"

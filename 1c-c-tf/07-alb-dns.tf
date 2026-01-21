@@ -1,12 +1,13 @@
 # Look up your existing Hosted Zone (since you bought it via Console)
 data "aws_route53_zone" "main" {
-  name         = var.domain_name
+  name = var.domain_name
+  # zone_id      = "Z04376043T34812BLBEDG" # This is here for debugging
   private_zone = false
 }
 
 # Request an SSL Certificate from ACM
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "app.${data.aws_route53_zone.main.name}"
+  domain_name       = local.app_fqdn
   validation_method = "DNS"
 
   lifecycle {
@@ -75,6 +76,20 @@ resource "aws_lb_target_group_attachment" "flask_app" {
   port             = 80
 }
 
+# ALIAS Record: app.daequanbritt.com -> ALB
+# This is the sign pointing users to your secure entry point.
+resource "aws_route53_record" "app_alias" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = local.app_fqdn
+  type    = "A"
+
+  alias {
+    name                   = aws_lb.main.dns_name
+    zone_id                = aws_lb.main.zone_id
+    evaluate_target_health = true
+  }
+}
+
 # HTTPS Listener (Port 443)
 resource "aws_lb_listener" "https" {
   load_balancer_arn = aws_lb.main.arn
@@ -82,10 +97,10 @@ resource "aws_lb_listener" "https" {
   protocol          = "HTTPS"
 
   # Updated policy for enterprise deployments and secure entry patterns
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  
+  ssl_policy = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+
   # Use the certificate directly
-  certificate_arn   = aws_acm_certificate.cert.arn
+  certificate_arn = aws_acm_certificate.cert.arn
 
   default_action {
     type             = "forward"

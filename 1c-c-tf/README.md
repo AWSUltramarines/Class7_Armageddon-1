@@ -1,81 +1,99 @@
-**1C bonus C complete!**
+# 🚀 Secure Multi-Tier Cloud Architecture
 
-# File tree:
-Here is the file structure for this terraform deployment
+**Engineer:** DaeQuan Jamal Britt
+
+**Domain:** `daequanbritt.com` | **Environment:** `armage-dev` 
+
+This deployment implements a professional, secure entry pattern using **TLS 1.3 encryption**, **WAF protection**, and **automated DNS management**. The architecture follows a least-privilege security model with all compute and database resources isolated in private subnets.
+
+## 🛡️ Enterprise Security Features
+
+*  **TLS 1.3 & ACM**: Secure HTTPS termination on Port 443 using the latest `TLS13-1-2-2021-06` security policy.
+
+
+*  **Managed Ingress (WAFv2)**: Regional Web ACL protection against SQL injection and Cross-Site Scripting (XSS) via AWS Managed Core Rules.
+
+
+*  **Zero-Trust Identity**: Uses IAM Instance Profiles with scoped policies for Secrets Manager and SSM Parameter Store access.
+
+
+*  **Automated DNS**: Dynamic Route 53 ALIAS record management pointing `app.daequanbritt.com` directly to the ALB.
+
+
+
+---
+
+## 📂 File Structure
+
 ```
 .
 ├── 00-auth.tf          # Provider & S3 Remote State Backend
-├── 01-IAM.tf           # Roles, policies & instance profiles
-├── 02-secrets.tf       # Secrets Manager & SSM Parameter Store
-├── 03-network.tf       # VPC, Subnets, NAT GW, & Endpoints 
-├── 04-sg.tf            # ALB, EC2, and RDS Security Group rules
-├── 05-main.tf          # Private EC2 Web Server & RDS MySQL Instance
-├── 06-logging.tf       # SNS Topic & CloudWatch Log Metric Filters
-├── 07-alb-dns.tf       # Load Balancer & SSL Certificate
+├── 01-IAM.tf           # Least-privilege roles & instance profiles 
+├── 02-secrets.tf       # Dynamic Secrets & SSM Parameter Store
+├── 03-network.tf       # VPC, Subnets, NAT GW, & Endpoints
+├── 04-sg.tf            # Tiered Security Group rules (ALB -> EC2 -> RDS)
+├── 05-main.tf          # Private Web Server & RDS MySQL Instance
+├── 06-logging.tf       # SNS Alerts & CloudWatch Log Metric Filters
+├── 07-alb-dns.tf       # ALB, TLS Listener, & ACM Validation
 ├── 08-dashboard.tf     # Visual App Health Dashboard & 5xx Alarm
-├── 09-waf.tf           # Cross-site scripting (XSS) & SQL injection protection
-├── 10-route53          # Hosted zone and record management
-├── 1a_user_data_tf.sh  # App initialization script with logging
-├── 98-outputs.tf       # Dynamic verification URLs and ARNs
-├── 99-variables.tf     # Project and naming variable definitions
-└── terraform.tfvars    # Environment-specific values (armage-dev)
+├── 09-waf.tf           # Web Application Firewall (WAFv2)
+└── 98-outputs.tf       # Verification URLs, ARNs, and Zone IDs
+
 ```
-___
-
-Additionally there is the evidence file paths:
-```
-.
-├── proof-1b            # The evidence for 1b including commands used
-|   └── questions       # Answers to questions for 1b
-├── proof-1c-a          # The evidence for 1c bonus A including commands
-├── proof-1c-b          # The evidence for 1c bonus B including commands
-└── proof-1c-c          # The evidence for 1c bonus C including commands. See the file 'A-GRADEME.md' for a 1 page document
-```
-___
-
-# Additional *(add this)*:
-In order to make this deployment work effectively you should make a `terraform.tfvars` file. Ex:
-```rb
-db_username      = "engineer"
-alert_email      = "jeeves@hotmail.com"
-project_name     = "armage"
-environment      = "dev"
-```
-
-___
-
-# 1C bonus C instructions:
-
-This part of the assignment elevates your infrastructure to a professional level by automating your domain management and encryption. By the end, your domain will automatically point to your secure load balancer using Terraform-managed DNS.
-
-### 🛰️ Assignment Breakdown
-
-* **🌌 The Nav Computer (Route 53)**: You are automating the creation of a Hosted Zone and the DNS records needed to prove you own your domain.
-* **🛡️ The Hangar Bay (HTTPS Listener)**: You are updating your ALB to terminate TLS/SSL traffic on Port 443 using your ACM certificate.
-* **📡 Holographic Signage (ALIAS Record)**: You are creating a specific record that points `app.daequanbritt.com` directly to your Load Balancer's DNS name.
-* **🛠️ Learning Friction**: You must choose between **DNS validation** (fully automated in Terraform) or **Email validation** (requires manual clicking).
-* **🚀 Real Engineering**: This setup mirrors how enterprise companies handle secure public entry for private applications.
 
 ---
 
-### 📝 To Do
+# 📊 Deployment Verification
 
-1. **Update Variables**: Append the new `manage_route53_in_terraform` and `route53_hosted_zone_id` variables to your `99-variables.tf` file.
-2. **Create DNS File**: Add a new file named `bonus_b_route53.tf` to hold your Hosted Zone and ALIAS record logic.
-3. **Refactor Listener**: Update your HTTPS listener in `07-alb-dns.tf` to use `aws_acm_certificate.cert.arn` and add a `depends_on` block pointing to your DNS validation resource.
-4. **Append Outputs**: Add the `chewbacca_route53_zone_id` and `chewbacca_app_url_https` to your `98-outputs.tf` so you can easily find your navigation coordinates.
-5. **Run Validation**: Use the AWS CLI to confirm your Hosted Zone exists, your app record is active, and your certificate status is `ISSUED`.
-6. **Final Test**: Perform a `curl -I` on your HTTPS URL to confirm you receive a `200 OK` response.
+To verify the deployment, the following metrics were used (See `A-GRADEME.md`):
+
+1. **Identity**: ACM Certificate Status: **`ISSUED`**.
+
+
+2. **Routing**: Route 53 A-Record for `app.daequanbritt.com` successfully resolves to the ALB.
+
+
+3. **Connectivity**: `curl -I` confirms **`HTTP/2 200 OK`** over a secure connection.
+* *Note: HTTP/2 is successfully negotiated due to the modern TLS 1.3 policy.*
+
+
 
 ---
 
-### 📦 Deliverables
+### 🛠️ Usage
 
-1. **The Codebase**: A complete set of `.tf` files (00 through 08 plus variables/outputs) that successfully deploy the full stack.
-2. **CLI Verification Screenshots**:
-* Output of `aws route53 list-resource-record-sets` showing your ALIAS record.
-* Output of `aws acm describe-certificate` showing the status as `ISSUED`.
+1. Ensure you have a Public Hosted Zone in Route 53 for your domain.
 
 
-3. **Success Proof**: A screenshot or text output of the `curl -I` command showing a successful HTTPS connection to `app.daequanbritt.com`.
-4. **Observability Check**: A screenshot of your CloudWatch Dashboard showing active metrics from your Load Balancer and EC2 instance.
+2. Configure your `terraform.tfvars`:
+
+```hcl
+project_name = "armage"
+environment  = "dev"
+domain_name  = "daequanbritt.com"
+alert_emails = ["your-email@example.com"]
+
+```
+
+3. Initialize and apply:
+
+```bash
+terraform init
+terraform apply
+
+```
+___
+
+# 🏗️ Infrastructure Architecture Overview
+
+| AWS Service | Component Role | Enterprise Pattern |
+| --- | --- | --- |
+| **Route 53** | DNS & Domain Routing | <br>**Managed Ingress**: Uses dynamic data lookups for Hosted Zones to ensure zero-conflict subdomain management.|
+| **ACM** | TLS/SSL Certificates | <br>**End-to-End Encryption**: Automates DNS validation and provides certificates for Port 443 termination. |
+| **ALB** | Application Load Balancer | <br>**Secure Entry**: Enforces a modern TLS 1.3 security policy and redirects all HTTP traffic to HTTPS. |
+| **WAFv2** | Web Application Firewall | <br>**Edge Defense**: Protects the entry point from SQLi and XSS attacks using AWS Managed Core Rule Sets. |
+| **EC2** | Private Compute | <br>**Isolated Logic**: Runs the Flask application in a private subnet with no direct internet access. |
+| **RDS (MySQL)** | Managed Database | <br>**Data Privacy**: Isolated in a dedicated DB subnet group; accessible only via Security Group-to-SG references. |
+| **NAT Gateway** | Outbound Connectivity | <br>**Controlled Access**: Allows private resources to securely fetch patches and Python packages without being exposed. |
+| **CloudWatch** | Monitoring & Logging | <br>**Observability**: Real-time health dashboards and automated metric filters for database connection monitoring. |
+___

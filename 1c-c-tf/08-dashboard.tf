@@ -1,6 +1,6 @@
 # THE ALARM: Triggers if ALB returns 5xx errors (Server Errors)
 resource "aws_cloudwatch_metric_alarm" "alb_5xx_alarm" {
-  alarm_name          = "daequan-alb-5xx-errors"
+  alarm_name          = "${var.project_name}-${var.environment}-alb-5xx-errors"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "HTTPCode_ELB_5XX_Count"
@@ -21,7 +21,7 @@ resource "aws_cloudwatch_metric_alarm" "alb_5xx_alarm" {
 
 # THE DASHBOARD: Visual "Control Room" for daequanbritt.com
 resource "aws_cloudwatch_dashboard" "main" {
-  dashboard_name = "daequanbritt-app-health"
+  dashboard_name = "${var.project_name}-${var.environment}-app-health"
 
   dashboard_body = jsonencode({
     widgets = [
