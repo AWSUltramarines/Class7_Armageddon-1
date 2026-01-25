@@ -10,6 +10,7 @@ In Lab 1b, you will operate, observe, break, and recover the system. You will ex
 This lab simulates what happens after deployment, which is where most real cloud work lives.
 
 
+---
 ## Troubleshooting Checklist and General troubleshooting
 | First Steps | Description |
 |-------------|-------------|
@@ -25,10 +26,12 @@ This lab simulates what happens after deployment, which is where most real cloud
 | [Step 8: Confirm Alarm OK](#step-8-confirm-alarm-returns-to-ok) | Validate monitoring recovery |
 | [Step 9: Post-Incident Documentation](#step-9-post-incident-documentation) | Record incident details |
 
+
+
 ### After Action Report
 Incident Title: Network & Computing Systems Outage
 Date of Incident: [Insert Date]
-Prepared By: Jason Lee
+Prepared By: 
 Systems Affected: Network Infrastructure, Application Servers, Database Services
 Duration: [Start Time – End Time]
 
