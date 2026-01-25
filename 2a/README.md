@@ -56,11 +56,11 @@ This project demonstrates an enterprise-grade secure entry pattern. By moving th
 * **📊 CloudWatch Dashboard**: Real-time visual metrics for CPU, ALB Request counts, and Latency.
 
 * **🚨 Incident Response**:
-* **DB Failure Alarm**: Triggers when logs detect "Database connection failed".
+  * **DB Failure Alarm**: Triggers when logs detect "Database connection failed".
 
-* **ALB 5xx Alarm**: Notifies via SNS if the backend returns server errors.
+  * **ALB 5xx Alarm**: Notifies via SNS if the backend returns server errors.
 
-* **📧 SNS Alerts**: Automated email notifications sent to `daequanbritt@gmail.com`.
+  * **📧 SNS Alerts**: Automated email notifications sent to `daequanbritt@gmail.com`.
 
 ---
 
