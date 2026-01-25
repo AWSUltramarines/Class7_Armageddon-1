@@ -14,7 +14,7 @@ This lab simulates what happens after deployment, which is where most real cloud
 | First Steps | Description |
 |-------------|-------------|
 | [Step 1: Check Alarm State](#step-1-check-alarm-state) | Verify CloudWatch alarm status |
-| [Step 2: Check CloudWatch Logs](#step-2-check-cloudwatch-logs-for-db-connection-errors) | Identify error patterns in logs |
+| [Step 2: Check CloudWatch Logs] | Identify error patterns in logs |
 | [Step 3: Verify Parameter Store](#step-3-verify-parameter-store-values) | Validate SSM parameter values |
 | [Step 4: Verify Secrets Manager](#step-4-verify-secrets-manager-credentials) | Check credential consistency |
 | [Step 5: Check RDS Status](#step-5-check-rds-instance-status) | Verify database availability |
@@ -25,4 +25,97 @@ This lab simulates what happens after deployment, which is where most real cloud
 | [Step 8: Confirm Alarm OK](#step-8-confirm-alarm-returns-to-ok) | Validate monitoring recovery |
 | [Step 9: Post-Incident Documentation](#step-9-post-incident-documentation) | Record incident details |
 
+### After Action Report
+Incident Title: Network & Computing Systems Outage
+Date of Incident: [Insert Date]
+Prepared By: Jason Lee
+Systems Affected: Network Infrastructure, Application Servers, Database Services
+Duration: [Start Time – End Time]
 
+1. Incident Summary
+
+On [date/time], a network and computing systems outage impacted user access to critical applications and backend services.
+Users experienced intermittent connectivity issues and service unavailability.
+
+The outage was detected through user reports and system monitoring alerts.
+
+Services were restored after identifying and resolving the root cause.
+
+2. Impact
+
+Application access disruptions
+
+Database connectivity failures
+
+Reduced productivity for affected users
+
+Increased support requests
+
+No data loss was identified.
+
+3. Root Cause
+
+The outage was caused by:
+[Example — choose one or customize]
+
+Misconfigured security group/firewall rule blocking service traffic
+
+Network routing failure between compute and database subnets
+
+Expired credentials or access permissions
+
+Resource exhaustion (CPU, memory, or disk)
+
+This prevented正常 communication between core systems.
+
+4. Detection & Response
+
+Detection Methods:
+
+User-reported errors
+
+Monitoring alerts (logs/metrics)
+
+Response Actions Taken:
+
+Verified system health and connectivity
+
+Reviewed logs and network access controls
+
+Identified misconfiguration/failure point
+
+Implemented corrective fix
+
+Validated service restoration
+
+5. Resolution
+
+Service was restored by:
+
+Correcting network/security configuration
+
+Restoring access permissions
+
+Restarting affected services (if applicable)
+
+Verifying application and database connectivity
+
+All systems returned to normal operation.
+
+6. Lessons Learned
+
+Monitoring alerts were effective but could trigger sooner
+
+Configuration changes should include validation checks
+
+Clearer documentation would speed troubleshooting
+
+7. Preventive Actions
+
+Implement automated configuration validation
+
+Improve monitoring thresholds and alerts
+
+Update network and system documentation
+
+Conduct periodic recovery drills
