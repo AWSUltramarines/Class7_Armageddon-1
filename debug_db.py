@@ -5,7 +5,7 @@ import socket
 import sys
 
 # --- CONFIGURATION ---
-SECRET_NAME = "lab/rds/mysql1"  # Your exact secret name
+SECRET_NAME = "lab/rds/mysql"  # Your exact secret name
 REGION = "us-east-1"           # Your AWS Region
 
 def test_connectivity(host, port):
