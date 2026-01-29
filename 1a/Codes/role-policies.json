@@ -1,3 +1,0 @@
-aws iam list-attached-role-policies \
-  --role-name labec2role \
-  --output table

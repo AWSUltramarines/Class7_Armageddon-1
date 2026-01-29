@@ -1,4 +1,0 @@
-aws rds describe-db-instances \
-  --db-instance-identifier labmysql \
-  --region us-east-1 \
-  --output json
