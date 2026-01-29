@@ -1,0 +1,7 @@
+1a more answers.
+why each rule exists? each ule exists to provide structure and safety to what it is being attached to
+what would break if removed? if the security group is removed, it would not allow access between the ec2 and rds, port issues. if the role is removed, the ec2 can't be accessed because it doesn't have permission. if the secret is removed or is wrong, the database will not be accessible from the ec2. 
+why broader access is forbidden? it gives too much access, which may not necessarily be needed or wanted depending on the infrastructure you are handling
+why this role exists? it gives permission to read the secret. It creates "least privilege" which is the surest way to be secure
+why it can read this secret? in the inline policy, the secret id is hardcoded. Thus, it can read this secret
+why it cannot read others? it does not have permission to read other secrets. Only that which has been hardcoded or allowed all access in the policy can read the secret.

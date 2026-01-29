@@ -1,0 +1,6 @@
+Short answers: 
+		A) Why is DB inbound source restricted to the EC2 security group? It is restricted to the ec2 group because the ec2 should be the only thing that talks to the rds. no other traffic or source should be allowed.
+
+		B) What port does MySQL use? 3306.
+
+		C) Why is Secrets Manager better than storing creds in code/user-data? secrets manager allows you to have a secret that you can have retrieved by permissions (which is temporary), unlike hardcoding it in the user data which would pose risk if the code happened to be compromised.
