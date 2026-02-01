@@ -34,12 +34,6 @@ variable "azs" {
     default     = ["us-east-1a", "us-east-1b"]          # TODO: student supplies
 }
 
-variable "ec2_ami_id" {
-    description = "AMI ID for the EC2 app host."
-    type        = string
-    default     = "ami-REPLACE_ME"                      # TODO
-}
-
 variable "ec2_instance_type" {
     description = "EC2 instance size for the app."
     type        = string
@@ -74,11 +68,32 @@ variable "db_password" {
     description = "DB master password (DO NOT hardcode in real life; for lab only)."
     type        = string
     sensitive   = true
-    default     = "REPLACE_ME!!!D@m!t!!"                # TODO: student supplies
+    default     = "REPLACE_ME!!!Dam!t!!"                # TODO: student supplies
 }
 
 variable "sns_email_endpoint" {
     description = "Email for SNS subscription (PagerDuty simulation)."
     type        = string
     default     = "mel_waring@hotmail.com"              # TODO: student supplies
+}
+
+# Data source to get latest Amazon Linux 2023 AMI
+data "aws_ami" "amazon_linux_2023" {
+    most_recent = true
+    owners      = ["amazon"]
+
+    filter {
+        name   = "name"
+        values = ["al2023-ami-2023.*-x86_64"]
+    }
+
+    filter {
+        name   = "virtualization-type"
+        values = ["hvm"]
+    }
+
+    filter {
+        name   = "architecture"
+        values = ["x86_64"]
+    }
 }

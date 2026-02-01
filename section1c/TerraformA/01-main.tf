@@ -3,6 +3,8 @@
 ############################################
 locals {
     name_prefix = var.project_name
+    secret_name = "${local.name_prefix}/rds/mysql" 
+    log_group = "/aws/ec2/${local.name_prefix}-rds-app"  
 }
 
 ############################################
@@ -151,17 +153,58 @@ resource "aws_security_group" "chewbacca_ec2_sg01" {
     }
 }
 
+resource "aws_vpc_security_group_ingress_rule" "web_server_http" {
+    security_group_id = aws_security_group.chewbacca_ec2_sg01.id
+    description = "HTTP from internet"
+    cidr_ipv4         = "0.0.0.0/0"
+    from_port         = 80
+    ip_protocol       = "tcp"
+    to_port           = 80
+}
+resource "aws_vpc_security_group_ingress_rule" "web_server_ssh" {
+    security_group_id = aws_security_group.chewbacca_ec2_sg01.id
+    description = "SSH from internet"
+    cidr_ipv4         = "0.0.0.0/0"
+    from_port         = 22
+    ip_protocol       = "tcp"
+    to_port           = 22
+}
+
+resource "aws_vpc_security_group_egress_rule" "ec2_all_outbound" {
+    security_group_id = aws_security_group.chewbacca_ec2_sg01.id
+    cidr_ipv4         = "0.0.0.0/0"
+    ip_protocol       = "-1"
+}
+
 # Explanation: RDS SG is the Rebel vault—only the app server gets a keycard.
 resource "aws_security_group" "chewbacca_rds_sg01" {
     name        = "${local.name_prefix}-rds-sg01"
     description = "RDS security group"
     vpc_id      = aws_vpc.chewbacca_vpc01.id
 
-    # TODO: student adds inbound MySQL 3306 from aws_security_group.chewbacca_ec2_sg01.id
-
     tags = {
         Name = "${local.name_prefix}-rds-sg01"
     }
+        lifecycle {
+        create_before_destroy = true
+    }
+
+    # Egress rule (allowing all outbound traffic is common practice for a DB)
+    egress {
+        from_port   = 0
+        to_port     = 0
+        protocol    = "-1"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
+}
+resource "aws_vpc_security_group_ingress_rule" "rds-ec2-ingress" {
+    security_group_id         = aws_security_group.chewbacca_rds_sg01.id
+    description               = "Allow application servers access to RDS"
+    from_port                 = 3306                            # MySQL port
+    to_port                   = 3306
+    ip_protocol               = "tcp"
+    
+    referenced_security_group_id = aws_security_group.chewbacca_ec2_sg01.id
 }
 
 ############################################
@@ -253,14 +296,20 @@ resource "aws_iam_instance_profile" "chewbacca_instance_profile01" {
 
 # Explanation: This is your “Han Solo box”—it talks to RDS and complains loudly when the DB is down.
 resource "aws_instance" "chewbacca_ec201" {
-    ami                    = var.ec2_ami_id
+    ami                    = data.aws_ami.amazon_linux_2023.id
     instance_type           = var.ec2_instance_type
     subnet_id               = aws_subnet.chewbacca_public_subnets[0].id
     vpc_security_group_ids  = [aws_security_group.chewbacca_ec2_sg01.id]
     iam_instance_profile    = aws_iam_instance_profile.chewbacca_instance_profile01.name
 
     # TODO: student supplies user_data to install app + CW agent + configure log shipping
-    # user_data = file("${path.module}/user_data.sh")
+    #user_data = file("${path.module}/user_data.sh") look into after class
+    user_data               = templatefile("./scripts/user_data.sh", {
+        ENV_AWS_REGION = var.aws_region,
+        ENV_SECRET_NAME = local.secret_name,
+        ENV_DB_NAME = var.db_name,
+        ENV_LOG_GROUP = aws_cloudwatch_log_group.chewbacca_log_group01.name
+    })
 
     tags = {
         Name = "${local.name_prefix}-ec201"
@@ -310,7 +359,7 @@ resource "aws_ssm_parameter" "chewbacca_db_name_param" {
 
 # Explanation: Secrets Manager is Chewbacca’s locked holster—credentials go here, not in code.
 resource "aws_secretsmanager_secret" "chewbacca_db_secret01" {
-name = "${local.name_prefix}/rds/mysql"
+    name = local.secret_name
 }
 
 # Explanation: Secret payload—students should align this structure with their app (and support rotation later).
@@ -332,7 +381,7 @@ resource "aws_secretsmanager_secret_version" "chewbacca_db_secret_version01" {
 
 # Explanation: When the Falcon is on fire, logs tell you *which* wire sparked—ship them centrally.
 resource "aws_cloudwatch_log_group" "chewbacca_log_group01" {
-    name              = "/aws/ec2/${local.name_prefix}-rds-app"
+    name              = local.log_group
     retention_in_days = 7
 
     tags = {
@@ -363,6 +412,18 @@ resource "aws_cloudwatch_metric_alarm" "chewbacca_db_alarm01" {
     }
 }
 
+resource "aws_cloudwatch_log_metric_filter" "db_errors" {
+    name           = "${local.name_prefix}-db-errors"
+    pattern        = "ERROR"
+    log_group_name = aws_cloudwatch_log_group.chewbacca_log_group01.name
+
+    metric_transformation {
+        name      = "DBConnectionErrors"
+        namespace = "Lab/RDSApp"
+        value     = "1"
+    }
+}
+
 ############################################
 # SNS (PagerDuty simulation)
 ############################################
@@ -385,4 +446,14 @@ resource "aws_sns_topic_subscription" "chewbacca_sns_sub01" {
 
 # Explanation: Endpoints keep traffic inside AWS like hyperspace lanes—less exposure, more control.
 # TODO: students can add endpoints for SSM, Logs, Secrets Manager if doing “no public egress” variant.
-# resource "aws_vpc_endpoint" "chewbacca_vpce_ssm" { ... }
+resource "aws_vpc_endpoint" "chewbacca_vpce_ssm" { 
+    vpc_id            = aws_vpc.chewbacca_vpc01.id
+    service_name      = "com.amazonaws.${var.aws_region}.ssm"
+    vpc_endpoint_type = "Interface"
+    subnet_ids        = aws_subnet.chewbacca_private_subnets[*].id
+    security_group_ids = [aws_security_group.chewbacca_ec2_sg01.id]
+
+    tags = {
+        Name = "${local.name_prefix}-vpce-ssm"
+    }
+}

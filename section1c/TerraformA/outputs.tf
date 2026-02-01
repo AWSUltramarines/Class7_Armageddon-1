@@ -26,3 +26,13 @@ output "chewbacca_sns_topic_arn" {
 output "chewbacca_log_group_name" {
     value = aws_cloudwatch_log_group.chewbacca_log_group01.name
 }
+
+output "app_url" {
+    description = "URL to access the Flask application"
+    value       = "http://${aws_instance.chewbacca_ec201.public_dns}"
+}
+
+output "app_url_ip" {
+    description = "URL to access the Flask application via IP"
+    value       = "http://${aws_instance.chewbacca_ec201.public_ip}"
+}
