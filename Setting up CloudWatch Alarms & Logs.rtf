@@ -1,0 +1,156 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 Menlo-Regular;
+\f3\fnil\fcharset0 HelveticaNeue-Italic;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid102\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid201\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid202\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid301\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid401\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid501\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid6}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\partightenfactor0
+
+\f0\b\fs40 \cf0 \ul \ulc0 Setting up CloudWatch Alarms & Logs\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 \ulnone \
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf0 {\listtext	0.	}Log in to the 
+\f0\b AWS Management Console
+\f1\b0  and open the 
+\f0\b CloudWatch
+\f1\b0  console.\
+{\listtext	0.	}In the left navigation pane, choose 
+\f0\b Alarms
+\f1\b0  and then click 
+\f0\b All alarms
+\f1\b0 .\
+{\listtext	0.	}Click the 
+\f0\b Create alarm
+\f1\b0  button.\
+{\listtext	0.	}Click 
+\f0\b Select metric
+\f1\b0 . This will open a menu where you can browse all available metrics (EC2, Lambda, RDS, etc.).\
+{\listtext	0.	}Choose a category (e.g., 
+\f0\b EC2 > Per-Instance Metrics
+\f1\b0 ), check the box next to the metric you want (e.g., CPUUtilization), and click 
+\f0\b Select metric
+\f1\b0 .\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Step 2: Specify Metric and Conditions\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 This is where you define what "bad" looks like.\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls2\ilvl0
+\f2\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f0\b\fs26 Metric Name/Instance ID:
+\f1\b0  Double-check that you've selected the right resource.\
+\ls2\ilvl0
+\f2\fs18 {\listtext	\uc0\u8226 	}
+\f0\b\fs26 Statistic:
+\f1\b0  Usually set to 
+\f0\b Average
+\f1\b0 , but you might want 
+\f0\b Maximum
+\f1\b0  if you're looking for spikes.\
+\ls2\ilvl0
+\f2\fs18 {\listtext	\uc0\u8226 	}
+\f0\b\fs26 Period:
+\f1\b0  How often the metric is evaluated (e.g., every 5 minutes).\
+\ls2\ilvl0
+\f2\fs18 {\listtext	\uc0\u8226 	}
+\f0\b\fs26 Threshold Type:
+\f1\b0  * 
+\f0\b Static:
+\f1\b0  You define a fixed number (e.g., "Greater than 80").\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls2\ilvl1
+\f2\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f0\b\fs26 Anomaly Detection:
+\f1\b0  AWS uses ML to determine the threshold based on past behavior.\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls2\ilvl0
+\f2\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f0\b\fs26 Conditions:
+\f1\b0  Define the logic (e.g., Whenever CPUUtilization is Greater/Threshold than 80 for 1 out of 1 datapoints).\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 \
+Step 3: Configure Actions (Notifications)\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Now, tell AWS what to do when the alarm state is 
+\f0\b In alarm
+\f1\b0 .\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls3\ilvl0\cf0 {\listtext	0.	}
+\f0\b Alarm state trigger:
+\f1\b0  Select 
+\f0\b In alarm
+\f1\b0 .\
+{\listtext	0.	}
+\f0\b Send a notification to:
+\f1\b0  Select an existing 
+\f0\b SNS Topic
+\f1\b0  or click 
+\f0\b Create new topic
+\f1\b0 .\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls3\ilvl1
+\f2\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f1\fs26 If creating a new one, enter an email address where you want to receive the alert.\
+\ls3\ilvl1
+\f2\fs18 {\listtext	\uc0\u8226 	}
+\f3\i\fs26 Note: You must click the "Confirm Subscription" link in the email AWS sends you for this to work.
+\f1\i0 \
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls3\ilvl0\cf0 {\listtext	0.	}
+\f0\b Auto Scaling/EC2 Actions (Optional):
+\f1\b0  You can also tell the alarm to reboot the server or scale your group if the threshold is hit.\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Step 4: Add Name and Description\
+\pard\pardeftab560\slleading20\partightenfactor0
+
+\f1\b0\fs26 \cf0 Give your alarm a clear, descriptive name so you know exactly what\'92s happening when you get a text at 2:00 AM.\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls4\ilvl0
+\f2\fs18 \cf0 {\listtext	\uc0\u8226 	}
+\f0\b\fs26 Example Name:
+\f1\b0  Production-Web-Server-High-CPU-Alarm\
+\ls4\ilvl0
+\f2\fs18 {\listtext	\uc0\u8226 	}
+\f0\b\fs26 Description:
+\f1\b0  Triggers when CPU exceeds 80% for 5 minutes.\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\pard\pardeftab560\sa40\partightenfactor0
+
+\f0\b\fs32 \cf0 Step 5: Preview and Create\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls5\ilvl0
+\f1\b0\fs26 \cf0 {\listtext	0.	}Review all your settings on the final summary page.\
+{\listtext	0.	}Check the 
+\f0\b Preview graph
+\f1\b0  to see how your historical data would have interacted with this new alarm.\
+{\listtext	0.	}Click 
+\f0\b Create alarm
+\f1\b0 .\
+\pard\pardeftab560\slleading20\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab560\pardirnatural\partightenfactor0
+\ls6\ilvl0\cf0 {\listtext	1.	}Setup Cloudwatch logs\
+{\listtext	2.	}Setup Cloudwatch alarms\
+}
