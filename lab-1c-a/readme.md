@@ -9,6 +9,10 @@ Build a private, NAT‑less architecture where EC2 runs in isolated subnets, com
 
 VPC Endpoints → EC2 (Private) w/ Web “Notes” App → RDS MySQL (Private)
 
+### Infrastructure Change
++ Private Instance
++ VPC Endpoint for Instance to Access Services
+
 # File Structure
 |-- 00.auth.tf
 |-- 01.vpc.tf

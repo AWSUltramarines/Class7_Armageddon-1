@@ -50,25 +50,26 @@ resource "aws_acm_certificate_validation" "cert" {
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
 
-# Create Route53 Record to point to Cloudfront
+# Create Route53 App Record to point to Cloudfront
 resource "aws_route53_record" "app" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = local.app_fqdn
   type    = "A"
 
   alias {
-    name                   = var.cf_distro_dns_name
+    name                   = var.cf_distro_domain_name
     zone_id                = var.cf_distro_zone_id
     evaluate_target_health = false
   }
 }
+# Create Route53 Apex Record to point to Cloudfront
 resource "aws_route53_record" "apex_alias" {
   zone_id = local.zone_id
   name    = var.domain_name
   type    = "A"
 
   alias {
-    name                   = var.cf_distro_dns_name
+    name                   = var.cf_distro_domain_name
     zone_id                = var.cf_distro_zone_id
     evaluate_target_health = false
   }

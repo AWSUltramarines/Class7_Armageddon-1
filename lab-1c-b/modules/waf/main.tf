@@ -1,3 +1,5 @@
+# Lab-1c-b
+# Adding WAF Resources
 # Create the Web ACL (The Firewall)
 resource "aws_wafv2_web_acl" "main" {
   name        = "${var.name_prefix}-web-acl"

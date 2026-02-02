@@ -5,6 +5,10 @@ data "aws_caller_identity" "self" {}
 
 data "aws_region" "region" {}
 ##############################
+### S3 Bucket
+#############################
+# Lab-1c-d
+# Create S3 Bucket for ALB access logs
 resource "aws_s3_bucket" "alb_logs_bucket" {
   count = var.enable_alb_access_logs ? 1 : 0
 

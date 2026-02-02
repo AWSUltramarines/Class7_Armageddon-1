@@ -4,7 +4,9 @@
 data "aws_caller_identity" "self" {}
 
 data "aws_region" "region" {}
-#####################################################################
+#################################################################
+### WAF ACL FOR LOAD BALANCER
+#################################################################
 resource "aws_wafv2_web_acl" "main" {
   name        = "${var.name_prefix}-web-acl"
   description = "WAF for ALB to block common web attacks"
@@ -47,7 +49,7 @@ resource "aws_wafv2_web_acl" "main" {
   }
 }
 
-# Associate the WAF with your ALB
+################# Associate the WAF with ALB
 resource "aws_wafv2_web_acl_association" "main" {
   resource_arn = var.alb_arn
   web_acl_arn  = aws_wafv2_web_acl.main.arn
@@ -94,18 +96,20 @@ resource "aws_wafv2_web_acl" "cf_waf" {
 ########################################
 ### WAF Logging Configuration
 ########################################
+########### CloudWatch Toggle for WAF Logging
 resource "aws_cloudwatch_log_group" "waf_log_group" {
   count             = var.waf_log_destination == "cloudwatch" ? 1 : 0
   name              = "aws-waf-logs-${var.name_prefix}-webacl"
   retention_in_days = 7
 }
-
+########### S3 Toggle for WAF Logging
 resource "aws_s3_bucket" "waf_s3_logs" {
   count         = var.waf_log_destination == "s3" ? 1 : 0
   bucket        = "aws-waf-logs-${var.name_prefix}-${data.aws_caller_identity.self.account_id}"
   force_destroy = true
 }
-
+########### Toggle for WAF ACL Log 
+########### Checks for CloudWatch or logs go to S3
 resource "aws_wafv2_web_acl_logging_configuration" "main" {
   resource_arn = aws_wafv2_web_acl.main.arn
 

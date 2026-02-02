@@ -4,8 +4,9 @@
 data "aws_caller_identity" "self" {}
 
 data "aws_region" "region" {}
-#############################
-# Data Source to create JSON policy document
+########################################
+# Data Source for Trust Policy
+########################################
 data "aws_iam_policy_document" "ec2_assume_role" {
   statement {
     effect = "Allow"
@@ -23,8 +24,9 @@ resource "aws_iam_role" "compute2secrets_role" {
   name               = "${var.name_prefix}-compute2secrets-role"
   assume_role_policy = data.aws_iam_policy_document.ec2_assume_role.json
 }
-
-############################################################################
+################################################################
+# Data Source for DBSecret, ParamAccess, KMS, & Logging Policy
+################################################################
 data "aws_iam_policy_document" "compute2secrets_access" {
   # Secrets Manager: Scoped to specific ARN
   statement {
@@ -64,30 +66,23 @@ data "aws_iam_policy_document" "compute2secrets_access" {
     resources = ["arn:aws:logs:*:*:*"]
   }
 }
+####################### Create Policy from Data Source
 resource "aws_iam_policy" "compute2secrets_access_policy" {
   name        = "${var.name_prefix}-secrets-access"
   description = "Least privilege access for Private EC2"
   policy      = data.aws_iam_policy_document.compute2secrets_access.json
 }
-
-resource "aws_iam_role_policy_attachment" "compute2secret_private_attach" {
-  role       = aws_iam_role.compute2secrets_role.name
-  policy_arn = aws_iam_policy.compute2secrets_access_policy.arn
-}
-
-####################################################################################
-
+####################### Attach Policy to Role
 resource "aws_iam_role_policy_attachment" "compute2secrets_secrets_attach" {
   role       = aws_iam_role.compute2secrets_role.name
   policy_arn = aws_iam_policy.compute2secrets_access_policy.arn
 }
-
+####################### Attach Role to Profile
 resource "aws_iam_instance_profile" "compute2secrets_instance_profile" {
   name = "${var.name_prefix}-instance-profile"
   role = aws_iam_role.compute2secrets_role.name
 }
-
-############################################################################
+####################### Additional Attachments to Role
 resource "aws_iam_role_policy_attachment" "compute2secrets_ssm_attach" {
   role       = aws_iam_role.compute2secrets_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"

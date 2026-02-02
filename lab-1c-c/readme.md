@@ -12,6 +12,9 @@ Route53 Hosted Zone + DNS Records → ACM Certificate (DNS‑validated) → ALB 
 
 ---
 
+### Infrastructure Change
++ Conditional email/manual vs DNS validation
+
 ## File structure
 |-- 00.provider.tf
 |-- 01.main.tf

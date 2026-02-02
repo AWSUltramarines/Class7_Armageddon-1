@@ -1,16 +1,9 @@
 ############################################
-# Locals & Data
+# Data Source
 ############################################
 data "aws_route53_zone" "main" {
   name         = var.domain_name
   private_zone = false
-}
-#####################################################
-##### RANDOM PASSWORD FOR CLOUDFRONT
-#####################################################
-resource "random_password" "origin_header" {
-  length  = 32
-  special = false
 }
 #####################################################
 ##### LOAD BALANCER
@@ -64,9 +57,6 @@ resource "aws_lb_listener" "https" {
       message_body = "Access Denied: Direct ALB access is prohibited."
       status_code  = "403"
     }
-    #   depends_on = [
-    #   aws_acm_certificate_validation.cert
-    # ]
   }
 }
 resource "aws_lb_listener_rule" "require_origin_header" {
@@ -81,7 +71,7 @@ resource "aws_lb_listener_rule" "require_origin_header" {
   condition {
     http_header {
       http_header_name = "X-Custom-Header"
-      values           = [random_password.origin_header.result]
+      values           = [var.cf_header_pw]
     }
   }
 }

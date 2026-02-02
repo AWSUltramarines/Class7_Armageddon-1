@@ -1,3 +1,6 @@
+######################################
+###### Autoscaling
+######################################
 resource "aws_autoscaling_group" "dev_asg" {
   name_prefix               = var.asg_name
   min_size                  = var.asg_min_size
@@ -48,7 +51,7 @@ resource "aws_autoscaling_group" "dev_asg" {
 }
 
 
-# Auto Scaling Policy
+########################## Auto Scaling Policy
 resource "aws_autoscaling_policy" "dev_scaling_policy" {
   name                   = "${var.name_prefix}-scaling-policy"
   autoscaling_group_name = aws_autoscaling_group.dev_asg.name
@@ -64,7 +67,7 @@ resource "aws_autoscaling_policy" "dev_scaling_policy" {
   }
 }
 
-# Enabling instance scale-in protection
+########################## Enabling instance scale-in protection
 resource "aws_autoscaling_attachment" "dev_asg_attachment" {
   autoscaling_group_name = aws_autoscaling_group.dev_asg.name
   lb_target_group_arn    = var.target_group_arn

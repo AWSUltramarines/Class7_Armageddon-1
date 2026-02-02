@@ -7,6 +7,8 @@ data "aws_route53_zone" "main" {
 }
 ######################################
 ######### Request an SSL Certificate from ACM
+# Lab-1c-b
+# Adding Route53 & ACM Resources
 resource "aws_acm_certificate" "cert" {
   domain_name       = "app.${data.aws_route53_zone.main.name}"
   validation_method = "DNS"

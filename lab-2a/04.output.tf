@@ -58,11 +58,6 @@ output "route53_zone_id" {
   description = "The Hosted Zone ID for your domain verification"
   value       = data.aws_route53_zone.main.zone_id
 }
-
-# output "app_url_https" {
-#   description = "The final secure URL for your application"
-#   value       = "https://${var.app_fqdn}"
-# }
 output "certificate_arn" {
   description = "The ARN of the ACM certificate"
   value       = module.route53.certificate_arn

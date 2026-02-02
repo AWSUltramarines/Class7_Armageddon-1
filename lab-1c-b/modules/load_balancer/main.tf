@@ -8,6 +8,8 @@ data "aws_route53_zone" "main" {
 ############################################
 # Load Balancer
 ############################################
+# Lab-1c-b
+# Load Balancer Resources
 resource "aws_lb" "dev_alb" {
   internal                   = false
   load_balancer_type         = "application"

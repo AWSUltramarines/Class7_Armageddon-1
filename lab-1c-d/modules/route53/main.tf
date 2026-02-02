@@ -50,7 +50,7 @@ resource "aws_acm_certificate_validation" "cert" {
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
 
-# Create Route53 Record to point to ALB
+# Create A record for app.domain-name.com
 resource "aws_route53_record" "app" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = local.app_fqdn
@@ -62,6 +62,7 @@ resource "aws_route53_record" "app" {
     evaluate_target_health = true
   }
 }
+# Create A record for domain-name.com
 resource "aws_route53_record" "apex_alias" {
   zone_id = local.zone_id
   name    = var.domain_name

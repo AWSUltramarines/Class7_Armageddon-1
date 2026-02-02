@@ -195,11 +195,6 @@ variable "app_subdomain" {
   type        = string
   default     = "app"
 }
-# variable "app_fqdn" {
-#   description = "The fully qualified domain name for the application"
-#   type        = string
-#   default     = "${var.subdomain_name}.${var.domain_name}"
-# }
 ################################
 #### Access Logs
 ################################
@@ -245,4 +240,11 @@ variable "s3_bucket" {
   description = "S3 Bucket for WAF Logs"
   type        = any
   default     = []
+}
+################################
+#### CloudFront
+################################
+variable "cf_header_pw" {
+  description = "HTTP Header PW"
+  type        = string
 }

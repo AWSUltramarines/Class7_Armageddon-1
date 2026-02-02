@@ -5,6 +5,8 @@ data "aws_ssm_parameter" "al2023" {
   name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-kernel-5.10-hvm-x86_64-gp2"
 }
 ############################################
+# EC2 Instance
+############################################
 resource "aws_instance" "test_server" {
   ami             = data.aws_ssm_parameter.al2023.value
   instance_type   = var.instance_type
@@ -22,14 +24,10 @@ resource "aws_instance" "test_server" {
     Terraform = var.terraform_tag
   }
 
-  # depends_on = [
-  #   aws_secretsmanager_secret_version.db_credentials,
-  #   aws_db_instance.mysql,
-  #   aws_nat_gateway.main
-  # ]
 }
-
-
+############################################
+# Target Group
+############################################
 resource "aws_lb_target_group" "dev_tg" {
   port        = 80
   protocol    = "HTTP"
@@ -51,13 +49,14 @@ resource "aws_lb_target_group" "dev_tg" {
     Name = "${var.name_prefix}-target-group"
   }
 }
-
 resource "aws_lb_target_group_attachment" "tg_attachment" {
   target_group_arn = aws_lb_target_group.dev_tg.arn
   target_id        = aws_instance.test_server.id
   port             = 80
 }
-
+############################################
+# Launch Template
+############################################
 resource "aws_launch_template" "dev_lt" {
   image_id      = aws_instance.test_server.ami
   instance_type = var.instance_type

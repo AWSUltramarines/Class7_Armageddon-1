@@ -58,6 +58,8 @@ resource "aws_wafv2_web_acl_association" "main" {
 ########################################
 ### WAF Logging Configuration
 ########################################
+# Lab-1c-e
+# WAF Logging Configuration (CW & S3)
 resource "aws_cloudwatch_log_group" "waf_log_group" {
   count             = var.waf_log_destination == "cloudwatch" ? 1 : 0
   name              = "aws-waf-logs-${var.name_prefix}-webacl"

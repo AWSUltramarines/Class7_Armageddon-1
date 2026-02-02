@@ -23,7 +23,12 @@ resource "aws_acm_certificate" "cert" {
 }
 
 # Create DNS records to validate that you own the domain
+# Lab-1c-c
+# Added DNS Validation Conditional
 resource "aws_route53_record" "cert_validation" {
+  # If DNS is selected loop through each domain_validation_option
+  # Return a map of DNS record details needed for validation
+  # Else use no DNS will be created
   for_each = var.certificate_validation_method == "DNS" ? {
     for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
@@ -48,6 +53,7 @@ resource "aws_acm_certificate_validation" "cert" {
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
 }
 
+# Create A record for app.domain-name.com
 resource "aws_route53_record" "app" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = local.app_fqdn

@@ -13,6 +13,10 @@ Route53 Zone Apex + app Records → ACM DNS Validation → ALB with HTTPS Listen
 
 ---
 
+### Infrastructure Change
++ Adding Apex DNS Record (my-website.com)
++ ALB Access Logs to S3 bucket
+
 ## File structure
 |-- 00.provider.tf
 |-- 01.main.tf

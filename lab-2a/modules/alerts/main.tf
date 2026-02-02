@@ -12,7 +12,7 @@ resource "aws_cloudwatch_log_group" "app_logs" {
   }
 }
 
-# THE FILTER: Looks for error patterns in the logs
+# Looks for error patterns in the logs
 resource "aws_cloudwatch_log_metric_filter" "db_failure" {
   name           = "DBConnectionFailureFilter"
   pattern        = "\"Database connection failed\"" # Search string in logs
@@ -44,7 +44,7 @@ resource "aws_sns_topic_subscription" "sns_sub" {
 }
 
 ###################################################################
-# THE ALARM: Triggers if failures > 0
+# Triggers if failures > 0
 resource "aws_cloudwatch_metric_alarm" "db_failure_alarm" {
   alarm_name          = "lab-db-connection-failure"
   alarm_description   = "Triggers when DB connection failures occur"
@@ -72,7 +72,7 @@ resource "aws_cloudwatch_metric_alarm" "db_failure_alarm" {
 ###### Cloud Watch Dashboard
 ##############################################
 
-# THE ALARM: Triggers if ALB returns 5xx errors (Server Errors)
+# Triggers if ALB returns 5xx errors (Server Errors)
 resource "aws_cloudwatch_metric_alarm" "alb_5xx_alarm" {
   alarm_name          = "${var.name_prefix}-alb-5xx-errors"
   comparison_operator = "GreaterThanThreshold"

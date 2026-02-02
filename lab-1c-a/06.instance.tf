@@ -1,6 +1,8 @@
 resource "aws_instance" "test_server" {
   ami             = data.aws_ssm_parameter.al2023.value
   instance_type   = "t3.micro"
+  # Lab-1c-a Change
+  # Private EC2
   subnet_id       = local.private_subnet_ids[0]
   security_groups = [aws_security_group.vpce_sg.id]
 

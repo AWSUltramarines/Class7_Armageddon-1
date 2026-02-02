@@ -1,17 +1,9 @@
 #####################################################
-##### RANDOM PASSWORD FOR CLOUDFRONT
-#####################################################
-resource "random_password" "origin_header" {
-  length  = 32
-  special = false
-}
-#####################################################
 ##### CLOUDFRONT
 #####################################################
 resource "aws_cloudfront_distribution" "cf_distro" {
   enabled             = true
   is_ipv6_enabled     = true
-  default_root_object = "index.html"
   # comment             = "Some comment"
   web_acl_id  = var.cf_waf_acl_arn
   price_class = "PriceClass_100"
@@ -27,8 +19,8 @@ resource "aws_cloudfront_distribution" "cf_distro" {
       origin_ssl_protocols   = ["TLSv1.2"]
     }
     custom_header {
-      name  = "X-Chewbacca-Growl"
-      value = random_password.origin_header.result
+      name  = "X-Custom-Header"
+      value = var.cf_header_pw
     }
   }
 

@@ -163,6 +163,8 @@ resource "aws_vpc_security_group_egress_rule" "compute_to_alb" {
   ip_protocol       = "-1"
 }
 ######## ALB Security Group
+# Lab-1c-b
+# Adding ALB SG Resources
 resource "aws_security_group" "alb_sg" {
   name        = "${var.name_prefix}-alb-sg"
   description = "ALB Security Group"

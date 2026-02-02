@@ -1,10 +1,12 @@
-#############################
+########################################
 ### Data Sources
-#############################
+########################################
 data "aws_caller_identity" "self" {}
 
 data "aws_region" "region" {}
-##############################
+#########################################
+# S3 Bucket
+#########################################
 resource "aws_s3_bucket" "alb_logs_bucket" {
   count = var.enable_alb_access_logs ? 1 : 0
 
@@ -40,7 +42,7 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
 
   bucket = aws_s3_bucket.alb_logs_bucket[0].id
 
-  # NOTE: This policy blocks all HTTP (insecure) access 
+  # This policy blocks all HTTP (insecure) access 
   # to the bucket and only allows HTTPS (secure) access.
   policy = jsonencode({
     Version = "2012-10-17"

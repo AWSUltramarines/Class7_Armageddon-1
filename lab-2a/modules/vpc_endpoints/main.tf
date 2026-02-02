@@ -1,3 +1,6 @@
+###################################
+####### Locals
+###################################
 locals {
   services = {
     "ssm"            = "com.amazonaws.${var.region}.ssm"

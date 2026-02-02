@@ -14,6 +14,9 @@ Route53 Zone Apex + app Records → ACM DNS Validation → ALB with HTTPS Listen
 
 ---
 
+### Infrastructure Change
++ Toggle WAF logging to go to CloudWatch Logs, S3, or Kinesis Data Firehose
+
 ## File structure
 |-- 00.provider.tf
 |-- 01.main.tf

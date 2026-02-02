@@ -1,6 +1,8 @@
 ############################################
 # VPC Endpoint - S3 (Gateway)
 ############################################
+# Lab-1c-a Change
+# VPC Endpoints for Private Instance to Access Services
 resource "aws_vpc_endpoint" "vpce_s3_gw" {
   vpc_id            = aws_vpc.dev.id
   service_name      = "com.amazonaws.${data.aws_region.region.name}.s3"

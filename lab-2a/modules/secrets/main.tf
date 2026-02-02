@@ -1,6 +1,6 @@
-################################
+###########################################
 #### Parameter Store
-################################
+###########################################
 resource "aws_ssm_parameter" "db_endpoint_param" {
   name  = "/lab/db/endpoint"
   type  = "String"
@@ -28,9 +28,12 @@ resource "aws_ssm_parameter" "db_name_param" {
     Name = "${var.name_prefix}-param-db-name"
   }
 }
-################################
+###########################################
 #### Secrets Manager
-################################
+###########################################
+# Commenting out due to errors thrown during deployment in Prod account
+# Secrets are already created in console
+
 # resource "aws_secretsmanager_secret" "db_secret" {
 #   name = var.secret_name
 

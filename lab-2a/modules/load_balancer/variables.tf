@@ -34,10 +34,6 @@ variable "launch_template_id" {
   description = "Launch Template ID"
   type        = string
 }
-# variable "certificate_validation_cert_arn" {
-#   description = "value"
-#   type        = string
-# }
 ######################################
 #### ALB Access Logs
 ######################################
@@ -63,6 +59,13 @@ variable "acm_certificate_arn" {
 ######################################
 variable "s3_bucket" {
   description = "S3 Bucket for ALB Access Logs"
+  type        = string
+}
+######################################
+#### CloudFront
+######################################
+variable "cf_header_pw" {
+  description = "HTTP Header PW"
   type        = string
 }
 

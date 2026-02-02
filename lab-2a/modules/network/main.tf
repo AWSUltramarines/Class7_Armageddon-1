@@ -122,8 +122,6 @@ resource "aws_route_table" "private" {
     Name = "${var.name_prefix}-private-rt"
   }
 }
-
-# ROUTE: Send non-local traffic from Private Subnets to NAT Gateway
 resource "aws_route" "private_nat" {
   route_table_id         = aws_route_table.private.id
   destination_cidr_block = "0.0.0.0/0"
@@ -241,5 +239,3 @@ resource "aws_vpc_security_group_egress_rule" "rds_egress_rules" {
   cidr_ipv4         = var.egress_cidr_ipv4
   ip_protocol       = "-1"
 }
-
-

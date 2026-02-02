@@ -1,4 +1,4 @@
-output "cf_distro_dns_name" {
+output "cf_distro_domain_name" {
   value = aws_cloudfront_distribution.cf_distro.domain_name
 }
 output "cf_distro_zone_id" {

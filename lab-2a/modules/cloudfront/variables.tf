@@ -38,3 +38,10 @@ variable "cf_waf_acl_arn" {
   description = "Cloudfront WAF ACL ARN"
   type        = string
 }
+################################
+#### CloudFront
+################################
+variable "cf_header_pw" {
+  description = "HTTP Header PW"
+  type        = string
+}

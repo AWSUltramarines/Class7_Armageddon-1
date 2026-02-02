@@ -28,7 +28,7 @@ variable "alb" {
 ################################
 #### Cloudfront
 ################################
-variable "cf_distro_dns_name" {
+variable "cf_distro_domain_name" {
   description = "The Cloudfront Distro resource"
   type        = string
 }

@@ -102,7 +102,7 @@ module "load_balancer" {
   domain_name         = var.domain_name
   s3_bucket           = module.s3bucket.s3_bucket
   acm_certificate_arn = module.route53.certificate_arn
-  # certificate_validation_cert_arn = module.route53.certificate_validation_cert_arn
+  cf_header_pw        = var.cf_header_pw
 }
 
 module "autoscaling" {
@@ -138,13 +138,13 @@ module "waf" {
 }
 
 module "route53" {
-  source             = "./modules/route53"
-  domain_name        = var.domain_name
-  name_prefix        = var.name_prefix
-  app_subdomain      = var.app_subdomain
-  alb                = module.load_balancer.alb
-  cf_distro_dns_name = module.cloudfront.cf_distro_dns_name
-  cf_distro_zone_id  = module.cloudfront.cf_distro_zone_id
+  source                = "./modules/route53"
+  domain_name           = var.domain_name
+  name_prefix           = var.name_prefix
+  app_subdomain         = var.app_subdomain
+  alb                   = module.load_balancer.alb
+  cf_distro_domain_name = module.cloudfront.cf_distro_domain_name
+  cf_distro_zone_id     = module.cloudfront.cf_distro_zone_id
 }
 
 module "s3bucket" {
@@ -165,5 +165,6 @@ module "cloudfront" {
   cf_waf_acl_arn  = module.waf.cf_waf_acl_arn
   alb_dns_name    = module.load_balancer.alb_dns_name
   certificate_arn = module.route53.certificate_arn
+  cf_header_pw    = var.cf_header_pw
 
 }
