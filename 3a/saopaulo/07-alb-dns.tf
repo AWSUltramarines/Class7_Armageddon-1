@@ -63,9 +63,37 @@ resource "aws_lb_listener" "http" {
   port              = "80"
   protocol          = "HTTP"
 
+  # Default action: DENY direct access
   default_action {
+    type = "fixed-response"
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "Access Denied: Direct ALB access is prohibited."
+      status_code  = "403"
+    }
+  }
+}
+
+# ================================================================ #
+# HEADER VALIDATION - Only allow traffic with secret header
+# ================================================================ #
+# This prevents direct ALB access - only CloudFront (which adds the
+# X-Custom-Header) can reach the backend.
+
+resource "aws_lb_listener_rule" "require_header" {
+  listener_arn = aws_lb_listener.http.arn
+  priority     = 1
+
+  action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.flask_app.arn
+  }
+
+  condition {
+    http_header {
+      http_header_name = "X-Custom-Header"
+      values           = [random_password.origin_header.result]
+    }
   }
 }
 
