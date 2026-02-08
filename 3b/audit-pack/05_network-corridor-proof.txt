@@ -1,0 +1,194 @@
+{
+  "tokyo": {
+    "region": "ap-northeast-1",
+    "transit_gateways": [
+      {
+        "TransitGatewayId": "tgw-0dc41479dfabcd940",
+        "TransitGatewayArn": "arn:aws:ec2:ap-northeast-1:329599652812:transit-gateway/tgw-0dc41479dfabcd940",
+        "State": "available",
+        "OwnerId": "329599652812",
+        "Description": "Tokyo Transit Gateway - Primary Hub",
+        "CreationTime": "2026-02-05 20:32:28+00:00",
+        "Options": {
+          "AmazonSideAsn": 64512,
+          "AutoAcceptSharedAttachments": "disable",
+          "DefaultRouteTableAssociation": "enable",
+          "AssociationDefaultRouteTableId": "tgw-rtb-0577d1e11b135bb71",
+          "DefaultRouteTablePropagation": "enable",
+          "PropagationDefaultRouteTableId": "tgw-rtb-0577d1e11b135bb71",
+          "VpnEcmpSupport": "enable",
+          "DnsSupport": "enable",
+          "SecurityGroupReferencingSupport": "disable",
+          "MulticastSupport": "disable",
+          "EncryptionSupport": {
+            "EncryptionState": "disabled"
+          }
+        },
+        "Tags": [
+          {
+            "Key": "Role",
+            "Value": "Hub"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Terraform"
+          },
+          {
+            "Key": "Name",
+            "Value": "akihabara-dev-tgw"
+          }
+        ]
+      }
+    ],
+    "attachments": [
+      {
+        "TransitGatewayAttachmentId": "tgw-attach-06b4d03468612ff4b",
+        "TransitGatewayId": "tgw-0dc41479dfabcd940",
+        "TransitGatewayOwnerId": "329599652812",
+        "ResourceOwnerId": "329599652812",
+        "ResourceType": "peering",
+        "ResourceId": "tgw-0a3c7c6d1092d5d98",
+        "State": "available",
+        "Association": {
+          "TransitGatewayRouteTableId": "tgw-rtb-0577d1e11b135bb71",
+          "State": "associated"
+        },
+        "CreationTime": "2026-02-05 22:31:11+00:00",
+        "Tags": [
+          {
+            "Key": "Side",
+            "Value": "Requester"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Terraform"
+          },
+          {
+            "Key": "Name",
+            "Value": "akihabara-tokyo-to-saopaulo-peering"
+          }
+        ]
+      },
+      {
+        "TransitGatewayAttachmentId": "tgw-attach-091380717787fb01d",
+        "TransitGatewayId": "tgw-0dc41479dfabcd940",
+        "TransitGatewayOwnerId": "329599652812",
+        "ResourceOwnerId": "329599652812",
+        "ResourceType": "vpc",
+        "ResourceId": "vpc-078e9306504c5c59e",
+        "State": "available",
+        "Association": {
+          "TransitGatewayRouteTableId": "tgw-rtb-0577d1e11b135bb71",
+          "State": "associated"
+        },
+        "CreationTime": "2026-02-05 20:34:06+00:00",
+        "Tags": [
+          {
+            "Key": "ManagedBy",
+            "Value": "Terraform"
+          },
+          {
+            "Key": "Name",
+            "Value": "akihabara-dev-tgw-vpc-attachment"
+          }
+        ]
+      }
+    ]
+  },
+  "saopaulo": {
+    "region": "sa-east-1",
+    "transit_gateways": [
+      {
+        "TransitGatewayId": "tgw-0a3c7c6d1092d5d98",
+        "TransitGatewayArn": "arn:aws:ec2:sa-east-1:329599652812:transit-gateway/tgw-0a3c7c6d1092d5d98",
+        "State": "available",
+        "OwnerId": "329599652812",
+        "Description": "Sao Paulo Transit Gateway - Spoke",
+        "CreationTime": "2026-02-05 22:11:56+00:00",
+        "Options": {
+          "AmazonSideAsn": 64513,
+          "AutoAcceptSharedAttachments": "disable",
+          "DefaultRouteTableAssociation": "enable",
+          "AssociationDefaultRouteTableId": "tgw-rtb-01b9ecd45ca3334a3",
+          "DefaultRouteTablePropagation": "enable",
+          "PropagationDefaultRouteTableId": "tgw-rtb-01b9ecd45ca3334a3",
+          "VpnEcmpSupport": "enable",
+          "DnsSupport": "enable",
+          "SecurityGroupReferencingSupport": "disable",
+          "MulticastSupport": "disable",
+          "EncryptionSupport": {
+            "EncryptionState": "disabled"
+          }
+        },
+        "Tags": [
+          {
+            "Key": "Role",
+            "Value": "Spoke"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Terraform"
+          },
+          {
+            "Key": "Name",
+            "Value": "liberdade-dev-tgw"
+          }
+        ]
+      }
+    ],
+    "attachments": [
+      {
+        "TransitGatewayAttachmentId": "tgw-attach-06b4d03468612ff4b",
+        "TransitGatewayId": "tgw-0a3c7c6d1092d5d98",
+        "TransitGatewayOwnerId": "329599652812",
+        "ResourceOwnerId": "329599652812",
+        "ResourceType": "peering",
+        "ResourceId": "tgw-0dc41479dfabcd940",
+        "State": "available",
+        "Association": {
+          "TransitGatewayRouteTableId": "tgw-rtb-01b9ecd45ca3334a3",
+          "State": "associated"
+        },
+        "CreationTime": "2026-02-05 22:31:35+00:00",
+        "Tags": [
+          {
+            "Key": "Side",
+            "Value": "Accepter"
+          },
+          {
+            "Key": "ManagedBy",
+            "Value": "Terraform"
+          },
+          {
+            "Key": "Name",
+            "Value": "liberdade-accept-tokyo-peering"
+          }
+        ]
+      },
+      {
+        "TransitGatewayAttachmentId": "tgw-attach-05622e392b86aa916",
+        "TransitGatewayId": "tgw-0a3c7c6d1092d5d98",
+        "TransitGatewayOwnerId": "329599652812",
+        "ResourceOwnerId": "329599652812",
+        "ResourceType": "vpc",
+        "ResourceId": "vpc-0cf6bc7b26988288d",
+        "State": "available",
+        "Association": {
+          "TransitGatewayRouteTableId": "tgw-rtb-01b9ecd45ca3334a3",
+          "State": "associated"
+        },
+        "CreationTime": "2026-02-05 22:13:04+00:00",
+        "Tags": [
+          {
+            "Key": "ManagedBy",
+            "Value": "Terraform"
+          },
+          {
+            "Key": "Name",
+            "Value": "liberdade-dev-tgw-vpc-attachment"
+          }
+        ]
+      }
+    ]
+  }
+}

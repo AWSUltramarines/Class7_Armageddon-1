@@ -1,0 +1,27 @@
+Found 11 objects. Analyzing latest 5:
+  - s3://akihabara-dev-cloudfront-standard-logs/Chwebacca-logs/EQQRUTNIGIKPP.2026-02-07-19.95414ccd.gz
+  - s3://akihabara-dev-cloudfront-standard-logs/Chwebacca-logs/EQQRUTNIGIKPP.2026-02-07-19.e7eaedf0.gz
+  - s3://akihabara-dev-cloudfront-standard-logs/Chwebacca-logs/EQQRUTNIGIKPP.2026-02-07-19.ff6600b3.gz
+  - s3://akihabara-dev-cloudfront-standard-logs/Chwebacca-logs/EQQRUTNIGIKPP.2026-02-07-20.3652a10e.gz
+  - s3://akihabara-dev-cloudfront-standard-logs/Chwebacca-logs/EQQRUTNIGIKPP.2026-02-07-20.6c533bdd.gz
+
+=== CloudFront Cache Outcome Report (Standard Logs) ===
+Core total (Hit/Miss/RefreshHit): 5
+All counted lines/notes:          691
+
+Core outcomes:
+  Hit               0   (0.0% of core)
+  Miss              5   (100.0% of core)
+  RefreshHit        0   (0.0% of core)
+
+Other outcomes / parsing notes (top 20):
+  Other:Error                       684
+  Other:Redirect                      2
+
+Interpretation (ops):
+  • High Hit% usually means lower latency & lower origin load.
+  • High Miss% suggests caching policy mismatch, uncacheable headers,
+    query-string/cookie variance, or origin Cache-Control behavior.
+  • RefreshHit means CloudFront revalidated with origin and served cached content (often good).
+=======================================================
+

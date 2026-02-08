@@ -1,0 +1,42 @@
+{
+  "actions": [
+    {
+      "action": "ALLOW",
+      "hits": "434"
+    },
+    {
+      "action": "BLOCK",
+      "hits": "3"
+    }
+  ],
+  "top_ips": [
+    {
+      "httpRequest.clientIp": "18.68.51.240",
+      "hits": "217"
+    },
+    {
+      "httpRequest.clientIp": "18.68.51.200",
+      "hits": "172"
+    },
+    {
+      "httpRequest.clientIp": "47.236.150.68",
+      "hits": "44"
+    },
+    {
+      "httpRequest.clientIp": "130.176.186.167",
+      "hits": "1"
+    },
+    {
+      "httpRequest.clientIp": "3.172.18.133",
+      "hits": "1"
+    },
+    {
+      "httpRequest.clientIp": "15.158.60.22",
+      "hits": "1"
+    },
+    {
+      "httpRequest.clientIp": "35.77.127.224",
+      "hits": "1"
+    }
+  ]
+}
