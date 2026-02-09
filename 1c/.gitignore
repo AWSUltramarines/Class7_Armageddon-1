@@ -1,0 +1,16 @@
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+*.tfvars
+!terraform.tfvars.example
+tfplan*
+
+# Build output (0-build_release.sh)
+out/
+keys/
+
+# OS
+.DS_Store
+Thumbs.db

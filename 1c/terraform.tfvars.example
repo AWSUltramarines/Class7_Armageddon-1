@@ -1,0 +1,91 @@
+#------------------------------------------------------------------------------
+# terraform.tfvars.example - Example Variable Values
+#------------------------------------------------------------------------------
+# Copy this file to terraform.tfvars and customize as needed:
+#   cp terraform.tfvars.example terraform.tfvars
+#------------------------------------------------------------------------------
+
+# AWS Region
+aws_region = "us-east-1"
+
+# Project naming
+project_name = "ec2-rds-notes-lab"
+environment  = "lab"
+
+#------------------------------------------------------------------------------
+# Exposure Mode
+#------------------------------------------------------------------------------
+# "airgap"     - No IGW, no public subnets, no ALB. SSM-only access.
+#                Requires release pipeline (tools/0-build_release.sh) before EC2.
+# "public_alb" - Legacy mode with IGW, public subnets, ALB for internet access.
+exposure_mode = "airgap"
+
+#------------------------------------------------------------------------------
+# Release Management (required for airgap mode)
+#------------------------------------------------------------------------------
+
+# Immutable release identifier
+# Generate with: ./tools/0-build_release.sh <release_id>
+release_id = "2026-02-09T0000Z"
+
+# Deployment channel - which release channel EC2 instances consume
+# Options: dev, stage, prod
+channel = "dev"
+
+# GPG key fingerprints (40 hex chars each)
+# Obtained from: ./tools/0-build_release.sh output
+# In the degenerate case, all 3 may be the same fingerprint.
+release_gpg_key_fingerprint = ""
+repo_gpg_key_fingerprint    = ""
+rpm_gpg_key_fingerprint     = ""
+
+#------------------------------------------------------------------------------
+# Feature Toggles
+#------------------------------------------------------------------------------
+
+# Set to true after release pipeline is configured (airgap mode)
+# In public_alb mode, can be true from the start
+enable_ec2 = false
+
+# Run dnf update from offline repo during bootstrap (airgap mode only)
+enable_dnf_update = false
+
+# Enable KMS VPC endpoint (recommended for production)
+enable_kms_endpoint = true
+
+#------------------------------------------------------------------------------
+# EC2 Instance
+#------------------------------------------------------------------------------
+instance_type = "t3.micro"
+
+#------------------------------------------------------------------------------
+# RDS
+#------------------------------------------------------------------------------
+db_instance_class    = "db.t3.micro"
+db_name              = "notesdb"
+db_port              = 3306
+db_allocated_storage = 20
+db_engine_version    = "8.0"
+
+#------------------------------------------------------------------------------
+# Secrets
+#------------------------------------------------------------------------------
+secret_name = "lab/rds/mysql"
+
+#------------------------------------------------------------------------------
+# CloudWatch & Monitoring
+#------------------------------------------------------------------------------
+log_group_name       = "/aws/ec2/lab-rds-app"
+log_retention_days   = 7
+alarm_error_threshold   = 3
+alarm_evaluation_period = 5
+sns_topic_name       = "lab-db-incidents"
+
+# Uncomment and set to receive alarm notifications
+# alert_email = "your-email@example.com"
+
+#------------------------------------------------------------------------------
+# ALB (public_alb mode only)
+#------------------------------------------------------------------------------
+# allowed_http_cidrs = ["0.0.0.0/0"]
+# alb_idle_timeout   = 60
