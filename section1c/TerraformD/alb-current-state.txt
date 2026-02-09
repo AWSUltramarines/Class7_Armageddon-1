@@ -1,0 +1,39 @@
+# aws_lb.chewbacca_alb01: (tainted)
+resource "aws_lb" "chewbacca_alb01" {
+    client_keep_alive                           = 3600
+    desync_mitigation_mode                      = "defensive"
+    drop_invalid_header_fields                  = false
+    enable_deletion_protection                  = false
+    enable_http2                                = true
+    enable_tls_version_and_cipher_suite_headers = false
+    enable_waf_fail_open                        = false
+    enable_xff_client_port                      = false
+    enable_zonal_shift                          = false
+    id                                          = "arn:aws:elasticloadbalancing:us-east-1:367338719203:loadbalancer/app/chewbacca-alb01/7d9e3942fd8dd444"
+    idle_timeout                                = 60
+    internal                                    = false
+    load_balancer_type                          = "application"
+    name                                        = "chewbacca-alb01"
+    preserve_host_header                        = false
+    region                                      = "us-east-1"
+    security_groups                             = [
+        "sg-03ea12a01011f33f8",
+    ]
+    subnets                                     = [
+        "subnet-0ecd518ff5942621d",
+        "subnet-0f39befae9e173a9a",
+    ]
+    tags                                        = {
+        "Name" = "chewbacca-alb01"
+    }
+    tags_all                                    = {
+        "Name" = "chewbacca-alb01"
+    }
+    xff_header_processing_mode                  = "append"
+
+    access_logs {
+        bucket  = "chewbacca-alb-logs-367338719203"
+        enabled = true
+        prefix  = "alb-access-logs"
+    }
+}

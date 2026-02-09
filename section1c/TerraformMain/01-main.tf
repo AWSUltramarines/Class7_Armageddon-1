@@ -145,6 +145,9 @@ resource "aws_security_group" "chewbacca_ec2_sg01" {
     description = "EC2 app security group"
     vpc_id      = aws_vpc.chewbacca_vpc01.id
 
+    # TODO: student adds inbound rules (HTTP 80, SSH 22 from their IP)
+    # TODO: student ensures outbound allows DB port to RDS SG (or allow all outbound)
+
     tags = {
         Name = "${local.name_prefix}-ec2-sg01"
     }
@@ -157,6 +160,14 @@ resource "aws_vpc_security_group_ingress_rule" "web_server_http" {
     from_port         = 80
     ip_protocol       = "tcp"
     to_port           = 80
+}
+resource "aws_vpc_security_group_ingress_rule" "web_server_ssh" {
+    security_group_id = aws_security_group.chewbacca_ec2_sg01.id
+    description = "SSH from internet"
+    cidr_ipv4         = "0.0.0.0/0"
+    from_port         = 22
+    ip_protocol       = "tcp"
+    to_port           = 22
 }
 
 resource "aws_vpc_security_group_egress_rule" "ec2_all_outbound" {
@@ -210,35 +221,6 @@ resource "aws_db_subnet_group" "chewbacca_rds_subnet_group01" {
     }
 }
 
-resource "aws_security_group" "chewbacca_vpce_sg01" {
-    name        = "${local.name_prefix}-vpce-sg01"
-    description = "Security group for VPC Interface Endpoints - allows HTTPS from VPC"
-    vpc_id      = aws_vpc.chewbacca_vpc01.id
-
-    # Inbound: Allow HTTPS from anywhere in the VPC
-    # This is how EC2 instances reach the endpoint ENIs
-    ingress {
-        description = "HTTPS from VPC for AWS API calls"
-        from_port   = 443
-        to_port     = 443
-        protocol    = "tcp"
-        cidr_blocks = [var.vpc_cidr]  # Only from within our VPC
-    }
-
-    # Outbound: Allow responses back
-    egress {
-        description = "Allow responses"
-        from_port   = 0
-        to_port     = 0
-        protocol    = "-1"
-        cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    tags = {
-        Name = "${local.name_prefix}-vpce-sg01"
-    }
-}
-
 ############################################
 # RDS Instance (MySQL)
 ############################################
@@ -283,90 +265,18 @@ resource "aws_iam_role" "chewbacca_ec2_role01" {
         }]
     })
 }
-# Custom least-privilege policy for Secrets Manager
-resource "aws_iam_policy" "chewbacca_secrets_least_privilege" {
-    name        = "${local.name_prefix}-secrets-least-privilege"
-    description = "Least privilege: GetSecretValue only for our RDS secret"
 
-    policy = jsonencode({
-        Version = "2012-10-17"
-        Statement = [
-            {
-                Sid    = "GetOurSecretOnly"
-                Effect = "Allow"
-                Action = [
-                    "secretsmanager:GetSecretValue",
-                    "secretsmanager:DescribeSecret"  # Needed for rotation checks
-                ]
-                # CRITICAL: Use the actual secret ARN, not a wildcard!
-                Resource = aws_secretsmanager_secret.chewbacca_db_secret01.arn
-            },
-            {
-                Sid    = "DecryptWithKMS"
-                Effect = "Allow"
-                Action = [
-                    "kms:Decrypt"
-                ]
-                # Allow decryption with any key - Secrets Manager uses its own
-                # In production, you'd scope this to the specific KMS key ARN
-                Resource = "*"
-                Condition = {
-                    StringEquals = {
-                        "kms:ViaService" = "secretsmanager.${var.aws_region}.amazonaws.com"
-                    }
-                }
-            }
-        ]
-    })
-
-    tags = {
-        Name = "${local.name_prefix}-secrets-policy"
-    }
-}
-
-# Custom least-privilege policy for SSM Parameter Store
-resource "aws_iam_policy" "chewbacca_ssm_params_least_privilege" {
-    name        = "${local.name_prefix}-ssm-params-least-privilege"
-    description = "Least privilege: GetParameter(s) only for /lab/db/* path"
-
-    policy = jsonencode({
-        Version = "2012-10-17"
-        Statement = [
-            {
-                Sid    = "GetLabDbParameters"
-                Effect = "Allow"
-                Action = [
-                    "ssm:GetParameter",
-                    "ssm:GetParameters",
-                    "ssm:GetParametersByPath"
-                ]
-                # Path-based restriction: only /lab/db/* parameters
-                Resource = "arn:aws:ssm:${var.aws_region}:*:parameter/lab/db/*"
-            }
-        ]
-    })
-
-    tags = {
-        Name = "${local.name_prefix}-ssm-params-policy"
-    }
-}
-
-# Attach our custom policies to the EC2 role
-resource "aws_iam_role_policy_attachment" "chewbacca_secrets_least_priv_attach" {
-    role       = aws_iam_role.chewbacca_ec2_role01.name
-    policy_arn = aws_iam_policy.chewbacca_secrets_least_privilege.arn
-}
-
-resource "aws_iam_role_policy_attachment" "chewbacca_ssm_params_least_priv_attach" {
-    role       = aws_iam_role.chewbacca_ec2_role01.name
-    policy_arn = aws_iam_policy.chewbacca_ssm_params_least_privilege.arn
-}
 # Explanation: These policies are your Wookiee toolbelt—tighten them (least privilege) as a stretch goal.
 resource "aws_iam_role_policy_attachment" "chewbacca_ec2_ssm_attach" {
     role       = aws_iam_role.chewbacca_ec2_role01.name
     policy_arn  = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
+# Explanation: EC2 must read secrets/params during recovery—give it access (students should scope it down).
+resource "aws_iam_role_policy_attachment" "chewbacca_ec2_secrets_attach" {
+    role      = aws_iam_role.chewbacca_ec2_role01.name
+    policy_arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite" # TODO: student replaces w/ least privilege
+}
 
 # Explanation: CloudWatch logs are the “ship’s black box”—you need them when things explode.
 resource "aws_iam_role_policy_attachment" "chewbacca_ec2_cw_attach" {
@@ -388,8 +298,8 @@ resource "aws_iam_instance_profile" "chewbacca_instance_profile01" {
 resource "aws_instance" "chewbacca_ec201" {
     ami                    = data.aws_ami.amazon_linux_2023.id
     instance_type           = var.ec2_instance_type
-    subnet_id               = aws_subnet.chewbacca_private_subnets[0].id
-    vpc_security_group_ids  = [aws_security_group.chewbacca_vpce_sg01.id]
+    subnet_id               = aws_subnet.chewbacca_public_subnets[0].id
+    vpc_security_group_ids  = [aws_security_group.chewbacca_ec2_sg01.id]
     iam_instance_profile    = aws_iam_instance_profile.chewbacca_instance_profile01.name
 
     # TODO: student supplies user_data to install app + CW agent + configure log shipping
@@ -535,109 +445,15 @@ resource "aws_sns_topic_subscription" "chewbacca_sns_sub01" {
 ############################################
 
 # Explanation: Endpoints keep traffic inside AWS like hyperspace lanes—less exposure, more control.
-
-# SSM Core API Endpoint
-# USE CASE: RunCommand, GetParameter, PutParameter, Session initiation
-resource "aws_vpc_endpoint" "chewbacca_vpce_ssm" {
-    vpc_id              = aws_vpc.chewbacca_vpc01.id
-    service_name        = "com.amazonaws.${var.aws_region}.ssm"
-    vpc_endpoint_type   = "Interface"
-    subnet_ids          = aws_subnet.chewbacca_private_subnets[*].id
-    security_group_ids  = [aws_security_group.chewbacca_vpce_sg01.id]
-    private_dns_enabled = true  # Makes ssm.region.amazonaws.com resolve privately
+# TODO: students can add endpoints for SSM, Logs, Secrets Manager if doing “no public egress” variant.
+resource "aws_vpc_endpoint" "chewbacca_vpce_ssm" { 
+    vpc_id            = aws_vpc.chewbacca_vpc01.id
+    service_name      = "com.amazonaws.${var.aws_region}.ssm"
+    vpc_endpoint_type = "Interface"
+    subnet_ids        = aws_subnet.chewbacca_private_subnets[*].id
+    security_group_ids = [aws_security_group.chewbacca_ec2_sg01.id]
 
     tags = {
         Name = "${local.name_prefix}-vpce-ssm"
-    }
-}
-
-# SSM Messages Endpoint
-# USE CASE: Interactive shell sessions via Session Manager
-# Without this, you'll see "Session Manager plugin not found" errors
-resource "aws_vpc_endpoint" "chewbacca_vpce_ssmmessages" {
-    vpc_id              = aws_vpc.chewbacca_vpc01.id
-    service_name        = "com.amazonaws.${var.aws_region}.ssmmessages"
-    vpc_endpoint_type   = "Interface"
-    subnet_ids          = aws_subnet.chewbacca_private_subnets[*].id
-    security_group_ids  = [aws_security_group.chewbacca_vpce_sg01.id]
-    private_dns_enabled = true
-
-    tags = {
-        Name = "${local.name_prefix}-vpce-ssmmessages"
-    }
-}
-
-# EC2 Messages Endpoint
-# USE CASE: SSM Agent on EC2 polls this for pending commands/sessions
-# Without this, the SSM agent can't receive instructions
-resource "aws_vpc_endpoint" "chewbacca_vpce_ec2messages" {
-    vpc_id              = aws_vpc.chewbacca_vpc01.id
-    service_name        = "com.amazonaws.${var.aws_region}.ec2messages"
-    vpc_endpoint_type   = "Interface"
-    subnet_ids          = aws_subnet.chewbacca_private_subnets[*].id
-    security_group_ids  = [aws_security_group.chewbacca_vpce_sg01.id]
-    private_dns_enabled = true
-
-    tags = {
-        Name = "${local.name_prefix}-vpce-ec2messages"
-    }
-}
-
-# Log data (which might contain sensitive info) never traverses
-# the public internet - it goes directly to CloudWatch over AWS's
-# private backbone.
-resource "aws_vpc_endpoint" "chewbacca_vpce_logs" {
-    vpc_id              = aws_vpc.chewbacca_vpc01.id
-    service_name        = "com.amazonaws.${var.aws_region}.logs"
-    vpc_endpoint_type   = "Interface"
-    subnet_ids          = aws_subnet.chewbacca_private_subnets[*].id
-    security_group_ids  = [aws_security_group.chewbacca_vpce_sg01.id]
-    private_dns_enabled = true
-
-    tags = {
-        Name = "${local.name_prefix}-vpce-logs"
-    }
-}
-
-# PCI-DSS, HIPAA, and SOC2 auditors love seeing this - credentials
-# never leave the AWS network boundary.
-resource "aws_vpc_endpoint" "chewbacca_vpce_secretsmanager" {
-    vpc_id              = aws_vpc.chewbacca_vpc01.id
-    service_name        = "com.amazonaws.${var.aws_region}.secretsmanager"
-    vpc_endpoint_type   = "Interface"
-    subnet_ids          = aws_subnet.chewbacca_private_subnets[*].id
-    security_group_ids  = [aws_security_group.chewbacca_vpce_sg01.id]
-    private_dns_enabled = true
-
-    tags = {
-        Name = "${local.name_prefix}-vpce-secretsmanager"
-    }
-}
-
-# Many teams forget this endpoint and wonder why Secrets Manager
-# "stopped working" after removing NAT.
-resource "aws_vpc_endpoint" "chewbacca_vpce_kms" {
-    vpc_id              = aws_vpc.chewbacca_vpc01.id
-    service_name        = "com.amazonaws.${var.aws_region}.kms"
-    vpc_endpoint_type   = "Interface"
-    subnet_ids          = aws_subnet.chewbacca_private_subnets[*].id
-    security_group_ids  = [aws_security_group.chewbacca_vpce_sg01.id]
-    private_dns_enabled = true
-
-    tags = {
-        Name = "${local.name_prefix}-vpce-kms"
-    }
-}
-
-resource "aws_vpc_endpoint" "chewbacca_vpce_s3" {
-    vpc_id            = aws_vpc.chewbacca_vpc01.id
-    service_name      = "com.amazonaws.${var.aws_region}.s3"
-    vpc_endpoint_type = "Gateway"
-    
-    # Gateway endpoints attach to route tables, not subnets
-    route_table_ids = [aws_route_table.chewbacca_private_rt01.id]
-
-    tags = {
-        Name = "${local.name_prefix}-vpce-s3"
     }
 }

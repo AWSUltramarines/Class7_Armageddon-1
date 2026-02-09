@@ -64,7 +64,7 @@ resource "aws_subnet" "chewbacca_private_subnets" {
 # NAT Gateway + EIP
 ############################################
 
-# Explanation: Chewbacca wants the private base to call home—EIP gives the NAT a stable “holonet address.”
+# # Explanation: Chewbacca wants the private base to call home—EIP gives the NAT a stable “holonet address.”
 resource "aws_eip" "chewbacca_nat_eip01" {
     domain = "vpc"
 
@@ -73,7 +73,7 @@ resource "aws_eip" "chewbacca_nat_eip01" {
     }
 }
 
-# Explanation: NAT is Chewbacca’s smuggler tunnel—private subnets can reach out without being seen.
+# # Explanation: NAT is Chewbacca’s smuggler tunnel—private subnets can reach out without being seen.
 resource "aws_nat_gateway" "chewbacca_nat01" {
     allocation_id = aws_eip.chewbacca_nat_eip01.id
     subnet_id     = aws_subnet.chewbacca_public_subnets[0].id # NAT in a public subnet
@@ -121,7 +121,7 @@ resource "aws_route_table" "chewbacca_private_rt01" {
     }
 }
 
-# Explanation: Private subnets route outbound internet via NAT (Chewbacca-approved stealth).
+#Explanation: Private subnets route outbound internet via NAT (Chewbacca-approved stealth).
 resource "aws_route" "chewbacca_private_default_route" {
     route_table_id         = aws_route_table.chewbacca_private_rt01.id
     destination_cidr_block = "0.0.0.0/0"
@@ -150,14 +150,6 @@ resource "aws_security_group" "chewbacca_ec2_sg01" {
     }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "web_server_http" {
-    security_group_id = aws_security_group.chewbacca_ec2_sg01.id
-    description = "HTTP from internet"
-    cidr_ipv4         = "0.0.0.0/0"
-    from_port         = 80
-    ip_protocol       = "tcp"
-    to_port           = 80
-}
 
 resource "aws_vpc_security_group_egress_rule" "ec2_all_outbound" {
     security_group_id = aws_security_group.chewbacca_ec2_sg01.id
@@ -259,7 +251,6 @@ resource "aws_db_instance" "chewbacca_rds01" {
     publicly_accessible    = false
     skip_final_snapshot    = true
 
-    # TODO: student sets multi_az / backups / monitoring as stretch goals
 
     tags = {
         Name = "${local.name_prefix}-rds01"
@@ -389,11 +380,9 @@ resource "aws_instance" "chewbacca_ec201" {
     ami                    = data.aws_ami.amazon_linux_2023.id
     instance_type           = var.ec2_instance_type
     subnet_id               = aws_subnet.chewbacca_private_subnets[0].id
-    vpc_security_group_ids  = [aws_security_group.chewbacca_vpce_sg01.id]
+    vpc_security_group_ids  = [aws_security_group.chewbacca_ec2_sg01.id]
     iam_instance_profile    = aws_iam_instance_profile.chewbacca_instance_profile01.name
 
-    # TODO: student supplies user_data to install app + CW agent + configure log shipping
-    #user_data = file("${path.module}/user_data.sh") look into after class
     user_data               = templatefile("./scripts/user_data.sh", {
         ENV_AWS_REGION = var.aws_region,
         ENV_SECRET_NAME = local.secret_name,

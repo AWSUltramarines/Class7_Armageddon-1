@@ -27,15 +27,6 @@ output "chewbacca_log_group_name" {
     value = aws_cloudwatch_log_group.chewbacca_log_group01.name
 }
 
-# output "app_url" {
-#     description = "URL to access the Flask application"
-#     value       = "http://${aws_instance.chewbacca_ec201.public_dns}"
-# }
-
-# output "app_url_ip" {
-#     description = "URL to access the Flask application via IP"
-#     value       = "http://${aws_instance.chewbacca_ec201.public_ip}"
-# }
 
 # OPTION B - Replace with private IP output:
 output "app_private_ip" {
@@ -119,4 +110,54 @@ output "endpoint_summary" {
             s3 = aws_vpc_endpoint.chewbacca_vpce_s3.id
         }
     }
+}
+
+
+# Explanation: Outputs are the mission coordinates — where to point your browser and your blasters.
+output "chewbacca_alb_dns_name" {
+  value = aws_lb.chewbacca_alb01.dns_name
+}
+
+output "chewbacca_app_fqdn" {
+  value = "${var.app_subdomain}.${var.domain_name}"
+}
+
+output "chewbacca_target_group_arn" {
+  value = aws_lb_target_group.chewbacca_tg01.arn
+}
+
+output "chewbacca_acm_cert_arn" {
+  value = aws_acm_certificate.chewbacca_acm_cert01.arn
+}
+
+output "chewbacca_waf_arn" {
+  value = var.enable_waf ? aws_wafv2_web_acl.chewbacca_waf01[0].arn : null
+}
+
+output "chewbacca_dashboard_name" {
+  value = aws_cloudwatch_dashboard.chewbacca_dashboard01.dashboard_name
+}
+
+# Explanation: Apex URL is the user-friendly address—what customers type when they can't remember subdomains.
+output "chewbacca_apex_url_https" {
+  description = "HTTPS URL for the apex domain (root domain)"
+  value       = "https://${var.domain_name}"
+}
+
+# Explanation: Log bucket name is your forensics toolkit location—where to hunt for 5xx errors or WAF blocks.
+output "chewbacca_alb_logs_bucket_name" {
+  description = "S3 bucket storing ALB access logs for incident response"
+  value       = var.enable_alb_access_logs ? aws_s3_bucket.chewbacca_alb_logs_bucket01[0].bucket : null
+}
+
+# Explanation: Route53 zone ID is the DNS control panel—needed for verifying records with CLI commands.
+output "chewbacca_route53_zone_id" {
+  description = "Route53 Hosted Zone ID for DNS verification"
+  value       = aws_route53_zone.chewbacca_zone.zone_id
+}
+
+# Explanation: ALB ARN is the unique identifier—needed for querying metrics and attributes via CLI.
+output "chewbacca_alb_arn" {
+  description = "ALB ARN for CLI verification commands"
+  value       = aws_lb.chewbacca_alb01.arn
 }
