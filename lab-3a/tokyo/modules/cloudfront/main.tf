@@ -193,7 +193,6 @@ resource "aws_cloudfront_response_headers_policy" "rsp_static" {
     }
   }
 }
-########################### NEED TO FIX
 # ========== HONORS A: Origin-Driven Caching ==========
 # Custom policy that respects origin's Cache-Control header
 resource "aws_cloudfront_cache_policy" "helga_cache_origin_driven01" {

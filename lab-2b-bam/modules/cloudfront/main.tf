@@ -53,7 +53,6 @@ resource "aws_cloudfront_distribution" "cf_distro" {
 
     # LAB 2B: Attach Static Policies
     cache_policy_id = aws_cloudfront_cache_policy.static_optimized.id
-    # Addition from Claude
     origin_request_policy_id   = aws_cloudfront_origin_request_policy.static_request.id
     response_headers_policy_id = aws_cloudfront_response_headers_policy.static_security.id
   }
@@ -162,7 +161,6 @@ resource "aws_cloudfront_cache_policy" "api_disabled" {
 }
 
 # Static Origin Request Policy (Minimal)
-# Addition from Claude
 resource "aws_cloudfront_origin_request_policy" "static_request" {
   name    = "${var.name_prefix}-static-origin-policy"
   comment = "Minimal forwarding for static assets"

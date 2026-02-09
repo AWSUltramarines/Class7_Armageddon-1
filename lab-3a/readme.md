@@ -74,7 +74,40 @@ Security Group referencing (referencing an SG ID) does **not** work across regio
 
 Ensure `enableDnsSupport` and `enableDnsHostnames` are true in both VPCs so the RDS endpoint continues to resolve to its private IP across the TGW link.
 
+### 4. Terraform Workflow
+
+#### Phase 1:
++ cd /saopaulo
++ terraform init
++ terraform plan
++ terraform apply
+
+take note of tgw id
+
 ---
+
+#### Phase 2:
++ cd /tokyo
++ fill in tgw id from phase 1 in tfvars file
++ terraform init
++ terraform plan
++ terraform apply
+
+take note of tgw id
+take note of rds endpoint
+
+---
+
+#### Phase 3:
+
++ cd /saopaulo
++ fill in tgw id from phase 2 in tfvars file
++ fill in rds endpoint from phase 2 in tfvars file
++ terraform plan
++ terraform apply
+
+---
+
 
 ## ✅ Lab 3A Architecture Verification
 

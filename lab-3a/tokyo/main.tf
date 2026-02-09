@@ -161,10 +161,13 @@ module "s3bucket" {
   domain_name            = var.domain_name
 }
 
-############################################
+#############################################
+###### Additional Resources 4 Cloudfront 
+#############################################
+#############################################
 # ACM Certificate in us-east-1 for CloudFront
 # (CloudFront requires certs in us-east-1)
-############################################
+#############################################
 resource "aws_acm_certificate" "cf_cert" {
   provider                  = aws.us_east_1
   domain_name               = var.domain_name
@@ -200,6 +203,9 @@ module "cloudfront" {
 
 }
 
+############################################
+# Transit Gateway Resources 
+############################################
 ############################################
 # LAB 3A: TOKYO TRANSIT GATEWAY (HUB)
 # Shinjuku Station - Data corridor hub
@@ -260,25 +266,6 @@ resource "aws_ec2_transit_gateway_peering_attachment" "tokyo_saopaulo" {
 }
 
 ############################################
-# TGW PEERING ATTACHMENT (Tokyo → São Paulo)
-# Shinjuku opens corridor to Liberdade
-# Tokyo (10.241.0.0/16) ↔ São Paulo (10.214.0.0/16)
-############################################
-
-# resource "aws_ec2_transit_gateway_peering_attachment" "shinjuku_to_liberdade_peer01" {
-#   count                   = var.enable_tgw && var.saopaulo_tgw_id != "" ? 1 : 0
-#   transit_gateway_id      = aws_ec2_transit_gateway.shinjuku_tgwlab3[0].id
-#   peer_region             = "sa-east-1"
-#   peer_transit_gateway_id = var.saopaulo_tgw_id
-#   #peer_transit_gateway_id = data.aws_ec2_transit_gateway.saopaulo_tgw.id
-
-#   tags = {
-#     Name = "shinjuku-to-liberdade-peer01"
-#     Type = "Cross-Region-Peering"
-#   }
-# }
-
-############################################
 # TGW ROUTE TABLE ENTRY FOR PEERING
 # Route to São Paulo CIDR (10.214.0.0/16)
 ############################################
@@ -286,9 +273,7 @@ resource "aws_ec2_transit_gateway_peering_attachment" "tokyo_saopaulo" {
 resource "aws_ec2_transit_gateway_route" "shinjuku_route_to_liberdade" {
   count                  = var.tgw_peering_accepted ? 1 : 0
   destination_cidr_block = var.saopaulo_vpc_cidr # 10.214.0.0/16
-  # transit_gateway_attachment_id  = aws_ec2_transit_gateway_peering_attachment.shinjuku_to_liberdade_peer01[0].id
   transit_gateway_route_table_id = aws_ec2_transit_gateway.shinjuku_tgwlab3[0].association_default_route_table_id
-  # Claude change
   transit_gateway_attachment_id = aws_ec2_transit_gateway_peering_attachment.tokyo_saopaulo[0].id
 }
 
