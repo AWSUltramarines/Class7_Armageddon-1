@@ -21,11 +21,12 @@ This repository contains individual team member work across separate branches. E
 | Jamal Waring | `jamalwaring` | [View Branch](../../tree/jamalwaring) | Lab 1a, Lab 1b, Lab 1c |
 | James Scales | `james_scales` | [View Branch](../../tree/james_scales) | Lab 1a, Lab 1b, Lab 1c, Lab 2a |
 | Jason Cramer | `Jason_Cramer` | [View Branch](../../tree/Jason_Cramer) | Lab 1a, Lab 1b |
+| Jason Cramer (updated) | `Jason_cramer` | [View Branch](../../tree/Jason_cramer) | Lab 1a, Lab 1b, Lab 1c, Lab 2a, Lab 2b |
 | Jason Lee | `Jason_Lee` | [View Branch](../../tree/Jason_Lee) | Lab 1a, Lab 1b, Lab 1c |
 | Joey Africanstar | `Joey_africanstar` | [View Branch](../../tree/Joey_africanstar) | Lab 1a |
 | Kaiju Hyuga | `Kaiju_Hyuga` | [View Branch](../../tree/Kaiju_Hyuga) | Lab 1a, Lab 1b |
 | Okey Okafor | `Okey_Okafor` | [View Branch](../../tree/Okey_Okafor) | Lab 1a |
-| Walid Ahmed | `Walid_Ahmed` | [View Branch](../../tree/Walid_Ahmed) | Lab 1a, Lab 1b |
+| Walid Ahmed | `Walid_Ahmed` | [View Branch](../../tree/Walid_Ahmed) | Lab 1a, Lab 1b, Lab 1c |
 | Willie Bright | `Willie_Bright` | [View Branch](../../tree/Willie_Bright) | Lab 1, Lab 2, Lab 3 |
 
 ---
@@ -42,6 +43,7 @@ git checkout Don_Mann
 git checkout jamalwaring
 git checkout james_scales
 git checkout Jason_Cramer
+git checkout Jason_cramer
 git checkout Jason_Lee
 git checkout Joey_africanstar
 git checkout Kaiju_Hyuga
@@ -165,6 +167,32 @@ Jason_Cramer/
 
 ---
 
+### Jason Cramer Branch (Updated)
+
+**Location:** `Jason_cramer`
+
+**Directory Structure:**
+```
+Jason_cramer/
+├── README.md
+├── armageddon_lab_1a/
+├── armageddon_deliverables_1a/
+├── armageddon_lab_1b/
+├── armageddon_deliverables_1b/
+├── armageddon_1c/
+│   ├── armageddon_lab_1c/ (Terraform)
+│   └── armageddon_deliverables_1c/ (1c, 1ca-1cf screenshots)
+└── armageddon_2/
+    ├── armageddon_lab_2/ (2ab, 2_beaman_a Terraform)
+    └── armageddon_deliverables_2/ (2a, 2b, 2b_beaman screenshots)
+```
+
+**Approach:** Terraform
+
+**Labs Covered:** Lab 1a, Lab 1b, Lab 1c, Lab 2a, Lab 2b
+
+---
+
 ### Jason Lee Branch
 
 **Location:** `Jason_Lee`
@@ -269,30 +297,35 @@ Walid_Ahmed/
 │   ├── 6-outputs.tf
 │   ├── templates/user_data.sh.tftpl
 │   └── evidence/ (8 screenshots)
-└── 1b/
-    ├── README.md
-    ├── RUNBOOK.md
-    ├── SECURITY.md
-    ├── 0-backend.tf
-    ├── 0-versions.tf
-    ├── 0.1-locals.tf
-    ├── 0.1-variables.tf
-    ├── 0.2-iam.tf
-    ├── 0.3-secrets.tf
-    ├── 1-providers.tf
-    ├── 2-network.tf
-    ├── 3-security_groups.tf
-    ├── 4-ec2.tf
-    ├── 5-rds.tf
-    ├── 6-cloudwatch.tf
-    ├── 7-outputs.tf
-    ├── templates/user_data.sh.tftpl
-    └── evidence/ (11 screenshots)
+├── 1b/
+│   ├── README.md
+│   ├── RUNBOOK.md
+│   ├── SECURITY.md
+│   ├── 0-backend.tf
+│   ├── 0-versions.tf
+│   ├── 0.1-locals.tf
+│   ├── 0.1-variables.tf
+│   ├── 0.2-iam.tf
+│   ├── 0.3-secrets.tf
+│   ├── 1-providers.tf
+│   ├── 2-network.tf
+│   ├── 3-security_groups.tf
+│   ├── 4-ec2.tf
+│   ├── 5-rds.tf
+│   ├── 6-cloudwatch.tf
+│   ├── 7-outputs.tf
+│   ├── templates/user_data.sh.tftpl
+│   └── evidence/ (11 screenshots)
+└── 1c/
+    ├── README.md, RUNBOOK.md, SECURITY.md
+    ├── *.tf (17 Terraform files)
+    ├── templates/ (user_data.sh.tftpl, user_data_legacy.sh.tftpl)
+    └── tools/ (release pipeline scripts)
 ```
 
 **Approach:** Terraform
 
-**Labs Covered:** Lab 1a, Lab 1b
+**Labs Covered:** Lab 1a, Lab 1b, Lab 1c
 
 ---
 
@@ -304,11 +337,22 @@ Walid_Ahmed/
 ```
 Willie_Bright/
 ├── README.md
+├── Lab_notes/ (PDF study notes, Labs 1a-3)
 ├── lab1/
 │   ├── 1a/ (Terraform + deliverables)
 │   └── 1b/ (Terraform + deliverables)
 ├── lab2/
+│   ├── Lab2_README.md
+│   ├── lab 2a/ (Terraform + CLI screenshots)
+│   └── lab 2b/ (Lab2B_a/, Lab2B_b/ Terraform)
 └── lab3/
+    ├── Lab3_README.md
+    ├── Lab_3a_CLI/ (screenshots)
+    ├── Lab_3b/
+    │   ├── Tokyo/ (Terraform)
+    │   ├── saopaulo/ (Terraform)
+    │   └── audit-pack/ (scripts + narrative)
+    └── saopaulo-3a/ (Terraform)
 ```
 
 **Approach:** Terraform
@@ -332,6 +376,7 @@ Willie_Bright/
 - CloudFront (Lab 2a)
 - ACM (Lab 2a)
 - ElastiCache (Lab 2b)
+- Transit Gateway (Lab 3)
 
 **Infrastructure Tools:**
 - Terraform >= 1.5.0 (where applicable)
@@ -351,11 +396,11 @@ Willie_Bright/
 |--------------|-------------|---------------|---------------|----------|--------------|--------------|--------------|-----------|------------------|-------------|-------------|
 | **Lab 1a README** | `1a/README.md` | `lab1/1a/` | `1a-tf/README.md` | `README.md` | - | `armageddon-1a/readme.md` | `armageddon_deliverables_1a/` | `README.md` | `*.rtf` files | `1a/1a_short_answers.txt` | `1a/1a.md` |
 | **Lab 1b README** | `1b/README.md` | `lab1/1b/` | `1bc-a-tf/README.md` | - | - | (in `armageddon-1a/`) | - | - | - | - | - |
-| **Lab 1c README** | - | - | `1c-b-tf/README.md`, `1c-c-tf/README.md` | - | - | - | - | - | - | - | - |
-| **Terraform Files** | `1a/*.tf`, `1b/*.tf` | `lab1/1a/*.tf`, `lab1/1b/*.tf` | `1a-tf/`, `1bc-a-tf/`, `1c-b-tf/`, `1c-c-tf/` | - | `section1c/` | `armageddon-1a/` | `armageddon_lab_1a/` | - | - | `1a/Armageddon_1/` | - |
+| **Lab 1c README** | `1c/README.md` | - | `1c-b-tf/README.md`, `1c-c-tf/README.md` | - | - | - | - | - | - | - | - |
+| **Terraform Files** | `1a/*.tf`, `1b/*.tf`, `1c/*.tf` | `lab1/1a/*.tf`, `lab1/1b/*.tf` | `1a-tf/`, `1bc-a-tf/`, `1c-b-tf/`, `1c-c-tf/` | - | `section1c/` | `armageddon-1a/` | `armageddon_lab_1a/` | - | - | `1a/Armageddon_1/` | - |
 | **Evidence/Screenshots** | `1a/evidence/`, `1b/evidence/` | `lab1/1a/`, `lab1/1b/` | `proof-*` folders | (in branch root) | - | `armageddon-1a/evidence/` | `armageddon_deliverables_1a/` | (in README.md) | `Student Deliverables.rtfd/` | `1a/` |
-| **Runbooks** | `1a/RUNBOOK.md`, `1b/RUNBOOK.md` | - | - | - | - | - | - | - | - | - | - |
-| **Security Docs** | `1a/SECURITY.md`, `1b/SECURITY.md` | - | - | - | - | - | - | - | - | - | - |
+| **Runbooks** | `1a/RUNBOOK.md`, `1b/RUNBOOK.md`, `1c/RUNBOOK.md` | - | - | - | - | - | - | - | - | - | - |
+| **Security Docs** | `1a/SECURITY.md`, `1b/SECURITY.md`, `1c/SECURITY.md` | - | - | - | - | - | - | - | - | - | - |
 
 ---
 
