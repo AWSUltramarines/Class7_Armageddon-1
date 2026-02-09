@@ -1,0 +1,3 @@
+2b_be_a_man_A_Paragraph
+
+Origin driven caching is safer for APIs because it dictates caching requirements. It can control what's cached, how long its cached for, controls authorization, and removes the burden from configuration resources. Disabling caching entirely is the best choice when dealing with sensitive or quickly changing data. Cached data should never reach the wrong person, or be delivered at the wrong time. 
