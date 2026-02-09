@@ -1,0 +1,599 @@
+[0m[1mmodule.cloudfront.data.aws_cloudfront_origin_request_policy.managed_all_viewer: Reading...[0m[0m
+[0m[1mmodule.waf.data.aws_region.region: Reading...[0m[0m
+[0m[1mmodule.iam.data.aws_region.region: Reading...[0m[0m
+[0m[1mmodule.s3bucket.data.aws_region.region: Reading...[0m[0m
+[0m[1mmodule.waf.aws_cloudwatch_log_group.waf_log_group[0]: Refreshing state... [id=aws-waf-logs-shinjuku-webacl][0m
+[0m[1mmodule.cloudfront.aws_cloudfront_cache_policy.static_cache: Refreshing state... [id=fae88f9f-5648-44d6-bbb2-3375fe569d8c][0m
+[0m[1mmodule.cloudfront.aws_cloudfront_origin_request_policy.orp_static: Refreshing state... [id=cfa031a8-13a6-49df-bf72-47ad1ce71786][0m
+[0m[1maws_ec2_transit_gateway.shinjuku_tgwlab3[0]: Refreshing state... [id=tgw-049e964d5b6ef477c][0m
+[0m[1mmodule.route53.aws_acm_certificate.cert: Refreshing state... [id=arn:aws:acm:ap-northeast-1:519046118835:certificate/de0656fe-0e06-4929-a87d-a4d641654ca3][0m
+[0m[1mmodule.s3bucket.data.aws_region.region: Read complete after 0s [id=ap-northeast-1][0m
+[0m[1mmodule.iam.data.aws_region.region: Read complete after 0s [id=ap-northeast-1][0m
+[0m[1mmodule.waf.data.aws_region.region: Read complete after 0s [id=ap-northeast-1][0m
+[0m[1mmodule.load_balancer.data.aws_route53_zone.main: Reading...[0m[0m
+[0m[1mmodule.compute.data.aws_ssm_parameter.al2023: Reading...[0m[0m
+[0m[1mmodule.cloudfront.aws_cloudfront_response_headers_policy.rsp_static: Refreshing state... [id=60e6a709-3bfc-4e76-9488-860a551f6f5b][0m
+[0m[1mmodule.route53.data.aws_route53_zone.main: Reading...[0m[0m
+[0m[1mmodule.iam.data.aws_caller_identity.self: Reading...[0m[0m
+[0m[1mmodule.secrets.aws_ssm_parameter.db_name_param: Refreshing state... [id=/lab/db/name][0m
+[0m[1mmodule.cloudfront.data.aws_cloudfront_origin_request_policy.managed_all_viewer: Read complete after 1s [id=216adef6-5c7f-47e4-b989-5492eafa07d3][0m
+[0m[1mmodule.waf.data.aws_caller_identity.self: Reading...[0m[0m
+[0m[1mmodule.iam.data.aws_caller_identity.self: Read complete after 0s [id=519046118835][0m
+[0m[1mmodule.network.aws_eip.nat_eip: Refreshing state... [id=eipalloc-0fdacc5ba95d87726][0m
+[0m[1mmodule.route53.data.aws_route53_zone.main: Read complete after 0s [id=Z04598541KI2U5K6285WU][0m
+[0m[1mmodule.iam.data.aws_iam_policy_document.ec2_assume_role: Reading...[0m[0m
+[0m[1mmodule.iam.data.aws_iam_policy_document.ec2_assume_role: Read complete after 0s [id=2851119427][0m
+[0m[1mmodule.cloudfront.aws_cloudfront_cache_policy.helga_cache_origin_driven01: Refreshing state... [id=17572175-6ec5-4f1c-963a-14e3321364ef][0m
+[0m[1mmodule.load_balancer.data.aws_route53_zone.main: Read complete after 1s [id=Z04598541KI2U5K6285WU][0m
+[0m[1mmodule.cloudfront.aws_cloudfront_origin_request_policy.orp_api: Refreshing state... [id=3deed884-f126-4197-abc6-16442cf5e201][0m
+[0m[1mmodule.alerts.aws_sns_topic.db_incidents: Refreshing state... [id=arn:aws:sns:ap-northeast-1:519046118835:lab_db_incidents][0m
+[0m[1mmodule.waf.data.aws_caller_identity.self: Read complete after 0s [id=519046118835][0m
+[0m[1mmodule.s3bucket.data.aws_caller_identity.self: Reading...[0m[0m
+[0m[1mmodule.network.data.aws_ec2_managed_prefix_list.cf_origin_facing: Reading...[0m[0m
+[0m[1mmodule.s3bucket.data.aws_caller_identity.self: Read complete after 0s [id=519046118835][0m
+[0m[1mmodule.alerts.aws_cloudwatch_log_group.app_logs: Refreshing state... [id=/aws/ec2/lab-rds-app][0m
+[0m[1mmodule.compute.data.aws_ssm_parameter.al2023: Read complete after 1s [id=/aws/service/ami-amazon-linux-latest/amzn2-ami-kernel-5.10-hvm-x86_64-gp2][0m
+[0m[1mmodule.network.aws_vpc.dev: Refreshing state... [id=vpc-0b8bf4989b007b138][0m
+[0m[1mmodule.cloudfront.aws_cloudfront_cache_policy.api-cache_disabled: Refreshing state... [id=1874c7f1-cf1a-4adf-862d-6373a0d1d893][0m
+[0m[1mmodule.iam.data.aws_iam_policy_document.compute2secrets_access: Reading...[0m[0m
+[0m[1mmodule.iam.data.aws_iam_policy_document.compute2secrets_access: Read complete after 0s [id=2131795768][0m
+[0m[1mmodule.iam.aws_iam_role.compute2secrets_role: Refreshing state... [id=shinjuku-compute2secrets-role][0m
+[0m[1mmodule.s3bucket.aws_s3_bucket.alb_logs_bucket[0]: Refreshing state... [id=shinjuku-alb-logs-519046118835][0m
+[0m[1maws_ec2_transit_gateway_peering_attachment.shinjuku_to_liberdade_peer01[0]: Refreshing state... [id=tgw-attach-0da6ed3ec694e49dd][0m
+[0m[1mmodule.waf.aws_wafv2_web_acl.main: Refreshing state... [id=c33aa2d5-fd38-44c1-9dda-411c072bb003][0m
+[0m[1mmodule.route53.aws_route53_record.cert_validation["dustycloudeng.click"]: Refreshing state... [id=Z04598541KI2U5K6285WU__1463bc9e2d2373d89539dff614eaf45a.dustycloudeng.click._CNAME][0m
+[0m[1mmodule.route53.aws_route53_record.cert_validation["app.dustycloudeng.click"]: Refreshing state... [id=Z04598541KI2U5K6285WU__1056726e207f687114afa45a1d4277c0.app.dustycloudeng.click._CNAME][0m
+[0m[1mmodule.iam.aws_iam_policy.compute2secrets_access_policy: Refreshing state... [id=arn:aws:iam::519046118835:policy/shinjuku-secrets-access][0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.compute2secrets_ssm_attach: Refreshing state... [id=shinjuku-compute2secrets-role/arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore][0m
+[0m[1mmodule.iam.aws_iam_instance_profile.compute2secrets_instance_profile: Refreshing state... [id=shinjuku-instance-profile][0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.compute2secrets_cw_attach: Refreshing state... [id=shinjuku-compute2secrets-role/arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy][0m
+[0m[1mmodule.alerts.aws_cloudwatch_log_metric_filter.db_failure: Refreshing state... [id=DBConnectionFailureFilter][0m
+[0m[1mmodule.alerts.aws_cloudwatch_metric_alarm.db_failure_alarm: Refreshing state... [id=lab-db-connection-failure][0m
+[0m[1mmodule.alerts.aws_sns_topic_subscription.sns_sub: Refreshing state... [id=arn:aws:sns:ap-northeast-1:519046118835:lab_db_incidents:0d39c517-09dc-47eb-ba37-50317c1c1364][0m
+[0m[1mmodule.network.data.aws_ec2_managed_prefix_list.cf_origin_facing: Read complete after 1s [id=pl-58a04531][0m
+[0m[1mmodule.route53.aws_acm_certificate_validation.cert[0]: Refreshing state... [id=2026-02-09 15:24:38.706 +0000 UTC][0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.compute2secrets_secrets_attach: Refreshing state... [id=shinjuku-compute2secrets-role/arn:aws:iam::519046118835:policy/shinjuku-secrets-access][0m
+[0m[1mmodule.network.aws_security_group.compute_sg: Refreshing state... [id=sg-044c04f4e37fa8439][0m
+[0m[1mmodule.network.aws_internet_gateway.igw: Refreshing state... [id=igw-0361123732ef16e02][0m
+[0m[1mmodule.network.aws_security_group.alb_cf: Refreshing state... [id=sg-0162d093e6f316113][0m
+[0m[1mmodule.network.aws_route_table.private: Refreshing state... [id=rtb-043fcdf7b514ef76a][0m
+[0m[1mmodule.network.aws_security_group.rds_sg: Refreshing state... [id=sg-010355f87ca05c466][0m
+[0m[1mmodule.network.aws_security_group.alb_sg: Refreshing state... [id=sg-02a45324fbe2b13f7][0m
+[0m[1mmodule.network.aws_route_table.public: Refreshing state... [id=rtb-0d54f042e77b786e0][0m
+[0m[1mmodule.network.aws_subnet.public[0]: Refreshing state... [id=subnet-0380c60f90de44333][0m
+[0m[1mmodule.network.aws_subnet.public[1]: Refreshing state... [id=subnet-0e9528ee0400c7ecb][0m
+[0m[1mmodule.network.aws_subnet.private[0]: Refreshing state... [id=subnet-058523cd27f2374f6][0m
+[0m[1mmodule.network.aws_subnet.private[1]: Refreshing state... [id=subnet-075f110a2ea24b1a7][0m
+[0m[1mmodule.network.aws_security_group.vpce_sg: Refreshing state... [id=sg-064ab6c290f801702][0m
+[0m[1mmodule.network.aws_route.public_internet: Refreshing state... [id=r-rtb-0d54f042e77b786e01080289494][0m
+[0m[1mmodule.compute.aws_lb_target_group.dev_tg: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-northeast-1:519046118835:targetgroup/tf-20260209152441007400000004/8f90fd9018dec7c8][0m
+[0m[1mmodule.network.aws_vpc_security_group_egress_rule.alb_egress_rules: Refreshing state... [id=sgr-0ee39d1b58a6e923f][0m
+[0m[1mmodule.network.aws_vpc_security_group_ingress_rule.alb_http_rules: Refreshing state... [id=sgr-06e2c6a1a624c577d][0m
+[0m[1mmodule.network.aws_vpc_security_group_ingress_rule.alb_https_rules: Refreshing state... [id=sgr-0506b0eda3933430e][0m
+[0m[1mmodule.network.aws_vpc_security_group_egress_rule.rds_egress_rules: Refreshing state... [id=sgr-0e7b88b1539e7e393][0m
+[0m[1mmodule.network.aws_security_group_rule.alb_ingress_cf443: Refreshing state... [id=sgrule-2940558062][0m
+[0m[1mmodule.network.aws_vpc_security_group_egress_rule.alb_egress_cf: Refreshing state... [id=sgr-07fb942a59eb0c379][0m
+[0m[1mmodule.network.aws_vpc_security_group_ingress_rule.compute_to_alb: Refreshing state... [id=sgr-036c61c845b7f463c][0m
+[0m[1maws_route.shinjuku_to_sp_route01[0]: Refreshing state... [id=r-rtb-043fcdf7b514ef76a1850180784][0m
+[0m[1mmodule.network.aws_vpc_security_group_egress_rule.compute_to_alb: Refreshing state... [id=sgr-09daf6effab6b2cf7][0m
+[0m[1mmodule.network.aws_vpc_security_group_ingress_rule.compute_to_rds: Refreshing state... [id=sgr-04a78ec6486f23571][0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Refreshing state... [id=nat-0448a5b198ca99231][0m
+[0m[1mmodule.network.aws_route_table_association.public[0]: Refreshing state... [id=rtbassoc-04381b55f7e043fb7][0m
+[0m[1mmodule.network.aws_route_table_association.public[1]: Refreshing state... [id=rtbassoc-05cf2823fedfe202f][0m
+[0m[1mmodule.network.aws_db_subnet_group.default: Refreshing state... [id=shinjuku-rds-subnet-group][0m
+[0m[1mmodule.network.aws_route_table_association.private[1]: Refreshing state... [id=rtbassoc-08f50d790dc65e154][0m
+[0m[1mmodule.network.aws_route_table_association.private[0]: Refreshing state... [id=rtbassoc-01a7056ecc6bd221d][0m
+[0m[1mmodule.network.aws_vpc_security_group_ingress_rule.allow_https: Refreshing state... [id=sgr-0145ed206d9e897e7][0m
+[0m[1mmodule.network.aws_vpc_security_group_egress_rule.vpce_egress_rules: Refreshing state... [id=sgr-090ab4e925878f4a7][0m
+[0m[1mmodule.vpc_endpoints.aws_vpc_endpoint.s3: Refreshing state... [id=vpce-0e49854dd8fd3439c][0m
+[0m[1maws_ec2_transit_gateway_vpc_attachment.shinjuku_attach_tokyo_vpclab3[0]: Refreshing state... [id=tgw-attach-05bb734968c713f26][0m
+[0m[1mmodule.network.aws_route.private_nat: Refreshing state... [id=r-rtb-043fcdf7b514ef76a1080289494][0m
+[0m[1maws_security_group_rule.shinjuku_rds_ingress_from_liberdade01[0]: Refreshing state... [id=sgrule-2780220100][0m
+[0m[1mmodule.compute.aws_instance.test_server: Refreshing state... [id=i-0e29ab0337bd47b12][0m
+[0m[1mmodule.vpc_endpoints.aws_vpc_endpoint.interface["secretsmanager"]: Refreshing state... [id=vpce-03935c8837982753e][0m
+[0m[1mmodule.vpc_endpoints.aws_vpc_endpoint.interface["logs"]: Refreshing state... [id=vpce-00e98d196e229481c][0m
+[0m[1mmodule.vpc_endpoints.aws_vpc_endpoint.interface["ssm"]: Refreshing state... [id=vpce-085afdd1f9d8b87ea][0m
+[0m[1mmodule.vpc_endpoints.aws_vpc_endpoint.interface["kms"]: Refreshing state... [id=vpce-04525202c7a47418d][0m
+[0m[1mmodule.vpc_endpoints.aws_vpc_endpoint.interface["ssmmessages"]: Refreshing state... [id=vpce-0120ae9b0ee58fcb6][0m
+[0m[1mmodule.vpc_endpoints.aws_vpc_endpoint.interface["ec2messages"]: Refreshing state... [id=vpce-098a83d29b183631b][0m
+[0m[1mmodule.waf.aws_wafv2_web_acl_logging_configuration.main: Refreshing state... [id=arn:aws:wafv2:ap-northeast-1:519046118835:regional/webacl/shinjuku-web-acl/c33aa2d5-fd38-44c1-9dda-411c072bb003][0m
+[0m[1mmodule.database.aws_db_instance.rds_instance: Refreshing state... [id=db-FUK5BFW7QI5XXSTSL5GX4FT4GI][0m
+[0m[1mmodule.s3bucket.aws_s3_bucket_public_access_block.alb_logs_pab[0]: Refreshing state... [id=shinjuku-alb-logs-519046118835][0m
+[0m[1mmodule.s3bucket.aws_s3_bucket_ownership_controls.alb_logs_owner[0]: Refreshing state... [id=shinjuku-alb-logs-519046118835][0m
+[0m[1mmodule.s3bucket.aws_s3_bucket_policy.alb_logs_policy[0]: Refreshing state... [id=shinjuku-alb-logs-519046118835][0m
+[0m[1mmodule.load_balancer.aws_lb.dev_alb: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-northeast-1:519046118835:loadbalancer/app/shinjuku-app-lb/17b5b0707e3d6613][0m
+[0m[1mmodule.secrets.aws_ssm_parameter.db_port_param: Refreshing state... [id=/lab/db/port][0m
+[0m[1mmodule.secrets.aws_ssm_parameter.db_endpoint_param: Refreshing state... [id=/lab/db/endpoint][0m
+[0m[1mmodule.waf.aws_wafv2_web_acl_association.main: Refreshing state... [id=arn:aws:wafv2:ap-northeast-1:519046118835:regional/webacl/shinjuku-web-acl/c33aa2d5-fd38-44c1-9dda-411c072bb003,arn:aws:elasticloadbalancing:ap-northeast-1:519046118835:loadbalancer/app/shinjuku-app-lb/17b5b0707e3d6613][0m
+[0m[1mmodule.alerts.aws_cloudwatch_metric_alarm.alb_5xx_alarm: Refreshing state... [id=shinjuku-alb-5xx-errors][0m
+[0m[1mmodule.load_balancer.aws_lb_listener.redirect: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-northeast-1:519046118835:listener/app/shinjuku-app-lb/17b5b0707e3d6613/64d3205c813af184][0m
+[0m[1mmodule.load_balancer.aws_lb_listener.https: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-northeast-1:519046118835:listener/app/shinjuku-app-lb/17b5b0707e3d6613/ce1204f7e5a8b4da][0m
+[0m[1mmodule.load_balancer.aws_lb_listener_rule.default_block: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-northeast-1:519046118835:listener-rule/app/shinjuku-app-lb/17b5b0707e3d6613/ce1204f7e5a8b4da/d9bdb6b31f069c47][0m
+[0m[1mmodule.load_balancer.aws_lb_listener_rule.require_origin_header: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-northeast-1:519046118835:listener-rule/app/shinjuku-app-lb/17b5b0707e3d6613/ce1204f7e5a8b4da/861fc2a1b80861b4][0m
+[0m[1mmodule.compute.aws_lb_target_group_attachment.tg_attachment: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-northeast-1:519046118835:targetgroup/tf-20260209152441007400000004/8f90fd9018dec7c8-20260209152513641900000010][0m
+[0m[1mmodule.alerts.aws_cloudwatch_dashboard.main: Refreshing state... [id=shinjuku-app-health][0m
+[0m[1mmodule.compute.aws_launch_template.dev_lt: Refreshing state... [id=lt-0370f740d88d52ff1][0m
+[0m[1mmodule.autoscaling.aws_autoscaling_group.dev_asg: Refreshing state... [id=shinjuku-asg-20260209152526714000000011][0m
+[0m[1mmodule.autoscaling.aws_autoscaling_attachment.dev_asg_attachment: Refreshing state... [id=shinjuku-asg-20260209152526714000000011-20260209152645023400000012][0m
+[0m[1mmodule.autoscaling.aws_autoscaling_policy.dev_scaling_policy: Refreshing state... [id=shinjuku-scaling-policy][0m
+
+[1m[36mNote:[0m[1m Objects have changed outside of Terraform
+[0m
+Terraform detected the following changes made outside of Terraform since the
+last "terraform apply" which may have affected this plan:
+
+[1m  # module.route53.aws_acm_certificate.cert[0m has changed
+[0m  [33m~[0m[0m resource "aws_acm_certificate" "cert" {
+        id                        = "arn:aws:acm:ap-northeast-1:519046118835:certificate/de0656fe-0e06-4929-a87d-a4d641654ca3"
+      [33m~[0m[0m status                    = "PENDING_VALIDATION" [33m->[0m[0m "ISSUED"
+        [90m# (17 unchanged attributes hidden)[0m[0m
+
+        [90m# (1 unchanged block hidden)[0m[0m
+    }
+
+
+Unless you have made equivalent changes to your configuration, or ignored the
+relevant attributes using ignore_changes, the following plan may include
+actions to undo or respond to these changes.
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+  [33m~[0m update in-place[0m
+[31m-[0m/[32m+[0m destroy and then create replacement[0m
+[32m+[0m/[31m-[0m create replacement and then destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # aws_ec2_transit_gateway_route.shinjuku_route_to_liberdade[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_ec2_transit_gateway_route" "shinjuku_route_to_liberdade" {
+      [32m+[0m[0m blackhole                      = false
+      [32m+[0m[0m destination_cidr_block         = "10.214.0.0/16"
+      [32m+[0m[0m id                             = (known after apply)
+      [32m+[0m[0m region                         = "ap-northeast-1"
+      [32m+[0m[0m transit_gateway_attachment_id  = "tgw-attach-0da6ed3ec694e49dd"
+      [32m+[0m[0m transit_gateway_route_table_id = "tgw-rtb-0d63536ede090eed8"
+    }
+
+[1m  # module.alerts.aws_cloudwatch_dashboard.main[0m will be updated in-place
+[0m  [33m~[0m[0m resource "aws_cloudwatch_dashboard" "main" {
+      [33m~[0m[0m dashboard_body = jsonencode(
+            {
+              [31m-[0m[0m widgets = [
+                  [31m-[0m[0m {
+                      [31m-[0m[0m height     = 6
+                      [31m-[0m[0m properties = {
+                          [31m-[0m[0m metrics = [
+                              [31m-[0m[0m [
+                                  [31m-[0m[0m "AWS/EC2",
+                                  [31m-[0m[0m "CPUUtilization",
+                                  [31m-[0m[0m "InstanceId",
+                                  [31m-[0m[0m "i-0e29ab0337bd47b12",
+                                ],
+                            ]
+                          [31m-[0m[0m period  = 300
+                          [31m-[0m[0m region  = "ap-northeast-1"
+                          [31m-[0m[0m stat    = "Average"
+                          [31m-[0m[0m title   = "EC2 CPU Utilization (%)"
+                        }
+                      [31m-[0m[0m type       = "metric"
+                      [31m-[0m[0m width      = 12
+                      [31m-[0m[0m x          = 0
+                      [31m-[0m[0m y          = 0
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m height     = 6
+                      [31m-[0m[0m properties = {
+                          [31m-[0m[0m metrics = [
+                              [31m-[0m[0m [
+                                  [31m-[0m[0m "AWS/ApplicationELB",
+                                  [31m-[0m[0m "RequestCount",
+                                  [31m-[0m[0m "LoadBalancer",
+                                  [31m-[0m[0m "app/shinjuku-app-lb/17b5b0707e3d6613",
+                                ],
+                            ]
+                          [31m-[0m[0m period  = 60
+                          [31m-[0m[0m region  = "ap-northeast-1"
+                          [31m-[0m[0m stat    = "Sum"
+                          [31m-[0m[0m title   = "Total ALB Requests"
+                        }
+                      [31m-[0m[0m type       = "metric"
+                      [31m-[0m[0m width      = 12
+                      [31m-[0m[0m x          = 12
+                      [31m-[0m[0m y          = 0
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m height     = 6
+                      [31m-[0m[0m properties = {
+                          [31m-[0m[0m metrics = [
+                              [31m-[0m[0m [
+                                  [31m-[0m[0m "AWS/ApplicationELB",
+                                  [31m-[0m[0m "TargetResponseTime",
+                                  [31m-[0m[0m "LoadBalancer",
+                                  [31m-[0m[0m "app/shinjuku-app-lb/17b5b0707e3d6613",
+                                ],
+                            ]
+                          [31m-[0m[0m period  = 60
+                          [31m-[0m[0m region  = "ap-northeast-1"
+                          [31m-[0m[0m stat    = "Average"
+                          [31m-[0m[0m title   = "Avg App Response Time (ms)"
+                        }
+                      [31m-[0m[0m type       = "metric"
+                      [31m-[0m[0m width      = 12
+                      [31m-[0m[0m x          = 0
+                      [31m-[0m[0m y          = 7
+                    },
+                  [31m-[0m[0m {
+                      [31m-[0m[0m height     = 6
+                      [31m-[0m[0m properties = {
+                          [31m-[0m[0m color   = "#d62728"
+                          [31m-[0m[0m metrics = [
+                              [31m-[0m[0m [
+                                  [31m-[0m[0m "AWS/ApplicationELB",
+                                  [31m-[0m[0m "HTTPCode_ELB_5XX_Count",
+                                  [31m-[0m[0m "LoadBalancer",
+                                  [31m-[0m[0m "app/shinjuku-app-lb/17b5b0707e3d6613",
+                                ],
+                            ]
+                          [31m-[0m[0m period  = 60
+                          [31m-[0m[0m region  = "ap-northeast-1"
+                          [31m-[0m[0m stat    = "Sum"
+                          [31m-[0m[0m title   = "ALB 5xx Server Errors"
+                        }
+                      [31m-[0m[0m type       = "metric"
+                      [31m-[0m[0m width      = 12
+                      [31m-[0m[0m x          = 12
+                      [31m-[0m[0m y          = 7
+                    },
+                ]
+            }
+        ) -> (known after apply)
+        id             = "shinjuku-app-health"
+        [90m# (3 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.cloudfront.aws_cloudfront_distribution.cf_distro[0m will be created
+[0m  [32m+[0m[0m resource "aws_cloudfront_distribution" "cf_distro" {
+      [32m+[0m[0m aliases                         = [
+          [32m+[0m[0m "app.dustycloudeng.click",
+          [32m+[0m[0m "dustycloudeng.click",
+        ]
+      [32m+[0m[0m arn                             = (known after apply)
+      [32m+[0m[0m caller_reference                = (known after apply)
+      [32m+[0m[0m continuous_deployment_policy_id = (known after apply)
+      [32m+[0m[0m domain_name                     = (known after apply)
+      [32m+[0m[0m enabled                         = true
+      [32m+[0m[0m etag                            = (known after apply)
+      [32m+[0m[0m hosted_zone_id                  = (known after apply)
+      [32m+[0m[0m http_version                    = "http2"
+      [32m+[0m[0m id                              = (known after apply)
+      [32m+[0m[0m in_progress_validation_batches  = (known after apply)
+      [32m+[0m[0m is_ipv6_enabled                 = true
+      [32m+[0m[0m last_modified_time              = (known after apply)
+      [32m+[0m[0m logging_v1_enabled              = (known after apply)
+      [32m+[0m[0m price_class                     = "PriceClass_100"
+      [32m+[0m[0m retain_on_delete                = false
+      [32m+[0m[0m staging                         = false
+      [32m+[0m[0m status                          = (known after apply)
+      [32m+[0m[0m tags                            = {
+          [32m+[0m[0m "Environment" = "production"
+        }
+      [32m+[0m[0m tags_all                        = {
+          [32m+[0m[0m "Environment" = "production"
+        }
+      [32m+[0m[0m trusted_key_groups              = (known after apply)
+      [32m+[0m[0m trusted_signers                 = (known after apply)
+      [32m+[0m[0m wait_for_deployment             = true
+      [32m+[0m[0m web_acl_id                      = (known after apply)
+
+      [32m+[0m[0m default_cache_behavior {
+          [32m+[0m[0m allowed_methods          = [
+              [32m+[0m[0m "DELETE",
+              [32m+[0m[0m "GET",
+              [32m+[0m[0m "HEAD",
+              [32m+[0m[0m "OPTIONS",
+              [32m+[0m[0m "PATCH",
+              [32m+[0m[0m "POST",
+              [32m+[0m[0m "PUT",
+            ]
+          [32m+[0m[0m cache_policy_id          = "1874c7f1-cf1a-4adf-862d-6373a0d1d893"
+          [32m+[0m[0m cached_methods           = [
+              [32m+[0m[0m "GET",
+              [32m+[0m[0m "HEAD",
+            ]
+          [32m+[0m[0m compress                 = false
+          [32m+[0m[0m default_ttl              = (known after apply)
+          [32m+[0m[0m max_ttl                  = (known after apply)
+          [32m+[0m[0m min_ttl                  = 0
+          [32m+[0m[0m origin_request_policy_id = "3deed884-f126-4197-abc6-16442cf5e201"
+          [32m+[0m[0m target_origin_id         = "shinjuku-alb-origin"
+          [32m+[0m[0m trusted_key_groups       = (known after apply)
+          [32m+[0m[0m trusted_signers          = (known after apply)
+          [32m+[0m[0m viewer_protocol_policy   = "redirect-to-https"
+
+          [32m+[0m[0m grpc_config (known after apply)
+        }
+
+      [32m+[0m[0m ordered_cache_behavior {
+          [32m+[0m[0m allowed_methods            = [
+              [32m+[0m[0m "GET",
+              [32m+[0m[0m "HEAD",
+              [32m+[0m[0m "OPTIONS",
+            ]
+          [32m+[0m[0m cache_policy_id            = "fae88f9f-5648-44d6-bbb2-3375fe569d8c"
+          [32m+[0m[0m cached_methods             = [
+              [32m+[0m[0m "GET",
+              [32m+[0m[0m "HEAD",
+            ]
+          [32m+[0m[0m compress                   = false
+          [32m+[0m[0m default_ttl                = (known after apply)
+          [32m+[0m[0m max_ttl                    = (known after apply)
+          [32m+[0m[0m min_ttl                    = 0
+          [32m+[0m[0m origin_request_policy_id   = "cfa031a8-13a6-49df-bf72-47ad1ce71786"
+          [32m+[0m[0m path_pattern               = "/static/*"
+          [32m+[0m[0m response_headers_policy_id = "60e6a709-3bfc-4e76-9488-860a551f6f5b"
+          [32m+[0m[0m target_origin_id           = "shinjuku-alb-origin"
+          [32m+[0m[0m viewer_protocol_policy     = "redirect-to-https"
+
+          [32m+[0m[0m grpc_config (known after apply)
+        }
+
+      [32m+[0m[0m origin {
+          [32m+[0m[0m connection_attempts         = 3
+          [32m+[0m[0m connection_timeout          = 10
+          [32m+[0m[0m domain_name                 = "shinjuku-app-lb-1744238258.ap-northeast-1.elb.amazonaws.com"
+          [32m+[0m[0m origin_id                   = "shinjuku-alb-origin"
+          [32m+[0m[0m response_completion_timeout = (known after apply)
+            [90m# (2 unchanged attributes hidden)[0m[0m
+
+          [32m+[0m[0m custom_header {
+              [32m+[0m[0m name  = "X-Custom-Header"
+              [32m+[0m[0m value = "ZXCasdQWE!23"
+            }
+
+          [32m+[0m[0m custom_origin_config {
+              [32m+[0m[0m http_port                = 80
+              [32m+[0m[0m https_port               = 443
+              [32m+[0m[0m origin_keepalive_timeout = 5
+              [32m+[0m[0m origin_protocol_policy   = "https-only"
+              [32m+[0m[0m origin_read_timeout      = 30
+              [32m+[0m[0m origin_ssl_protocols     = [
+                  [32m+[0m[0m "TLSv1.2",
+                ]
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            }
+        }
+
+      [32m+[0m[0m restrictions {
+          [32m+[0m[0m geo_restriction {
+              [32m+[0m[0m locations        = (known after apply)
+              [32m+[0m[0m restriction_type = "none"
+            }
+        }
+
+      [32m+[0m[0m viewer_certificate {
+          [32m+[0m[0m acm_certificate_arn      = "arn:aws:acm:ap-northeast-1:519046118835:certificate/de0656fe-0e06-4929-a87d-a4d641654ca3"
+          [32m+[0m[0m minimum_protocol_version = "TLSv1.2_2021"
+          [32m+[0m[0m ssl_support_method       = "sni-only"
+        }
+    }
+
+[1m  # module.compute.aws_instance.test_server[0m must be [1m[31mreplaced[0m
+[0m[32m+[0m/[31m-[0m[0m resource "aws_instance" "test_server" {
+      [33m~[0m[0m arn                                  = "arn:aws:ec2:ap-northeast-1:519046118835:instance/i-0e29ab0337bd47b12" -> (known after apply)
+      [33m~[0m[0m availability_zone                    = "ap-northeast-1a" -> (known after apply)
+      [33m~[0m[0m disable_api_stop                     = false -> (known after apply)
+      [33m~[0m[0m disable_api_termination              = false -> (known after apply)
+      [33m~[0m[0m ebs_optimized                        = false -> (known after apply)
+      [32m+[0m[0m enable_primary_ipv6                  = (known after apply)
+      [31m-[0m[0m hibernation                          = false [90m-> null[0m[0m
+      [32m+[0m[0m host_id                              = (known after apply)
+      [32m+[0m[0m host_resource_group_arn              = (known after apply)
+      [33m~[0m[0m id                                   = "i-0e29ab0337bd47b12" -> (known after apply)
+      [33m~[0m[0m instance_initiated_shutdown_behavior = "stop" -> (known after apply)
+      [32m+[0m[0m instance_lifecycle                   = (known after apply)
+      [33m~[0m[0m instance_state                       = "running" -> (known after apply)
+      [33m~[0m[0m ipv6_address_count                   = 0 -> (known after apply)
+      [33m~[0m[0m ipv6_addresses                       = [] -> (known after apply)
+      [32m+[0m[0m key_name                             = (known after apply)
+      [33m~[0m[0m monitoring                           = false -> (known after apply)
+      [32m+[0m[0m outpost_arn                          = (known after apply)
+      [32m+[0m[0m password_data                        = (known after apply)
+      [32m+[0m[0m placement_group                      = (known after apply)
+      [32m+[0m[0m placement_group_id                   = (known after apply)
+      [33m~[0m[0m placement_partition_number           = 0 -> (known after apply)
+      [33m~[0m[0m primary_network_interface_id         = "eni-02ee8c7abfb41fb91" -> (known after apply)
+      [33m~[0m[0m private_dns                          = "ip-10-241-101-35.ap-northeast-1.compute.internal" -> (known after apply)
+      [33m~[0m[0m private_ip                           = "10.241.101.35" -> (known after apply)
+      [32m+[0m[0m public_dns                           = (known after apply)
+      [32m+[0m[0m public_ip                            = (known after apply)
+      [33m~[0m[0m secondary_private_ips                = [] -> (known after apply)
+      [33m~[0m[0m security_groups                      = [ [31m# forces replacement[0m[0m
+          [32m+[0m[0m "sg-044c04f4e37fa8439",
+        ]
+      [32m+[0m[0m spot_instance_request_id             = (known after apply)
+        tags                                 = {
+            "Name"      = "shinjuku-web-server"
+            "Terraform" = "Made in Terraform"
+        }
+      [33m~[0m[0m tenancy                              = "default" -> (known after apply)
+      [33m~[0m[0m vpc_security_group_ids               = [
+          [31m-[0m[0m "sg-044c04f4e37fa8439",
+        ] -> (known after apply)
+        [90m# (12 unchanged attributes hidden)[0m[0m
+
+      [33m~[0m[0m capacity_reservation_specification (known after apply)
+      [31m-[0m[0m capacity_reservation_specification {
+          [31m-[0m[0m capacity_reservation_preference = "open" [90m-> null[0m[0m
+        }
+
+      [33m~[0m[0m cpu_options (known after apply)
+      [31m-[0m[0m cpu_options {
+          [31m-[0m[0m core_count       = 1 [90m-> null[0m[0m
+          [31m-[0m[0m threads_per_core = 2 [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+        }
+
+      [31m-[0m[0m credit_specification {
+          [31m-[0m[0m cpu_credits = "unlimited" [90m-> null[0m[0m
+        }
+
+      [33m~[0m[0m ebs_block_device (known after apply)
+
+      [33m~[0m[0m enclave_options (known after apply)
+      [31m-[0m[0m enclave_options {
+          [31m-[0m[0m enabled = false [90m-> null[0m[0m
+        }
+
+      [33m~[0m[0m ephemeral_block_device (known after apply)
+
+      [33m~[0m[0m instance_market_options (known after apply)
+
+      [33m~[0m[0m maintenance_options (known after apply)
+      [31m-[0m[0m maintenance_options {
+          [31m-[0m[0m auto_recovery = "default" [90m-> null[0m[0m
+        }
+
+      [33m~[0m[0m metadata_options (known after apply)
+      [31m-[0m[0m metadata_options {
+          [31m-[0m[0m http_endpoint               = "enabled" [90m-> null[0m[0m
+          [31m-[0m[0m http_protocol_ipv6          = "disabled" [90m-> null[0m[0m
+          [31m-[0m[0m http_put_response_hop_limit = 1 [90m-> null[0m[0m
+          [31m-[0m[0m http_tokens                 = "optional" [90m-> null[0m[0m
+          [31m-[0m[0m instance_metadata_tags      = "disabled" [90m-> null[0m[0m
+        }
+
+      [33m~[0m[0m network_interface (known after apply)
+
+      [33m~[0m[0m primary_network_interface (known after apply)
+      [31m-[0m[0m primary_network_interface {
+          [31m-[0m[0m delete_on_termination = true [90m-> null[0m[0m
+          [31m-[0m[0m network_interface_id  = "eni-02ee8c7abfb41fb91" [90m-> null[0m[0m
+        }
+
+      [33m~[0m[0m private_dns_name_options (known after apply)
+      [31m-[0m[0m private_dns_name_options {
+          [31m-[0m[0m enable_resource_name_dns_a_record    = false [90m-> null[0m[0m
+          [31m-[0m[0m enable_resource_name_dns_aaaa_record = false [90m-> null[0m[0m
+          [31m-[0m[0m hostname_type                        = "ip-name" [90m-> null[0m[0m
+        }
+
+      [33m~[0m[0m root_block_device (known after apply)
+      [31m-[0m[0m root_block_device {
+          [31m-[0m[0m delete_on_termination = true [90m-> null[0m[0m
+          [31m-[0m[0m device_name           = "/dev/xvda" [90m-> null[0m[0m
+          [31m-[0m[0m encrypted             = false [90m-> null[0m[0m
+          [31m-[0m[0m iops                  = 100 [90m-> null[0m[0m
+          [31m-[0m[0m tags                  = {} [90m-> null[0m[0m
+          [31m-[0m[0m tags_all              = {} [90m-> null[0m[0m
+          [31m-[0m[0m throughput            = 0 [90m-> null[0m[0m
+          [31m-[0m[0m volume_id             = "vol-0fe35a968e145f46e" [90m-> null[0m[0m
+          [31m-[0m[0m volume_size           = 8 [90m-> null[0m[0m
+          [31m-[0m[0m volume_type           = "gp2" [90m-> null[0m[0m
+            [90m# (1 unchanged attribute hidden)[0m[0m
+        }
+    }
+
+[1m  # module.compute.aws_lb_target_group_attachment.tg_attachment[0m must be [1m[31mreplaced[0m
+[0m[31m-[0m/[32m+[0m[0m resource "aws_lb_target_group_attachment" "tg_attachment" {
+      [33m~[0m[0m id               = "arn:aws:elasticloadbalancing:ap-northeast-1:519046118835:targetgroup/tf-20260209152441007400000004/8f90fd9018dec7c8-20260209152513641900000010" -> (known after apply)
+      [33m~[0m[0m target_id        = "i-0e29ab0337bd47b12" -> (known after apply) [31m# forces replacement[0m[0m
+        [90m# (3 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.route53.aws_route53_record.apex_alias[0m will be created
+[0m  [32m+[0m[0m resource "aws_route53_record" "apex_alias" {
+      [32m+[0m[0m allow_overwrite = (known after apply)
+      [32m+[0m[0m fqdn            = (known after apply)
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m name            = "dustycloudeng.click"
+      [32m+[0m[0m type            = "A"
+      [32m+[0m[0m zone_id         = "Z04598541KI2U5K6285WU"
+
+      [32m+[0m[0m alias {
+          [32m+[0m[0m evaluate_target_health = false
+          [32m+[0m[0m name                   = (known after apply)
+          [32m+[0m[0m zone_id                = (known after apply)
+        }
+    }
+
+[1m  # module.route53.aws_route53_record.app[0m will be created
+[0m  [32m+[0m[0m resource "aws_route53_record" "app" {
+      [32m+[0m[0m allow_overwrite = (known after apply)
+      [32m+[0m[0m fqdn            = (known after apply)
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m name            = "app.dustycloudeng.click"
+      [32m+[0m[0m type            = "A"
+      [32m+[0m[0m zone_id         = "Z04598541KI2U5K6285WU"
+
+      [32m+[0m[0m alias {
+          [32m+[0m[0m evaluate_target_health = false
+          [32m+[0m[0m name                   = (known after apply)
+          [32m+[0m[0m zone_id                = (known after apply)
+        }
+    }
+
+[1m  # module.waf.aws_wafv2_web_acl.cf_waf[0m will be created
+[0m  [32m+[0m[0m resource "aws_wafv2_web_acl" "cf_waf" {
+      [32m+[0m[0m application_integration_url = (known after apply)
+      [32m+[0m[0m arn                         = (known after apply)
+      [32m+[0m[0m capacity                    = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m lock_token                  = (known after apply)
+      [32m+[0m[0m name                        = "shinjuku-cf-waf"
+      [32m+[0m[0m name_prefix                 = (known after apply)
+      [32m+[0m[0m region                      = "ap-northeast-1"
+      [32m+[0m[0m scope                       = "CLOUDFRONT"
+      [32m+[0m[0m tags_all                    = (known after apply)
+
+      [32m+[0m[0m default_action {
+          [32m+[0m[0m allow {
+            }
+        }
+
+      [32m+[0m[0m rule {
+          [32m+[0m[0m name     = "AWSManagedRulesCommonRuleSet"
+          [32m+[0m[0m priority = 1
+
+          [32m+[0m[0m override_action {
+              [32m+[0m[0m count {}
+            }
+
+          [32m+[0m[0m statement {
+              [32m+[0m[0m managed_rule_group_statement {
+                  [32m+[0m[0m name        = "AWSManagedRulesCommonRuleSet"
+                  [32m+[0m[0m vendor_name = "AWS"
+                    [90m# (1 unchanged attribute hidden)[0m[0m
+                }
+            }
+
+          [32m+[0m[0m visibility_config {
+              [32m+[0m[0m cloudwatch_metrics_enabled = true
+              [32m+[0m[0m metric_name                = "shinjuku-cf-waf"
+              [32m+[0m[0m sampled_requests_enabled   = true
+            }
+        }
+
+      [32m+[0m[0m visibility_config {
+          [32m+[0m[0m cloudwatch_metrics_enabled = true
+          [32m+[0m[0m metric_name                = "shinjuku-cf-waf-common"
+          [32m+[0m[0m sampled_requests_enabled   = true
+        }
+    }
+
+[1mPlan:[0m [0m7 to add, 1 to change, 2 to destroy.
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mDeprecated attribute[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  on modules\iam\main.tf line 36, in data "aws_iam_policy_document" "compute2secrets_access":
+[33m│[0m [0m  36:     resources = ["arn:aws:secretsmanager:${data.aws_region.region[4m.name[0m}:${data.aws_caller_identity.self.account_id}:secret:${var.secret_name}*"][0m
+[33m│[0m [0m
+[33m│[0m [0mThe attribute "name" is deprecated. Refer to the provider documentation for details.
+[33m╵[0m[0m
+[90m
+─────────────────────────────────────────────────────────────────────────────[0m
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.
