@@ -108,6 +108,15 @@ take note of rds endpoint
 
 ---
 
+#### Phase 4:
+
++ cd /tokyo
++ change variable create_tgw_peering default to true in variables.tf
++ terraform plan
++ terraform apply
+
+---
+
 
 ## ✅ Lab 3A Architecture Verification
 

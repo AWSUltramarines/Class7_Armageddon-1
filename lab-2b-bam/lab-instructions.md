@@ -1,4 +1,0 @@
-Beron Da Saluki criteria
-    Implements “safe caching” for a public GET endpoint using Cache-Control from origin (e.g., public, max-age=30)
-    Demonstrates correct behavior using headers and evidence
-    Shows they understand why Cache-Control is preferred
