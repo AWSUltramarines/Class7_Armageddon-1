@@ -7,7 +7,6 @@
 data "aws_cloudfront_origin_request_policy" "managed_all_viewer" {
   name = "Managed-AllViewer"
 }
-
 ############################################
 # Cache Policy: API with caching disabled
 ############################################
@@ -23,16 +22,16 @@ resource "aws_cloudfront_cache_policy" "helga_cache_api_disabled01" {
 
   parameters_in_cache_key_and_forwarded_to_origin {
     cookies_config {
-      cookie_behavior = "all"
+      cookie_behavior = "none"
     }
     headers_config {
       header_behavior = "none"  # FIXED: Must be "none" when caching disabled
     }
     query_strings_config {
-      query_string_behavior = "all"
+      query_string_behavior = "none"
     }
-    enable_accept_encoding_gzip   = true
-    enable_accept_encoding_brotli = true
+    enable_accept_encoding_gzip   = false
+    enable_accept_encoding_brotli = false
   }
 }
 

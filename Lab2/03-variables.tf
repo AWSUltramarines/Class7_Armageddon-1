@@ -121,7 +121,7 @@ variable "manage_route53_in_terraform" {
 
 variable "route53_hosted_zone_id" {
   type        = string
-  default     = "Z076499737UY78K9J1ZVE" # Only required if manage_route53_in_terraform is false
+  default     = "Z09718651ZDK48U993ARX" # Only required if manage_route53_in_terraform is false
   description = "The ID of your existing Route53 Hosted Zone"
 }
 
