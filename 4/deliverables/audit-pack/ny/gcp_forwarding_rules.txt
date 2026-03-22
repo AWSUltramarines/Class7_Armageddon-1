@@ -1,0 +1,2 @@
+NAME             REGION       IP_ADDRESS  IP_PROTOCOL  TARGET
+nihonmachi-fr01  us-central1  10.16.1.9   TCP          us-central1/backendServices/nihonmachi-backend01

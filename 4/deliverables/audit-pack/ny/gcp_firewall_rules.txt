@@ -1,0 +1,19 @@
+NAME                                NETWORK            DIRECTION  PRIORITY  ALLOW                          DENY  DISABLED
+allow-access-from-google-to-ubuntu  obsidian-cloud-3   INGRESS    1000      tcp:22                               False
+allow-access-from-source-to-ubuntu  obsidian-cloud-3   INGRESS    1000      icmp,tcp:22,tcp:5984,tcp:3389        False
+allow-iap-ssh-android-build         flutter-build-vpc  INGRESS    1000      tcp:22                               False
+allow-source-ssh-android-build      flutter-build-vpc  INGRESS    1000      icmp,tcp:22                          False
+default-allow-http                  default            INGRESS    1000      tcp:80                               False
+default-allow-https                 default            INGRESS    1000      tcp:443                              False
+default-allow-icmp                  default            INGRESS    65534     icmp                                 False
+default-allow-internal              default            INGRESS    65534     tcp:0-65535,udp:0-65535,icmp         False
+default-allow-rdp                   default            INGRESS    65534     tcp:3389                             False
+default-allow-ssh                   default            INGRESS    65534     tcp:22                               False
+inf-storage-allow-iap-ssh           inf-storage-vpc    INGRESS    1000      tcp:22                               False
+inf-storage-allow-smb               inf-storage-vpc    INGRESS    1000      tcp:445                              False
+nihonmachi-allow-hc01               nihonmachi-vpc01   INGRESS    1000      tcp:443                              False
+nihonmachi-allow-https-from-vpn01   nihonmachi-vpc01   INGRESS    1000      tcp:443                              False
+nihonmachi-allow-iap-ssh            nihonmachi-vpc01   INGRESS    1000      tcp:22                               False
+openclaw-bot-allow-gateway          default            INGRESS    1000      tcp:18789                            False
+openclaw-bot-allow-http             default            INGRESS    1000      tcp:80                               False
+openclaw-bot-allow-ssh              default            INGRESS    1000      tcp:22                               False

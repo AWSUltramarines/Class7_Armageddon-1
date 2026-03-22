@@ -1,0 +1,178 @@
+{
+    "RouteTables": [
+        {
+            "Associations": [
+                {
+                    "Main": true,
+                    "RouteTableAssociationId": "rtbassoc-0ada332c7179b40a4",
+                    "RouteTableId": "rtb-07fb549ad5dc2054a",
+                    "AssociationState": {
+                        "State": "associated"
+                    }
+                }
+            ],
+            "PropagatingVgws": [],
+            "RouteTableId": "rtb-07fb549ad5dc2054a",
+            "Routes": [
+                {
+                    "DestinationCidrBlock": "172.31.0.0/16",
+                    "GatewayId": "local",
+                    "Origin": "CreateRouteTable",
+                    "State": "active"
+                },
+                {
+                    "DestinationCidrBlock": "0.0.0.0/0",
+                    "GatewayId": "igw-09f10887a36153d1b",
+                    "Origin": "CreateRoute",
+                    "State": "active"
+                }
+            ],
+            "Tags": [],
+            "VpcId": "vpc-0251ac46edddf59d3",
+            "OwnerId": "329599652812"
+        },
+        {
+            "Associations": [
+                {
+                    "Main": false,
+                    "RouteTableAssociationId": "rtbassoc-0c4f0093f6107f076",
+                    "RouteTableId": "rtb-0dc70e79c11f104dc",
+                    "SubnetId": "subnet-07667950d8c65726b",
+                    "AssociationState": {
+                        "State": "associated"
+                    }
+                },
+                {
+                    "Main": false,
+                    "RouteTableAssociationId": "rtbassoc-0fdccb65cffec6a57",
+                    "RouteTableId": "rtb-0dc70e79c11f104dc",
+                    "SubnetId": "subnet-0c26b9f155ac9337e",
+                    "AssociationState": {
+                        "State": "associated"
+                    }
+                }
+            ],
+            "PropagatingVgws": [],
+            "RouteTableId": "rtb-0dc70e79c11f104dc",
+            "Routes": [
+                {
+                    "DestinationCidrBlock": "10.14.0.0/16",
+                    "GatewayId": "local",
+                    "Origin": "CreateRouteTable",
+                    "State": "active"
+                },
+                {
+                    "DestinationCidrBlock": "0.0.0.0/0",
+                    "GatewayId": "igw-08102b1d18caa2b01",
+                    "Origin": "CreateRoute",
+                    "State": "active"
+                }
+            ],
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "akihabara-dev-public-rt"
+                },
+                {
+                    "Key": "ManagedBy",
+                    "Value": "Terraform"
+                }
+            ],
+            "VpcId": "vpc-03713446e93e35b71",
+            "OwnerId": "329599652812"
+        },
+        {
+            "Associations": [
+                {
+                    "Main": true,
+                    "RouteTableAssociationId": "rtbassoc-013c463a2cf1cab69",
+                    "RouteTableId": "rtb-082dfb83edc158f07",
+                    "AssociationState": {
+                        "State": "associated"
+                    }
+                }
+            ],
+            "PropagatingVgws": [],
+            "RouteTableId": "rtb-082dfb83edc158f07",
+            "Routes": [
+                {
+                    "DestinationCidrBlock": "10.14.0.0/16",
+                    "GatewayId": "local",
+                    "Origin": "CreateRouteTable",
+                    "State": "active"
+                }
+            ],
+            "Tags": [],
+            "VpcId": "vpc-03713446e93e35b71",
+            "OwnerId": "329599652812"
+        },
+        {
+            "Associations": [
+                {
+                    "Main": false,
+                    "RouteTableAssociationId": "rtbassoc-0e92303020096324e",
+                    "RouteTableId": "rtb-0cb30d8e69bd34032",
+                    "SubnetId": "subnet-08e900c4a83eb91a2",
+                    "AssociationState": {
+                        "State": "associated"
+                    }
+                },
+                {
+                    "Main": false,
+                    "RouteTableAssociationId": "rtbassoc-014155094d13681cb",
+                    "RouteTableId": "rtb-0cb30d8e69bd34032",
+                    "SubnetId": "subnet-0233a2b5b7457b3eb",
+                    "AssociationState": {
+                        "State": "associated"
+                    }
+                }
+            ],
+            "PropagatingVgws": [],
+            "RouteTableId": "rtb-0cb30d8e69bd34032",
+            "Routes": [
+                {
+                    "DestinationCidrBlock": "10.14.0.0/16",
+                    "GatewayId": "local",
+                    "Origin": "CreateRouteTable",
+                    "State": "active"
+                },
+                {
+                    "DestinationCidrBlock": "10.15.0.0/16",
+                    "TransitGatewayId": "tgw-09d5f1159f368144c",
+                    "Origin": "CreateRoute",
+                    "State": "active"
+                },
+                {
+                    "DestinationCidrBlock": "10.16.0.0/16",
+                    "TransitGatewayId": "tgw-09d5f1159f368144c",
+                    "Origin": "CreateRoute",
+                    "State": "active"
+                },
+                {
+                    "DestinationCidrBlock": "0.0.0.0/0",
+                    "NatGatewayId": "nat-0ce9c98bee0a4e171",
+                    "Origin": "CreateRoute",
+                    "State": "active"
+                },
+                {
+                    "DestinationPrefixListId": "pl-61a54008",
+                    "GatewayId": "vpce-0616d002e0ce5753b",
+                    "Origin": "CreateRoute",
+                    "State": "active"
+                }
+            ],
+            "Tags": [
+                {
+                    "Key": "Name",
+                    "Value": "akihabara-dev-private-rt"
+                },
+                {
+                    "Key": "ManagedBy",
+                    "Value": "Terraform"
+                }
+            ],
+            "VpcId": "vpc-03713446e93e35b71",
+            "OwnerId": "329599652812"
+        }
+    ]
+}

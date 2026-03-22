@@ -1,0 +1,3 @@
+NAME                   REGION       GATEWAY             PEER_ADDRESS
+nihonmachi-vpntunnel0  us-central1  nihonmachi-vpngw01  18.176.8.193
+nihonmachi-vpntunnel1  us-central1  nihonmachi-vpngw01  35.76.214.46
