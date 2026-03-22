@@ -16,7 +16,7 @@ This repository contains individual team member work across separate branches. E
 
 | Member | Branch Name | Branch Link | Labs Included |
 |--------|-------------|-------------|---------------|
-| Daequan Britt | `daequan_britt` | [View Branch](../../tree/daequan_britt) | Lab 1a, Lab 1b, Lab 1c, Lab 2a, Lab 2b |
+| Daequan Britt | `daequan_britt` | [View Branch](../../tree/daequan_britt) | Lab 1, Lab 2, Lab 3, Lab 4 |
 | Don Mann | `Don_Mann` | [View Branch](../../tree/Don_Mann) | Lab 1a |
 | Jamal Waring | `jamalwaring` | [View Branch](../../tree/jamalwaring) | Lab 1a, Lab 1b, Lab 1c |
 | James Scales | `james_scales` | [View Branch](../../tree/james_scales) | Lab 1a, Lab 1b, Lab 1c, Lab 2a |
