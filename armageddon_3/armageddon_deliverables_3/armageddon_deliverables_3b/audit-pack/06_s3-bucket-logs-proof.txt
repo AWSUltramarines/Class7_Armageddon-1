@@ -1,0 +1,5 @@
+######## AWS CLI verification (students can prove the bucket/logs exist) #############
+
+$ aws s3 ls | grep jasongeddon
+2026-02-28 12:01:18 jasongeddon-alb-logs-634018648701
+2026-02-28 13:48:35 jasongeddon-shinjuku-alb-logs-634018648701

@@ -1,0 +1,42 @@
+######  NETWORK CORRIDOR PROOF (TGW) #####
+
+$ aws ec2 describe-transit-gateway-attachments --region sa-east-1 --query "TransitGatewayAttachments[].{Type:ResourceType,State:State,AttachmentId:TransitGatewayAttachmentId}" --output table
+----------------------------------------------------------
+|            DescribeTransitGatewayAttachments           |
++-------------------------------+------------+-----------+
+|         AttachmentId          |   State    |   Type    |
++-------------------------------+------------+-----------+
+|  tgw-attach-076096788fb520ae9 |  available |  peering  |
+|  tgw-attach-0b5306a62c13c38fb |  available |  vpc      |
++-------------------------------+------------+-----------+
+
+$ aws ec2 describe-transit-gateway-attachments --region ap-northeast-1 --query "TransitGatewayAttachments[].{Type:ResourceType,State:State,AttachmentId:TransitGatewayAttachmentId}" --output table
+----------------------------------------------------------
+|            DescribeTransitGatewayAttachments           |
++-------------------------------+------------+-----------+
+|         AttachmentId          |   State    |   Type    |
++-------------------------------+------------+-----------+
+|  tgw-attach-076096788fb520ae9 |  available |  peering  |
+|  tgw-attach-0271ea749707dead3 |  available |  vpc      |
++-------------------------------+------------+-----------+
+
+
+$ aws ec2 describe-route-tables --region ap-northeast-1 --filters "Name=vpc-id,Values=vpc-0437180891c16c52d" --query "RouteTables[].Routes[?DestinationCidrBlock=='10.78.0.0/16'] | [].{CIDR:DestinationCidrBlock,TGW:TransitGatewayId}" --output table
+-------------------------------------------
+|           DescribeRouteTables           |
++---------------+-------------------------+
+|     CIDR      |           TGW           |
++---------------+-------------------------+
+|  10.78.0.0/16 |  tgw-032788bc7cab0d1c5  |
++---------------+-------------------------+
+
+
+
+$ aws ec2 describe-route-tables --region sa-east-1 --filters "Name=vpc-id,Values=vpc-023b57623e5df0994" --query "RouteTables[].Routes[?DestinationCidrBlock=='10.77.0.0/16'] | [].{CIDR:DestinationCidrBlock,TGW:TransitGatewayId}" --output table
+-------------------------------------------
+|           DescribeRouteTables           |
++---------------+-------------------------+
+|     CIDR      |           TGW           |
++---------------+-------------------------+
+|  10.77.0.0/16 |  tgw-05f013bf1d8412b18  |
++---------------+-------------------------+

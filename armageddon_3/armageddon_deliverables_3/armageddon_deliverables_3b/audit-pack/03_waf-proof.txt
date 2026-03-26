@@ -1,0 +1,343 @@
+##### WAF proof ######
+
+$ aws wafv2 list-web-acls --scope CLOUDFRONT --region us-east-1 --query "WebACLs[].{Name:Name,Id:Id}" --output table
+------------------------------------------------------------------
+|                           ListWebACLs                          |
++---------------------------------------+------------------------+
+|                  Id                   |         Name           |
++---------------------------------------+------------------------+
+|  e6933696-dfef-4d22-8765-9c0d141a5845 |  jasongeddon-cf-waf01  |
++---------------------------------------+------------------------+
+
+
+
+$ aws wafv2 get-web-acl --scope CLOUDFRONT --region us-east-1 --name jasongeddon-cf-waf01 --id e6933696-dfef-4d22-8765-9c0d141a5845 --query "WebACL.ARN" --output text
+arn:aws:wafv2:us-east-1:634018648701:global/webacl/jasongeddon-cf-waf01/e6933696-dfef-4d22-8765-9c0d141a5845
+
+
+$ aws wafv2 get-sampled-requests --region us-east-1 --web-acl-arn "arn:aws:wafv2:us-east-1:634018648701:global/webacl/jasongeddon-cf-waf01/e6933696-dfef-4d22-8765-9c0d141a5845" --rule-metric-name "AWS-AWSManagedRulesCommonRuleSet" --scope CLOUDFRONT --time-window "StartTime=2026-03-11T01:00:00Z,EndTime=2026-03-11T23:59:59Z" --max-items 10
+{
+    "SampledRequests": [],
+    "PopulationSize": 0,
+{
+    "SampledRequests": [
+        {
+            "Request": {
+                "ClientIP": "62.106.78.245",
+                "Country": "US",
+                "URI": "/api/public-feed",
+                "Method": "HEAD",
+                "HTTPVersion": "HTTP/1.1",
+                "Headers": [
+                    {
+                        "Name": "Host",
+                        "Value": "jason-cramer.com"
+                    },
+                    {
+                        "Name": "User-Agent",
+                        "Value": "curl/8.18.0"
+                    },
+                    {
+                        "Name": "Accept",
+                        "Value": "*/*"
+                    }
+                ]
+            },
+            "Weight": 1,
+            "Timestamp": "2026-03-11T00:06:31.176000-04:00",
+            "Action": "ALLOW"
+        },
+        {
+            "Request": {
+                "ClientIP": "62.106.78.245",
+                "Country": "US",
+                "URI": "/api/public-feed",
+                "Method": "HEAD",
+                "HTTPVersion": "HTTP/1.1",
+                "Headers": [
+                    {
+                        "Name": "Host",
+                        "Value": "jason-cramer.com"
+                    },
+                    {
+                        "Name": "User-Agent",
+                        "Value": "curl/8.18.0"
+                    },
+                    {
+                        "Name": "Accept",
+                        "Value": "*/*"
+                    }
+                ]
+            },
+            "Weight": 2,
+            "Timestamp": "2026-03-11T00:03:29.707000-04:00",
+            "Action": "ALLOW"
+        },
+        {
+            "Request": {
+                "ClientIP": "185.217.168.224",
+                "Country": "US",
+                "URI": "/",
+                "Method": "GET",
+                "HTTPVersion": "HTTP/2.0",
+                "Headers": [
+                    {
+                        "Name": "host",
+                        "Value": "jason-cramer.com"
+                    },
+                    {
+                        "Name": "sec-ch-ua",
+                        "Value": "\"Not:A-Brand\";v=\"99\", \"Microsoft Edge\";v=\"145\", \"Chromium\";v=\"145\""
+                    },
+                    {
+                        "Name": "sec-ch-ua-mobile",
+                        "Value": "?0"
+                    },
+                    {
+                        "Name": "sec-ch-ua-platform",
+                        "Value": "\"Windows\""
+                    },
+                    {
+                        "Name": "dnt",
+                        "Value": "1"
+                    },
+                    {
+                        "Name": "upgrade-insecure-requests",
+                        "Value": "1"
+                    },
+                    {
+                        "Name": "user-agent",
+                        "Value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"
+                    },
+                    {
+                        "Name": "accept",
+                    },
+                    {
+                        "Name": "sec-fetch-site",
+                        "Value": "none"
+                    },
+                    {
+                        "Name": "sec-fetch-mode",
+                        "Value": "navigate"
+                    },
+                    {
+                        "Name": "sec-fetch-user",
+                        "Value": "?1"
+                    },
+                    {
+                        "Name": "sec-fetch-dest",
+                        "Value": "document"
+                    },
+                    {
+                        "Name": "accept-encoding",
+                        "Value": "gzip, deflate, br, zstd"
+                    },
+                    {
+                        "Name": "accept-language",
+                        "Value": "en-US,en;q=0.9"
+                    },
+                    {
+                        "Name": "priority",
+                        "Value": "u=0, i"
+                    }
+                ]
+            },
+            "Weight": 1,
+            "Timestamp": "2026-03-11T00:05:56.845000-04:00",
+            "Action": "ALLOW"
+        },
+        {
+            "Request": {
+                "ClientIP": "185.217.168.224",
+                "Country": "US",
+                "URI": "/favicon.ico",
+                "Method": "GET",
+                "HTTPVersion": "HTTP/2.0",
+                "Headers": [
+                    {
+                        "Name": "host",
+                        "Value": "jason-cramer.com"
+                    },
+                    {
+                        "Name": "sec-ch-ua-platform",
+                        "Value": "\"Windows\""
+                    },
+                    {
+                        "Name": "user-agent",
+                        "Value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36 Edg/145.0.0.0"
+                    },
+                    {
+                        "Name": "sec-ch-ua",
+                        "Value": "\"Not:A-Brand\";v=\"99\", \"Microsoft Edge\";v=\"145\", \"Chromium\";v=\"145\""
+                    },
+                    {
+                        "Name": "dnt",
+                        "Value": "1"
+                    },
+                    {
+                        "Name": "sec-ch-ua-mobile",
+                        "Value": "?0"
+                    },
+                    {
+                        "Name": "accept",
+                        "Value": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8"
+                    },
+                    {
+                        "Name": "sec-fetch-site",
+                        "Value": "same-origin"
+                    },
+                    {
+                        "Name": "sec-fetch-mode",
+                        "Value": "no-cors"
+                    },
+                    {
+                        "Name": "sec-fetch-dest",
+                        "Value": "image"
+                    },
+                    {
+                        "Name": "referer",
+                        "Value": "https://jason-cramer.com/"
+                    },
+                    {
+                        "Name": "accept-encoding",
+                        "Value": "gzip, deflate, br, zstd"
+                    },
+                    {
+                        "Name": "accept-language",
+                        "Value": "en-US,en;q=0.9"
+                    },
+                    {
+                        "Name": "priority",
+                        "Value": "u=1, i"
+                    }
+                ]
+            },
+            "Weight": 1,
+            "Timestamp": "2026-03-11T00:05:57.443000-04:00",
+            "Action": "ALLOW"
+        },
+        {
+            "Request": {
+                "ClientIP": "8.138.47.72",
+                "Country": "CN",
+                "URI": "/",
+                "Method": "GET",
+                "HTTPVersion": "HTTP/2.0",
+                "Headers": [
+                    {
+                        "Name": "host",
+                        "Value": "app.jason-cramer.com"
+                    },
+                    {
+                        "Name": "upgrade-insecure-requests",
+                        "Value": "1"
+                    },
+                    {
+                        "Name": "user-agent",
+                        "Value": "Mozilla/5.0 (Linux; Android 14; HUAWEI Mate 60 Pro) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36"
+                    },
+                    {
+                        "Name": "accept",
+                    },
+                    {
+                        "Name": "sec-fetch-site",
+                        "Value": "none"
+                    },
+                    {
+                        "Name": "sec-fetch-mode",
+                        "Value": "navigate"
+                    },
+                    {
+                        "Name": "sec-fetch-user",
+                        "Value": "?1"
+                    },
+                    {
+                        "Name": "sec-fetch-dest",
+                        "Value": "document"
+                    },
+                    {
+                        "Name": "sec-ch-ua",
+                        "Value": "\"Chromium\";v=\"140\", \"Not=A?Brand\";v=\"24\", \"HeadlessChrome\";v=\"140\""
+                    },
+                    {
+                        "Name": "sec-ch-ua-mobile",
+                        "Value": "?1"
+                    },
+                    {
+                        "Name": "sec-ch-ua-platform",
+                        "Value": "\"Android\""
+                    },
+                    {
+                        "Name": "accept-encoding",
+                        "Value": "gzip, deflate, br, zstd"
+                    },
+                    {
+                        "Name": "priority",
+                        "Value": "u=0, i"
+                    }
+                ]
+            },
+            "Weight": 1,
+            "Timestamp": "2026-03-10T22:40:51.558000-04:00",
+            "Action": "ALLOW"
+        },
+        {
+            "Request": {
+                "ClientIP": "62.106.78.245",
+                "Country": "US",
+                "URI": "/",
+                "Method": "GET",
+                "HTTPVersion": "HTTP/1.1",
+                "Headers": [
+                    {
+                        "Name": "Host",
+                        "Value": "app.jason-cramer.com"
+                    },
+                    {
+                        "Name": "User-Agent",
+                        "Value": "curl/8.18.0"
+                    },
+                    {
+                        "Name": "Accept",
+                        "Value": "*/*"
+                    }
+                ]
+            },
+            "Weight": 1,
+            "Timestamp": "2026-03-11T00:20:52.977000-04:00",
+            "Action": "ALLOW"
+        },
+        {
+            "Request": {
+                "ClientIP": "62.106.78.245",
+                "Country": "US",
+                "URI": "/list",
+                "Method": "GET",
+                "HTTPVersion": "HTTP/1.1",
+                "Headers": [
+                    {
+                        "Name": "Host",
+                        "Value": "app.jason-cramer.com"
+                    },
+                    {
+                        "Name": "User-Agent",
+                        "Value": "curl/8.18.0"
+                    },
+                    {
+                        "Name": "Accept",
+                        "Value": "*/*"
+                    }
+                ]
+            },
+            "Weight": 1,
+            "Timestamp": "2026-03-11T00:21:07.363000-04:00",
+            "Action": "ALLOW"
+        }
+    ],
+    "PopulationSize": 7,
+    "TimeWindow": {
+        "StartTime": "2026-03-10T21:23:50.764000-04:00",
+        "EndTime": "2026-03-11T00:23:50.764000-04:00"
+    }
+}
+

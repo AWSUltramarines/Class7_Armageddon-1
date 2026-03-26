@@ -1,0 +1,22 @@
+####### Tokyo: RDS exists  #########
+
+
+$ aws rds describe-db-instances --region ap-northeast-1 \
+          --query "DBInstances[].{DB:DBInstanceIdentifier,AZ:AvailabilityZone,Region:'ap-northeast-1',Endpoint:Endpoint.Address}"
+[
+    {
+        "DB": "jasongeddon-rds01",
+        "AZ": "ap-northeast-1d",
+        "Region": "ap-northeast-1",
+        "Endpoint": "jasongeddon-rds01.c3qkomm6cm4q.ap-northeast-1.rds.amazonaws.com"
+    }
+]
+
+#########     São Paulo: No RDS    ############
+
+$ aws rds describe-db-instances --region sa-east-1 \
+          --query "DBInstances[].DBInstanceIdentifier"
+[]
+
+
+

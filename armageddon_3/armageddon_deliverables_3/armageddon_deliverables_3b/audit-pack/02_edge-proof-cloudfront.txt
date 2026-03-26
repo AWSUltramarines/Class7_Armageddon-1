@@ -1,0 +1,15 @@
+##### Edge proof (CloudFront logs show cache + access)  ##########
+
+$ curl -I https://jason-cramer.com/api/public-feed
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 98
+Connection: keep-alive
+Date: Wed, 11 Mar 2026 04:03:30 GMT
+Cache-Control: public, s-maxage=30, max-age=0
+Server: Werkzeug/3.1.6 Python/3.9.25
+X-Cache: Miss from cloudfront
+Via: 1.1 831a5c2d8cabf224ae48071fe7b9d89a.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: ATL59-P15
+X-Amz-Cf-Id: fUCJeAD6NgpFRMg15M0M6kHnQjtcB3miwuN8GFdzSgMTYfoq2j5GVQ==
+

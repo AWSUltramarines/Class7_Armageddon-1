@@ -1,0 +1,63 @@
+##### Change proof (CloudTrail)  #######
+
+$ aws cloudtrail lookup-events --region sa-east-1 --lookup-attributes AttributeKey=EventName,AttributeValue=AuthorizeSecurityGroupIngress --max-results 5 --query "Events[].{Time:EventTime,User:Username,Event:EventName}" --output table
+--------------------------------------------------------------------------
+|                              LookupEvents                              |
++--------------------------------+-----------------------------+---------+
+|              Event             |            Time             |  User   |
++--------------------------------+-----------------------------+---------+
+|  AuthorizeSecurityGroupIngress |  2026-02-28T12:01:47-05:00  |  AWSCLI |
+|  AuthorizeSecurityGroupIngress |  2026-02-28T12:01:46-05:00  |  AWSCLI |
+|  AuthorizeSecurityGroupIngress |  2026-02-28T12:01:45-05:00  |  AWSCLI |
+|  AuthorizeSecurityGroupIngress |  2026-02-28T12:01:33-05:00  |  AWSCLI |
++--------------------------------+-----------------------------+---------+
+
+
+$ aws cloudtrail lookup-events --region ap-northeast-1 --lookup-attributes AttributeKey=EventName,AttributeValue=AuthorizeSecurityGroupIngress --max-results 5 --query "Events[].{Time:EventTime,User:Username,Event:EventName}" --output table
+--------------------------------------------------------------------------
+|                              LookupEvents                              |
++--------------------------------+-----------------------------+---------+
+|              Event             |            Time             |  User   |
++--------------------------------+-----------------------------+---------+
+|  AuthorizeSecurityGroupIngress |  2026-02-28T14:09:15-05:00  |  AWSCLI |
+|  AuthorizeSecurityGroupIngress |  2026-02-28T14:09:15-05:00  |  AWSCLI |
+|  AuthorizeSecurityGroupIngress |  2026-02-28T13:30:05-05:00  |  AWSCLI |
+|  AuthorizeSecurityGroupIngress |  2026-02-28T13:30:05-05:00  |  AWSCLI |
+|  AuthorizeSecurityGroupIngress |  2026-02-28T13:30:04-05:00  |  AWSCLI |
++--------------------------------+-----------------------------+---------+
+
+
+
+
+$ aws cloudtrail lookup-events --region sa-east-1 --lookup-attributes AttributeKey=EventName,AttributeValue=CreateTransitGatewayRoute --max-results 5 --query "Events[].{Time:EventTime,User:Username,Event:EventName}" --output table
+----------------------------------------------------------------------
+|                            LookupEvents                            |
++----------------------------+-----------------------------+---------+
+|            Event           |            Time             |  User   |
++----------------------------+-----------------------------+---------+
+|  CreateTransitGatewayRoute |  2026-02-28T16:31:58-05:00  |  AWSCLI |
++----------------------------+-----------------------------+---------+
+
+
+$ aws cloudtrail lookup-events --region ap-northeast-1 --lookup-attributes AttributeKey=EventName,AttributeValue=CreateTransitGatewayRoute --max-results 5 --query "Events[].{Time:EventTime,User:Username,Event:EventName}" --output table
+----------------------------------------------------------------------
+|                            LookupEvents                            |
++----------------------------+-----------------------------+---------+
+|            Event           |            Time             |  User   |
++----------------------------+-----------------------------+---------+
+|  CreateTransitGatewayRoute |  2026-02-28T16:30:54-05:00  |  AWSCLI |
++----------------------------+-----------------------------+---------+
+
+
+
+$ aws cloudtrail lookup-events --region us-east-1 --lookup-attributes AttributeKey=EventName,AttributeValue=UpdateDistribution --max-results 5 --query "Events[].{Time:EventTime,User:Username,Event:EventName}" --output table
+---------------------------------------------------------------
+|                        LookupEvents                         |
++---------------------+-----------------------------+---------+
+|        Event        |            Time             |  User   |
++---------------------+-----------------------------+---------+
+|  UpdateDistribution |  2026-02-09T05:51:52-05:00  |  AWSCLI |
+|  UpdateDistribution |  2026-02-08T20:54:57-05:00  |  AWSCLI |
+|  UpdateDistribution |  2026-02-08T12:22:10-05:00  |  AWSCLI |
+|  UpdateDistribution |  2026-01-12T15:39:03-05:00  |  AWSCLI |
+|  UpdateDistribution |  2026-01-10T19:56:13-05:00  |  root   |
