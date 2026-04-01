@@ -1,0 +1,188 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;\f2\froman\fcharset0 Times-Roman;
+\f3\fnil\fcharset0 .AppleSystemUIFontMonospaced-Regular;}
+{\colortbl;\red255\green255\blue255;\red239\green240\blue240;\red24\green26\blue30;\red244\green246\blue249;
+}
+{\*\expandedcolortbl;;\cssrgb\c94902\c95294\c95294;\cssrgb\c12157\c13725\c15686;\cssrgb\c96471\c97255\c98039;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid101\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid201\'02\'00.;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+\margl1440\margr1440\vieww16180\viewh15880\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\qc\partightenfactor0
+
+\f0\fs36 \cf0 \ul \ulc0 Armageddon Part 1
+\fs24 \ulnone \
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0
+\f1\b \cf0 {\listtext	1.	}1. Create a VPC\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls2\ilvl0\cf0 {\listtext	1.	}2. Create SG for EC2 http, ssh traffic  all IPV4. \
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\cf0 3. Create SG for RDS port 3306, source: custom, in the search field select the security group of your ec2 (SG link)\
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\ls3\ilvl0\cf0 {\listtext	1.	}4. Create an EC2 instance
+\f0\b0\fs28 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 	
+\fs24 >
+\fs28  Create a name for the EC2\
+	
+\fs24 >
+\fs28  Select Application and OS (Amazon Linux)\
+	
+\fs24 >
+\fs28  Instance Type (t3.micro)\
+	
+\fs24 >
+\fs28  Key Pair (select your key pair)\
+	
+\fs24 >
+\fs28  Network Settings Edit: Select existing security group\
+		-Select your subnet\
+		-auto-assign public ip: enable\
+		-Select existing SG : SG you created\
+	
+\fs24 >
+\fs28  Advance Details:  copy and paste Theo\'92s EC2script into the user data field\
+	  -make sure you edit the script SECRET_ID name you created and \
+	
+\fs24 >
+\fs28  Select \'93Launch Instance\'94\
+
+\fs24 	>
+\fs28  Bring up the instance page and select the instance you just created\
+
+\fs24 	>
+\fs28  Copy and past PublicDNS address to a blank URL with \'93http://\'93 in front of it and ENTER URL\
+
+\fs24 	>
+\fs28  You should be able to see your Web page instance
+\fs24 \
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+
+\f1\b \cf0 \
+5. Create RDS 
+\f0\b0 \
+	- Search RDS in the aws dashboard\
+	- Select Aurora and RDS\
+	- Create a database\
+		> Creation Method: Full Configuration\
+		> Config: MySQL\
+		> Engine Version: MySQL 8.4.6\
+		> DB instance size: Free tier\
+		> Availability and durability: Single-AZ DB Instance Deployment \
+		> DB instance Identifier: \'93NAME\'94\
+		> Master Uname: admin1\
+		> Credentials Management: Managed in AWS secrets manager\
+		> Instance Configuration: Select : db.t3.micro\
+		> Storage: General Purpose SSD(gp2)\
+		> Connectivity:  Connect to EC2 compute resource (ec2 you created)\
+		>  select: VPC you created\
+		>  Public Access: NO (we don\'92t want DB to connect to then Internet)\
+		> VPC security group: Choose existing (find the SG you created for )\
+		> Additional Configuration\'97-> Database Options\
+		> Initial DB Name: \'93Name\'94\
+		> 
+\f1\b Create Database\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+
+\f0\b0 \cf0 \
+\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+
+\f1\b \cf0 6. Create A Secrete using AWS Secrets Manager
+\f0\b0 \
+	- Search AWS secrets manager in the aws dashboard\
+	- Select secrets manager\
+	- Store a new secret\
+		> Secret Type: Credentials for Amazon RDS Database\
+		> Credentials: username-admin PW- xxxxxxxx (create a pw)\
+		> Encryption key : Default\
+		> Database: Select your database (make sure you are in the correct region if you don\'92t see you DB)\'97->
+\f1\b  NEXT
+\f0\b0 \
+		> Secret Name and Description: \'93Name\'94 \'97->
+\f1\b  NEXT
+\f0\b0 \
+		> Configure Rotation: OPTIONAL \'97->
+\f1\b  NEXT
+\f0\b0 \
+		> Review: STORE/Create\
+\
+
+\f1\b 7. Create an IAM Role, create and add inline policy and Attach user role to an EC2 instance
+\f0\b0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 	
+\f1\b Create an inline policy
+\f0\b0 \
+	> Create a policy\'97\'97> JSON\'97\'97> add the policy Theo gave and Replace this line: (\'93
+\f2\fs28 \cb2 \expnd0\expndtw0\kerning0
+arn:aws:secretsmanager:us-east-1:914333746568:secret:lab/rds/*\'94)  within the policy Theo gave \'97\'97Next
+\f0\fs24 \cb1 \kerning1\expnd0\expndtw0 \
+	> Add policy name and  description\'97\'97 Create policy\
+	
+\f1\b Create IAM role
+\f0\b0 \
+	> Trusted Entity: AWS Service\
+	> use Cases: EC2  \'97\'97NEXT\
+	> Add permissions :add the inline policy you created\'97\'97> Next\
+	
+\f1\b Add role to an EC2 instance
+\f0\b0 \
+	>
+\fs28  select the the ec2 instance you created and go to 
+\f1\b action 
+\f0\b0 select
+\f1\b  security 
+\f0\b0 and
+\f1\b  modify IAM\
+	
+\f0\b0\fs24 >
+\fs28  select the IAM role you created \'97\'97> UPDATE IAM Role
+\f3\fs27\fsmilli13600 \cf3 \cb4 \expnd0\expndtw0\kerning0
+\
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\b \cf0 8. Go back to the EC2 instance and modify user data script. (Stop the EC2 instance to modify)
+\f0\b0 \
+	> Select EC2 instance\'97> ACTIONS\'97-> Instance Settings\'97\'97> Edit user data\
+	> Replace the SECRET_ID\'94, \'93with your secret name from secrets manager\'94 (example \'93
+\f2\fs28 \cb2 \expnd0\expndtw0\kerning0
+lab/rds/mysql
+\f0\fs24 \cb1 \kerning1\expnd0\expndtw0 \'94)\
+\pard\tx220\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\li720\fi-720\pardirnatural\partightenfactor0
+\cf0  		> Save\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 	> Start EC2 instance\
+\
+\
+\
+\
+\
+\
+\
+* If connection fails go back to you AWS console and go to security group, add new inbound rule, Select: ALL Traffic, Source: Anywhere-ipv4 , then SAVE RULES\
+\
+* These actions are typically triggered by a client's HTTP request, which uses standard methods like GET, POST, PUT, and DELETE.\
+\
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f3\fs27\fsmilli13600 \cf3 \cb4 \expnd0\expndtw0\kerning0
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\
+\
+}

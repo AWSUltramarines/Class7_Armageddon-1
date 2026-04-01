@@ -1,0 +1,504 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset0 HelveticaNeue-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red24\green26\blue30;\red255\green255\blue255;\red24\green26\blue30;
+\red239\green240\blue240;\red0\green0\blue0;\red13\green16\blue20;\red251\green251\blue252;}
+{\*\expandedcolortbl;;\cssrgb\c12157\c13725\c15686;\cssrgb\c100000\c100000\c100000;\cssrgb\c12157\c13725\c15686;
+\cssrgb\c94902\c95294\c95294;\cssrgb\c0\c0\c0;\cssrgb\c5882\c7843\c10196;\cssrgb\c98824\c98824\c99216;}
+\margl1440\margr1440\vieww17140\viewh16820\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs28 \cf0 \expnd0\expndtw0\kerning0
+{{\NeXTGraphic Screenshot 2026-01-14 at 12.37.48â€¯PM.png \width8820 \height5380 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\pard\pardeftab720\partightenfactor0
+\cf0 \
+\
+{{\NeXTGraphic Screenshot 2026-01-14 at 12.34.57â€¯PM.png \width33080 \height10060 \appleattachmentpadding0 \appleembedtype0 \appleaqc
+}¬}\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs32 \cf2 \cb3 \outl0\strokewidth0 \strokec2 \
+\
+
+\b\fs36 2. Short answers:\'a0
+\f0\b0\fs28 \cf0 \cb1 \outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs32 \cf4 \cb3 A) Why is DB inbound source restricted to the EC2 security group?\'a0
+\f1\b0 \
+\
+Its\'92s restricted to only the authorized EC2 instance, least privilege 
+\f0\fs28 \cf0 \cb1 \
+\
+\
+
+\f2\b\fs32 \cf4 \cb3 B) What port does MySQL use? 
+\f1\b0 \
+\
+3306
+\f0\fs28 \cf0 \cb1 \
+\
+
+\f2\b\fs32 \cf4 \cb3 C) Why is Secrets Manager better than storing creds in code/user-data?
+\f1\b0 \
+\
+Its more secure and encrypted at rest/in transit\
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs28 \cf0 \cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs36 \cf2 \cb3 \outl0\strokewidth0 \strokec2 3. Evidence for Audits / Labs (Recommended Output)
+\f0\b0\fs28 \cf0 \cb1 \outl0\strokewidth0 \
+\pard\pardeftab720\partightenfactor0
+\cf0 \
+\
+\pard\pardeftab720\partightenfactor0
+
+\f2\b\fs32 \cf4 \cb3 aws ec2 describe-security-groups --group-ids sg-01d3a14f0f5a2a7ad > sg.json
+\f1\b0 \
+\
+\
+$ cat sg.json\
+\{\
+    "SecurityGroups": [\
+        \{\
+            "GroupId": "sg-01d3a14f0f5a2a7ad",\
+            "IpPermissionsEgress": [\
+                \{\
+                    "IpProtocol": "-1",\
+                    "UserIdGroupPairs": [],\
+                    "IpRanges": [\
+                        \{\
+                            "CidrIp": "0.0.0.0/0"\
+                        \}\
+                    ],\
+                    "Ipv6Ranges": [],\
+                    "PrefixListIds": []\
+                \}\
+            ],\
+            "VpcId": "vpc-0faa3f5f58e4e801e",\
+            "SecurityGroupArn": "arn:aws:ec2:us-east-1:914215748428:security-group/sg-01d3a14f0f5a2a7ad",\
+            "OwnerId": "914215748428",\
+            "GroupName": "armEC2-SG",\
+            "Description": "armEC2-SG",\
+            "IpPermissions": [\
+                \{\
+                    "IpProtocol": "tcp",\
+                    "FromPort": 80,\
+                    "ToPort": 80,\
+                    "UserIdGroupPairs": [],\
+                    "IpRanges": [\
+                        \{\
+                            "CidrIp": "0.0.0.0/0"\
+                        \}\
+                    ],\
+                    "Ipv6Ranges": [],\
+                    "PrefixListIds": []\
+                \},\
+                \{\
+                    "IpProtocol": "tcp",\
+                    "FromPort": 22,\
+                    "ToPort": 22,\
+                    "UserIdGroupPairs": [],\
+                    "IpRanges": [\
+                        \{\
+                            "CidrIp": "0.0.0.0/0"\
+                        \}\
+                    ],\
+                    "Ipv6Ranges": [],\
+                    "PrefixListIds": []\
+                \}\
+            ]\
+        \}\
+    ]\
+\}\
+~ $ \
+\
+\
+\
+\
+\
+
+\f2\b aws rds describe-db-instances --db-instance-identifier armrds > rds.json
+\f1\b0 \
+\
+\
+ $ cat rds.json \
+\{\
+    "DBInstances": [\
+        \{\
+            "DBInstanceIdentifier": "armrds",\
+            "DBInstanceClass": "db.t3.micro",\
+            "Engine": "mysql",\
+            "DBInstanceStatus": "available",\
+            "MasterUsername": "admin",\
+            "Endpoint": \{\
+                "Address": "armrds.cej46m4066r2.us-east-1.rds.amazonaws.com",\
+                "Port": 3306,\
+                "HostedZoneId": "Z2R2ITUGPM61AM"\
+            \},\
+            "AllocatedStorage": 20,\
+            "InstanceCreateTime": "2026-01-14T16:33:56.330000+00:00",\
+            "PreferredBackupWindow": "09:01-09:31",\
+            "BackupRetentionPeriod": 1,\
+            "DBSecurityGroups": [],\
+            "VpcSecurityGroups": [\
+                \{\
+                    "VpcSecurityGroupId": "sg-01d6885b3bbf8f496",\
+                    "Status": "active"\
+                \}\
+            ],\
+            "DBParameterGroups": [\
+                \{\
+                    "DBParameterGroupName": "default.mysql8.4",\
+                    "ParameterApplyStatus": "in-sync"\
+                \}\
+            ],\
+            "AvailabilityZone": "us-east-1a",\
+            "DBSubnetGroup": \{\
+                "DBSubnetGroupName": "rds-ec2-db-subnet-group-4",\
+                "DBSubnetGroupDescription": "Created from the RDS Management Console",\
+                "VpcId": "vpc-0faa3f5f58e4e801e",\
+                "SubnetGroupStatus": "Complete",\
+                "Subnets": [\
+                    \{\
+                        "SubnetIdentifier": "subnet-00bf2b62c7a4f1a47",\
+                        "SubnetAvailabilityZone": \{\
+                            "Name": "us-east-1b"\
+                        \},\
+                        "SubnetOutpost": \{\},\
+                        "SubnetStatus": "Active"\
+                    \},\
+                    \{\
+                        "SubnetIdentifier": "subnet-0e37c7edce71bc586",\
+                        "SubnetAvailabilityZone": \{\
+                            "Name": "us-east-1f"\
+                        \},\
+                        "SubnetOutpost": \{\},\
+                        "SubnetStatus": "Active"\
+                    \},\
+                    \{\
+                        "SubnetIdentifier": "subnet-0498b3ebb5e7d55b0",\
+                        "SubnetAvailabilityZone": \{\
+                            "Name": "us-east-1e"\
+                        \},\
+                        "SubnetOutpost": \{\},\
+                        "SubnetStatus": "Active"\
+                    \},\
+                    \{\
+                        "SubnetIdentifier": "subnet-037e3294a1635e8f9",\
+                        "SubnetAvailabilityZone": \{\
+                            "Name": "us-east-1a"\
+                        \},\
+                        "SubnetOutpost": \{\},\
+                        "SubnetStatus": "Active"\
+                    \},\
+                    \{\
+                        "SubnetIdentifier": "subnet-073b24996e7d1715f",\
+                        "SubnetAvailabilityZone": \{\
+                            "Name": "us-east-1c"\
+                        \},\
+                        "SubnetOutpost": \{\},\
+                        "SubnetStatus": "Active"\
+                    \}\
+                ]\
+            \},\
+            "PreferredMaintenanceWindow": "tue:03:27-tue:03:57",\
+            "UpgradeRolloutOrder": "second",\
+            "PendingModifiedValues": \{\},\
+            "LatestRestorableTime": "2026-01-16T01:10:00+00:00",\
+            "MultiAZ": false,\
+            "EngineVersion": "8.4.7",\
+            "AutoMinorVersionUpgrade": true,\
+            "ReadReplicaDBInstanceIdentifiers": [],\
+            "LicenseModel": "general-public-license",\
+            "StorageThroughput": 0,\
+            "OptionGroupMemberships": [\
+                \{\
+                    "OptionGroupName": "default:mysql-8-4",\
+                    "Status": "in-sync"\
+                \}\
+            ],\
+            "PubliclyAccessible": false,\
+            "StorageType": "gp2",\
+            "DbInstancePort": 0,\
+            "StorageEncrypted": true,\
+            "KmsKeyId": "arn:aws:kms:us-east-1:914215748428:key/7b345103-0cf4-4803-9262-4aeb5a51538c",\
+            "DbiResourceId": "db-PBJJJFCDIPPEVYYGJ3OKASMTIA",\
+            "CACertificateIdentifier": "rds-ca-rsa2048-g1",\
+            "DomainMemberships": [],\
+            "CopyTagsToSnapshot": true,\
+            "MonitoringInterval": 0,\
+            "DBInstanceArn": "arn:aws:rds:us-east-1:914215748428:db:armrds",\
+            "IAMDatabaseAuthenticationEnabled": false,\
+            "DatabaseInsightsMode": "standard",\
+            "PerformanceInsightsEnabled": false,\
+            "DeletionProtection": false,\
+            "AssociatedRoles": [],\
+            "MaxAllocatedStorage": 1000,\
+            "TagList": [],\
+            "CustomerOwnedIpEnabled": false,\
+            "NetworkType": "IPV4",\
+            "ActivityStreamStatus": "stopped",\
+            "BackupTarget": "region",\
+            "CertificateDetails": \{\
+                "CAIdentifier": "rds-ca-rsa2048-g1",\
+                "ValidTill": "2027-01-14T16:31:57+00:00"\
+            \},\
+            "DedicatedLogVolume": false,\
+            "IsStorageConfigUpgradeAvailable": false,\
+            "EngineLifecycleSupport": "open-source-rds-extended-support-disabled"\
+        \}\
+    ]\
+\}\
+~ $ \
+\
+\
+\
+
+\f2\b aws secretsmanager describe-secret
+\f1\b0  --secret-id 
+\f0\fs28 \cf0 \cb5 lab/rds/mysql1
+\f1\fs32 \cf4 \cb3  > secret.json\
+\
+\
+\
+~ $ cat secret.json \
+\{\
+    "ARN": "arn:aws:secretsmanager:us-east-1:914215748428:secret:lab/rds/mysql1-dfJGb2",\
+    "Name": "lab/rds/mysql1",\
+    "LastChangedDate": "2026-01-14T16:42:23.734000+00:00",\
+    "LastAccessedDate": "2026-01-14T00:00:00+00:00",\
+    "Tags": [],\
+    "VersionIdsToStages": \{\
+        "5ce3e243-b4a8-4fc5-b702-1957cebd7fa1": [\
+            "AWSCURRENT"\
+        ]\
+    \},\
+    "CreatedDate": "2026-01-14T16:42:23.693000+00:00"\
+\}\
+~ $ \
+\
+\
+\
+\
+\
+aws ec2 describe-instances --instance-ids i-048a0357a7d604671 > instance.json\
+\
+\
+\
+~ $ cat instance.json \
+\{\
+    "Reservations": [\
+        \{\
+            "ReservationId": "r-0006658e332863a99",\
+            "OwnerId": "914215748428",\
+            "Groups": [],\
+            "Instances": [\
+                \{\
+                    "Architecture": "x86_64",\
+                    "BlockDeviceMappings": [\
+                        \{\
+                            "DeviceName": "/dev/xvda",\
+                            "Ebs": \{\
+                                "AttachTime": "2026-01-14T18:19:42+00:00",\
+                                "DeleteOnTermination": true,\
+                                "Status": "attached",\
+                                "VolumeId": "vol-09fb9fe2cb263379b"\
+                            \}\
+                        \}\
+                    ],\
+                    "ClientToken": "734709f6-8bee-401d-9137-fc7c461fd951",\
+                    "EbsOptimized": true,\
+                    "EnaSupport": true,\
+                    "Hypervisor": "xen",\
+                    "IamInstanceProfile": \{\
+                        "Arn": "arn:aws:iam::914215748428:instance-profile/armageddonRole1",\
+                        "Id": "AIPA5JW4BINGMZ3Y5ZWXF"\
+                    \},\
+                    "NetworkInterfaces": [\
+                        \{\
+                            "Association": \{\
+                                "IpOwnerId": "amazon",\
+                                "PublicDnsName": "ec2-54-198-190-195.compute-1.amazonaws.com",\
+                                "PublicIp": "54.198.190.195"\
+                            \},\
+                            "Attachment": \{\
+                                "AttachTime": "2026-01-14T18:19:41+00:00",\
+                                "AttachmentId": "eni-attach-067e35a28e4c63999",\
+                                "DeleteOnTermination": true,\
+                                "DeviceIndex": 0,\
+                                "Status": "attached",\
+                                "NetworkCardIndex": 0\
+                            \},\
+                            "Description": "",\
+                            "Groups": [\
+                                \{\
+                                    "GroupId": "sg-01d3a14f0f5a2a7ad",\
+                                    "GroupName": "armEC2-SG"\
+                                \},\
+                                \{\
+                                    "GroupId": "sg-0029c1aee0162d921",\
+                                    "GroupName": "ec2-rds-1"\
+                                \}\
+                            ],\
+                            "Ipv6Addresses": [],\
+                            "MacAddress": "0e:df:72:f6:dc:1b",\
+                            "NetworkInterfaceId": "eni-0dbb9f3c0cbac48a1",\
+                            "OwnerId": "914215748428",\
+                            "PrivateDnsName": "ip-10-99-1-250.ec2.internal",\
+                            "PrivateIpAddress": "10.99.1.250",\
+                            "PrivateIpAddresses": [\
+                                \{\
+                                    "Association": \{\
+                                        "IpOwnerId": "amazon",\
+                                        "PublicDnsName": "ec2-54-198-190-195.compute-1.amazonaws.com",\
+                                        "PublicIp": "54.198.190.195"\
+                                    \},\
+                                    "Primary": true,\
+                                    "PrivateDnsName": "ip-10-99-1-250.ec2.internal",\
+                                    "PrivateIpAddress": "10.99.1.250"\
+                                \}\
+                            ],\
+                            "SourceDestCheck": true,\
+                            "Status": "in-use",\
+                            "SubnetId": "subnet-0e957fcab0a372a03",\
+                            "VpcId": "vpc-0faa3f5f58e4e801e",\
+                            "InterfaceType": "interface",\
+                            "Operator": \{\
+                                "Managed": false\
+                            \}\
+                        \}\
+                    ],\
+                    "RootDeviceName": "/dev/xvda",\
+                    "RootDeviceType": "ebs",\
+                    "SecurityGroups": [\
+                        \{\
+                            "GroupId": "sg-01d3a14f0f5a2a7ad",\
+                            "GroupName": "armEC2-SG"\
+                        \},\
+                        \{\
+                            "GroupId": "sg-0029c1aee0162d921",\
+                            "GroupName": "ec2-rds-1"\
+                        \}\
+                    ],\
+                    "SourceDestCheck": true,\
+                    "Tags": [\
+                        \{\
+                            "Key": "Name",\
+                            "Value": "armEC2"\
+                        \}\
+                    ],\
+                    "VirtualizationType": "hvm",\
+                    "CpuOptions": \{\
+                        "CoreCount": 1,\
+                        "ThreadsPerCore": 2\
+                    \},\
+                    "CapacityReservationSpecification": \{\
+                        "CapacityReservationPreference": "open"\
+                    \},\
+                    "HibernationOptions": \{\
+                        "Configured": false\
+                    \},\
+                    "MetadataOptions": \{\
+                        "State": "applied",\
+                        "HttpTokens": "required",\
+                        "HttpPutResponseHopLimit": 2,\
+                        "HttpEndpoint": "enabled",\
+                        "HttpProtocolIpv6": "disabled",\
+                        "InstanceMetadataTags": "disabled"\
+                    \},\
+                    "EnclaveOptions": \{\
+                        "Enabled": false\
+                    \},\
+                    "BootMode": "uefi-preferred",\
+                    "PlatformDetails": "Linux/UNIX",\
+                    "UsageOperation": "RunInstances",\
+                    "UsageOperationUpdateTime": "2026-01-14T18:19:41+00:00",\
+                    "PrivateDnsNameOptions": \{\
+                        "HostnameType": "ip-name",\
+                        "EnableResourceNameDnsARecord": false,\
+                        "EnableResourceNameDnsAAAARecord": false\
+                    \},\
+                    "MaintenanceOptions": \{\
+                        "AutoRecovery": "default",\
+                        "RebootMigration": "default"\
+                    \},\
+                    "CurrentInstanceBootMode": "uefi",\
+                    "NetworkPerformanceOptions": \{\
+                        "BandwidthWeighting": "default"\
+                    \},\
+                    "Operator": \{\
+                        "Managed": false\
+                    \},\
+                    "InstanceId": "i-048a0357a7d604671",\
+                    "ImageId": "ami-07ff62358b87c7116",\
+                    "State": \{\
+                        "Code": 16,\
+                        "Name": "running"\
+                    \},\
+                    "PrivateDnsName": "ip-10-99-1-250.ec2.internal",\
+                    "PublicDnsName": "ec2-54-198-190-195.compute-1.amazonaws.com",\
+                    "StateTransitionReason": "",\
+                    "AmiLaunchIndex": 0,\
+                    "ProductCodes": [],\
+                    "InstanceType": "t3.micro",\
+                    "LaunchTime": "2026-01-14T18:19:41+00:00",\
+                    "Placement": \{\
+                        "AvailabilityZoneId": "use1-az6",\
+                        "GroupName": "",\
+                        "Tenancy": "default",\
+                        "AvailabilityZone": "us-east-1a"\
+                    \},\
+                    "Monitoring": \{\
+                        "State": "disabled"\
+                    \},\
+                    "SubnetId": "subnet-0e957fcab0a372a03",\
+                    "VpcId": "vpc-0faa3f5f58e4e801e",\
+                    "PrivateIpAddress": "10.99.1.250",\
+                    "PublicIpAddress": "54.198.190.195"\
+                \}\
+            ]\
+        \}\
+    ]\
+\}\
+~ $ \
+\
+\
+\
+\
+\
+\
+
+\f2\b aws iam list-attached-role-policies --role-name
+\f1\b0  
+\f2\b\fs48 \AppleTypeServices\AppleTypeServicesF65539 \cf7 \cb8 armageddonRole1
+\f1\b0\fs32 \AppleTypeServices \cf4 \cb3  
+\f2\b > role-policies.json\
+\
+
+\f1\b0 ~ $ cat role-policies.json \
+\{\
+    "AttachedPolicies": [\
+        \{\
+            "PolicyName": "arm-ec2-new-policy",\
+            "PolicyArn": "arn:aws:iam::914215748428:policy/arm-ec2-new-policy"\
+        \}\
+    ]\
+\}\
+~ $ \
+
+\f2\b \
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs28 \cf0 \cb1 \
+\
+\
+\
+}
